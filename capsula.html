@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1D93CE">
+<title>🍾 Mensagem na Garrafa — Cápsula do Tempo do Enzo</title>
+<meta name="description" content="Escreva um recado, um conselho ou uma história para o Enzo do futuro. A garrafa fica selada até ele crescer!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ceu:#C9F3FF;
+  --agua-rasa:#7FE0F5;
+  --agua:#3FC0E8;
+  --agua-media:#1D93CE;
+  --oceano:#0F6FB5;
+  --profundo:#083F76;
+  --areia:#FBE9BF;
+  --navy:#0D3B66;
+  --amarelo:#FFD23F;
+  --laranja:#F49B33;
+  --rosa:#F26DB3;
+  --verde:#58C472;
+  --vermelho:#E8564A;
+  --branco:#FFFFFF;
+  --display:'Baloo 2','Arial Rounded MT Bold',system-ui,sans-serif;
+  --texto:'Nunito','Segoe UI',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--texto);
+  color:var(--navy);
+  line-height:1.6;
+  min-height:100svh;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  background:linear-gradient(180deg,
+    var(--ceu) 0%,
+    var(--agua-rasa) 6%,
+    var(--agua) 22%,
+    var(--agua-media) 48%,
+    var(--oceano) 78%,
+    var(--profundo) 100%);
+}
+img,svg{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer}
+
+/* ambiente: bolhas */
+.oceano-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bolha{
+  position:absolute;bottom:-70px;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, rgba(255,255,255,.85), rgba(255,255,255,.1) 58%, rgba(255,255,255,.3));
+  animation:subir linear infinite;opacity:0;
+}
+@keyframes subir{
+  0%{transform:translateY(0) translateX(0);opacity:0}
+  8%{opacity:.7}
+  92%{opacity:.55}
+  100%{transform:translateY(-110vh) translateX(5vw);opacity:0}
+}
+
+.pagina{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:1.4rem 1.1rem 4rem}
+
+.voltar{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-family:var(--display);font-weight:700;font-size:.95rem;
+  color:var(--navy);text-decoration:none;
+  background:var(--branco);border:3px solid var(--navy);border-radius:99px;
+  padding:.35rem 1.05rem;
+  box-shadow:0 4px 0 rgba(13,59,102,.3);
+  transition:transform .15s ease;
+}
+.voltar:hover{transform:translateY(-2px)}
+
+.topo{text-align:center;margin:1.6rem 0 1.4rem}
+.topo .eyebrow{
+  display:inline-block;
+  font-family:var(--display);font-weight:700;
+  color:var(--navy);background:var(--branco);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.3rem 1.1rem;font-size:clamp(.8rem,3vw,1rem);
+  box-shadow:0 5px 0 rgba(13,59,102,.28);
+  animation:balancar 4.5s ease-in-out infinite;
+}
+@keyframes balancar{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.topo h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(1.9rem,7.6vw,3.4rem);
+  line-height:1;margin:.9rem 0 .4rem;color:var(--branco);
+  text-shadow:0 .05em 0 var(--verde), 0 .12em 0 rgba(13,59,102,.9), 0 .2em 1.6rem rgba(8,63,118,.4);
+}
+.topo p{color:var(--branco);font-weight:700;max-width:36rem;margin:0 auto;text-shadow:0 1px 6px rgba(8,63,118,.5)}
+
+/* garrafa desenhada à mão, boiando na onda */
+.garrafa-cena{width:min(230px,58vw);margin:1.4rem auto 0}
+.garrafa-cena .garrafa{animation:boiar 4.5s ease-in-out infinite;transform-origin:50% 60%}
+@keyframes boiar{
+  0%,100%{transform:rotate(-16deg) translateY(0)}
+  50%{transform:rotate(-11deg) translateY(-9px)}
+}
+
+/* cartão do formulário */
+.card-capsula{
+  background:linear-gradient(180deg,#FFFFFF 0%,#F2F8FD 100%);
+  border-radius:30px;padding:1.7rem 1.4rem 1.9rem;
+  max-width:36rem;margin:1.6rem auto 0;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.9), 0 8px 0 rgba(4,32,64,.35), 0 22px 34px rgba(8,63,118,.35);
+}
+.card-capsula h2{
+  font-family:var(--display);font-weight:800;font-size:1.35rem;
+  text-align:center;margin-bottom:.2rem;
+}
+.card-capsula .dica{font-size:.9rem;opacity:.8;text-align:center;margin-bottom:1.2rem}
+
+.rotulo{
+  display:block;
+  font-family:var(--display);font-weight:700;font-size:.92rem;
+  margin:1rem 0 .35rem;
+}
+.campo{
+  width:100%;
+  font-family:var(--texto);font-weight:700;font-size:1.02rem;
+  color:var(--navy);
+  border:3px solid var(--navy);border-radius:16px;
+  padding:.65rem 1rem;
+  background:var(--branco);
+  outline:none;
+}
+.campo:focus{border-color:var(--agua-media);box-shadow:0 0 0 4px rgba(63,192,232,.35)}
+textarea.campo{min-height:9.5rem;resize:vertical;line-height:1.5}
+.contador{
+  display:block;text-align:right;
+  font-size:.75rem;font-weight:800;opacity:.6;margin-top:.2rem;
+}
+
+/* chips do tipo de mensagem */
+.tipos{display:flex;flex-wrap:wrap;gap:.5rem}
+.tipos input{position:absolute;opacity:0;pointer-events:none}
+.tipos label{
+  font-family:var(--display);font-weight:700;font-size:.88rem;
+  color:var(--navy);background:var(--branco);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.4rem 1rem;cursor:pointer;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.7), 0 4px 0 rgba(13,59,102,.3);
+  transition:transform .15s ease, background .15s ease;
+  user-select:none;-webkit-user-select:none;
+}
+.tipos label:hover{transform:translateY(-2px)}
+.tipos input:checked + label{background:var(--amarelo);border-color:var(--laranja)}
+.tipos input:focus-visible + label{outline:3px solid var(--laranja);outline-offset:2px}
+
+/* honeypot anti-bots: campo invisível que gente de verdade não preenche */
+.pergunta-do-polvo{position:absolute;left:-9999px;top:-9999px}
+
+.btn-lancar{
+  font-family:var(--display);font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  width:100%;margin-top:1.4rem;
+  font-size:clamp(1.05rem,4.2vw,1.25rem);
+  color:var(--navy);background:var(--amarelo);
+  padding:.95rem 1.6rem;border-radius:99px;
+  border:4px solid var(--navy);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 6px 0 var(--navy), 0 16px 26px rgba(8,63,118,.35);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn-lancar:hover{transform:translateY(3px);box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 3px 0 var(--navy), 0 10px 18px rgba(8,63,118,.3)}
+.btn-lancar:active{transform:translateY(5px)}
+.btn-lancar:disabled{opacity:.6;cursor:wait;transform:none}
+.btn-lancar:focus-visible{outline:4px solid var(--branco);outline-offset:3px}
+
+.selinho{
+  text-align:center;font-size:.8rem;font-weight:800;
+  margin-top:.9rem;opacity:.7;
+}
+
+/* sucesso: a garrafa zarpa */
+.sucesso{display:none;text-align:center;padding:.4rem 0 .6rem}
+.card-capsula.enviada form{display:none}
+.card-capsula.enviada .sucesso{display:block}
+.sucesso .mar{
+  position:relative;height:130px;overflow:hidden;
+  border-radius:20px;margin-bottom:1.1rem;
+  background:linear-gradient(180deg,var(--agua-rasa),var(--agua-media));
+  border:3px solid var(--navy);
+}
+.sucesso .mar .ondinha{
+  position:absolute;left:-20%;right:-20%;bottom:-12px;height:46px;
+  background:
+    radial-gradient(circle at 10px -6px, transparent 14px, rgba(255,255,255,.35) 15px 18px, transparent 19px) repeat-x;
+  background-size:40px 46px;
+}
+.sucesso .garrafinha{
+  position:absolute;top:34px;left:-60px;font-size:2.6rem;line-height:1;
+  animation:zarpar 5s linear infinite;
+}
+@keyframes zarpar{
+  0%{transform:translateX(0) rotate(-14deg)}
+  25%{transform:translateX(28vw) translateY(-8px) rotate(-6deg)}
+  50%{transform:translateX(56vw) translateY(2px) rotate(-16deg)}
+  75%{transform:translateX(84vw) translateY(-7px) rotate(-8deg)}
+  100%{transform:translateX(120vw) rotate(-14deg)}
+}
+.sucesso h2{margin-bottom:.3rem}
+.sucesso p{font-weight:700;max-width:32rem;margin:0 auto .4rem}
+.sucesso .doo{
+  font-family:var(--display);font-weight:800;color:var(--oceano);
+  letter-spacing:.05em;margin:.6rem 0 1.2rem;
+}
+.btn-outra{
+  font-family:var(--display);font-weight:700;font-size:.95rem;
+  color:var(--navy);background:var(--branco);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.5rem 1.3rem;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.7), 0 4px 0 rgba(13,59,102,.3);
+  transition:transform .15s ease;
+}
+.btn-outra:hover{transform:translateY(-2px)}
+.btn-outra:focus-visible{outline:3px solid var(--laranja);outline-offset:2px}
+
+/* como funciona (rodapé do card) */
+.como-funciona{
+  max-width:36rem;margin:1.4rem auto 0;
+  text-align:center;color:var(--branco);font-weight:700;font-size:.9rem;
+  background:rgba(255,255,255,.1);border:2px dashed rgba(255,255,255,.45);
+  border-radius:24px;padding:1rem 1.2rem;
+}
+
+/* rodapé: voltar ao topo */
+.rodape{text-align:center;margin-top:2.6rem}
+.cta-topo{
+  font-family:var(--display);font-weight:800;
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:clamp(1rem,3.8vw,1.15rem);
+  color:var(--navy);background:var(--amarelo);
+  padding:.8rem 1.8rem;border-radius:99px;text-decoration:none;
+  border:4px solid var(--navy);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 6px 0 var(--navy), 0 16px 26px rgba(8,63,118,.35);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.cta-topo:hover{transform:translateY(3px);box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 3px 0 var(--navy), 0 10px 18px rgba(8,63,118,.3)}
+.cta-topo:focus-visible{outline:4px solid var(--branco);outline-offset:3px}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
+  z-index:90;opacity:0;pointer-events:none;
+  font-family:var(--display);font-weight:800;
+  background:var(--amarelo);color:var(--navy);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.6rem 1.4rem;font-size:1rem;text-align:center;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.5), 0 5px 0 var(--navy), 0 14px 26px rgba(8,63,118,.45);
+  transition:opacity .35s ease, transform .35s ease;
+  max-width:92vw;
+}
+.toast.mostra{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion:reduce){
+  .bolha,.topo .eyebrow,.garrafa-cena .garrafa,.sucesso .garrafinha{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="oceano-bg" id="oceanoBg" aria-hidden="true"></div>
+
+<div class="pagina" id="topo">
+  <a class="voltar" href="index.html">🐟 Voltar ao cardápio</a>
+  <a class="voltar" href="fotos.html">📸 Fotos da festa</a>
+
+  <header class="topo">
+    <p class="eyebrow">🎶 Glub glub glub glub glub glub 🎶</p>
+    <h1>🍾 Mensagem na Garrafa</h1>
+    <p>A cápsula do tempo do Enzo! Escreva um recado, um conselho ou conte uma história.
+       A gente sela tudo numa garrafa que só o Enzo do futuro vai abrir. 🦈</p>
+
+    <div class="garrafa-cena" aria-hidden="true">
+      <svg viewBox="0 0 240 200">
+        <path d="M0 152 Q30 138 60 152 T120 152 T180 152 T240 152 L240 200 L0 200 Z" fill="rgba(255,255,255,.22)"/>
+        <path d="M0 168 Q40 156 80 168 T160 168 T240 168 L240 200 L0 200 Z" fill="rgba(255,255,255,.16)"/>
+        <g class="garrafa">
+          <rect x="99" y="16" width="26" height="22" rx="5" fill="#B07B4F" stroke="#7A4E2A" stroke-width="4"/>
+          <path d="M78 72 Q78 58 92 54 L100 51 L100 38 L124 38 L124 51 L132 54 Q146 58 146 72 L146 146 Q146 160 132 160 L92 160 Q78 160 78 146 Z"
+                fill="rgba(201,243,255,.6)" stroke="#0D3B66" stroke-width="5" stroke-linejoin="round"/>
+          <g transform="rotate(-8 112 120)">
+            <rect x="95" y="94" width="34" height="50" rx="8" fill="#FBE9BF" stroke="#C99414" stroke-width="4"/>
+            <line x1="102" y1="108" x2="122" y2="108" stroke="#C99414" stroke-width="3" stroke-linecap="round"/>
+            <line x1="102" y1="119" x2="122" y2="119" stroke="#C99414" stroke-width="3" stroke-linecap="round"/>
+            <line x1="102" y1="130" x2="115" y2="130" stroke="#C99414" stroke-width="3" stroke-linecap="round"/>
+          </g>
+          <path d="M87 76 Q84 108 88 138" stroke="rgba(255,255,255,.85)" stroke-width="6" stroke-linecap="round" fill="none"/>
+        </g>
+        <circle cx="170" cy="70" r="5" fill="rgba(255,255,255,.7)"/>
+        <circle cx="182" cy="52" r="3.5" fill="rgba(255,255,255,.6)"/>
+        <circle cx="176" cy="36" r="2.5" fill="rgba(255,255,255,.5)"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- formulário da cápsula -->
+  <section class="card-capsula" id="cardCapsula" aria-label="Escrever mensagem para a cápsula do tempo">
+    <form id="formCapsula" novalidate>
+      <h2>Escreva para o Enzo do futuro 💌</h2>
+      <p class="dica">Sua mensagem fica selada na garrafa — ninguém espia antes do Enzo crescer!</p>
+
+      <label class="rotulo" for="campoNome">Quem está mandando essa mensagem? 🐠</label>
+      <input class="campo" id="campoNome" name="nome" type="text" maxlength="60"
+             autocomplete="name" placeholder="Seu nome (ex.: Tia Ana)" required>
+
+      <label class="rotulo" for="campoRelacao">Você é o quê do Enzo? 🦈</label>
+      <input class="campo" id="campoRelacao" name="relacao" type="text" maxlength="60"
+             placeholder="ex.: madrinha, tio, vizinha, amigo dos papais" required>
+
+      <span class="rotulo" id="rotuloTipo">O que vai dentro da garrafa? 🍾</span>
+      <div class="tipos" role="radiogroup" aria-labelledby="rotuloTipo">
+        <input type="radio" name="tipo" id="tipoRecado" value="Recado carinhoso" checked>
+        <label for="tipoRecado">💌 Recado carinhoso</label>
+        <input type="radio" name="tipo" id="tipoConselho" value="Conselho pro futuro">
+        <label for="tipoConselho">🧭 Conselho pro futuro</label>
+        <input type="radio" name="tipo" id="tipoHistoria" value="História pra lembrar">
+        <label for="tipoHistoria">📖 História pra lembrar</label>
+      </div>
+
+      <label class="rotulo" for="campoMensagem">Sua mensagem 📜</label>
+      <textarea class="campo" id="campoMensagem" name="mensagem" maxlength="2000" required
+                placeholder="Querido Enzo do futuro… escreva aqui seu recado, seu conselho ou aquela história boa pra ele ler quando crescer!"></textarea>
+      <span class="contador" id="contador" aria-hidden="true">0/2000</span>
+
+      <!-- pergunta secreta do polvo: humanos não veem, robôs caem na cilada -->
+      <div class="pergunta-do-polvo" aria-hidden="true">
+        <label for="campoPolvo">Não preencha este campo</label>
+        <input id="campoPolvo" name="polvo" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button class="btn-lancar" id="btnLancar" type="submit">Lançar a garrafa ao mar 🍾🌊</button>
+      <p class="selinho">🔒 Selada com carinho até o Enzo crescer</p>
+    </form>
+
+    <!-- estado de sucesso: a garrafa zarpa -->
+    <div class="sucesso" aria-live="polite">
+      <div class="mar" aria-hidden="true">
+        <span class="garrafinha">🍾</span>
+        <div class="ondinha"></div>
+      </div>
+      <h2>Glub glub… garrafa lançada! 🎉</h2>
+      <p>Sua mensagem foi selada e já está navegando pelo oceano.
+         O Enzo do futuro vai adorar ler o que você escreveu! 💙</p>
+      <p class="doo">Doo doo doo doo doo doo! 🦈</p>
+      <button class="btn-outra" id="btnOutra" type="button">Escrever outra mensagem ✍️</button>
+    </div>
+  </section>
+
+  <p class="como-funciona">
+    🧜 Cada garrafa vai parar direto no baú secreto dos papais do Enzo,
+    que vão guardar todas até ele ter idade pra ler. Capricha na mensagem!
+  </p>
+
+  <footer class="rodape">
+    <a class="cta-topo" href="index.html">Voltar ao cardápio 🐟</a>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO — cole aqui a URL do Apps Script publicado
+   (veja o passo a passo em capsula-apps-script.gs)
+   ============================================================ */
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx6F7Ykf8uKw5HPLatZPljZaqxqI-zoBODVO2XlQq2KBdhPtbHNU6MGtdFENO2OOIFkFw/exec';
+
+var $ = function (id) { return document.getElementById(id); };
+
+/* ---------- bolhas de fundo ---------- */
+(function () {
+  var bg = $('oceanoBg');
+  for (var i = 0; i < 14; i++) {
+    var b = document.createElement('div');
+    b.className = 'bolha';
+    var t = 8 + Math.random() * 20;
+    b.style.width = b.style.height = t + 'px';
+    b.style.left = Math.random() * 100 + 'vw';
+    b.style.animationDuration = (9 + Math.random() * 9) + 's';
+    b.style.animationDelay = (Math.random() * 10) + 's';
+    bg.appendChild(b);
+  }
+})();
+
+/* ---------- toast ---------- */
+var toastTimer = null;
+function toast(msg) {
+  var t = $('toast');
+  t.textContent = msg;
+  t.classList.add('mostra');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove('mostra'); }, 3200);
+}
+
+/* ---------- nome e relação lembrados no aparelho ---------- */
+var campoNome = $('campoNome');
+var campoRelacao = $('campoRelacao');
+try {
+  campoNome.value = localStorage.getItem('festa-enzo-nome') || '';
+  campoRelacao.value = localStorage.getItem('festa-enzo-relacao') || '';
+} catch (e) {}
+
+/* ---------- contador de caracteres ---------- */
+var campoMensagem = $('campoMensagem');
+var contador = $('contador');
+campoMensagem.addEventListener('input', function () {
+  contador.textContent = campoMensagem.value.length + '/2000';
+});
+
+/* ---------- envio ---------- */
+var form = $('formCapsula');
+var btnLancar = $('btnLancar');
+var card = $('cardCapsula');
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  var nome = campoNome.value.trim();
+  var relacao = campoRelacao.value.trim();
+  var mensagem = campoMensagem.value.trim();
+  var tipo = form.querySelector('input[name="tipo"]:checked').value;
+
+  if (!nome) { campoNome.focus(); toast('Ei, marujo! Conta pra gente quem você é ✏️'); return; }
+  if (!relacao) { campoRelacao.focus(); toast('Conta pro Enzo: você é o quê dele? 🦈'); return; }
+  if (!mensagem) { campoMensagem.focus(); toast('A garrafa não pode ir vazia! Escreva sua mensagem 📜'); return; }
+
+  // robô caiu na pergunta do polvo: finge que deu certo e não envia nada
+  if ($('campoPolvo').value) { celebrar(); return; }
+
+  if (!SCRIPT_URL) {
+    toast('Ops! A cápsula ainda não foi ligada à planilha 🛠️');
+    return;
+  }
+
+  try {
+    localStorage.setItem('festa-enzo-nome', nome);
+    localStorage.setItem('festa-enzo-relacao', relacao);
+  } catch (e2) {}
+
+  btnLancar.disabled = true;
+  btnLancar.textContent = 'Selando a garrafa… 🫧';
+
+  // sem headers customizados = requisição simples, sem preflight (funciona com Apps Script)
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ nome: nome, relacao: relacao, tipo: tipo, mensagem: mensagem })
+  })
+    .then(function (r) { return r.json(); })
+    .then(function (dados) {
+      if (!dados || !dados.ok) throw new Error(dados && dados.erro);
+      celebrar();
+    })
+    .catch(function () {
+      toast('A maré engoliu a garrafa! Tente de novo 🌊');
+    })
+    .then(function () {
+      btnLancar.disabled = false;
+      btnLancar.innerHTML = 'Lançar a garrafa ao mar 🍾🌊';
+    });
+});
+
+function celebrar() {
+  card.classList.add('enviada');
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  toast('Mensagem guardada na cápsula do tempo! 🦈🎉');
+}
+
+$('btnOutra').addEventListener('click', function () {
+  campoMensagem.value = '';
+  contador.textContent = '0/2000';
+  card.classList.remove('enviada');
+  campoMensagem.focus();
+});
+</script>
+</body>
+</html>

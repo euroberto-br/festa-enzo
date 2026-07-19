@@ -29,12 +29,13 @@ passando por cada categoria de comida, cada uma apresentada por um personagem da
 até chegar ao bolo e ao fundo do mar. No caminho há peixinhos escondidos para caçar, música,
 confete e uma salinha com 4 mini-jogos.
 
-O site tem duas páginas:
+O site tem três páginas:
 
 | Página | O que faz |
 |---|---|
 | 🍽️ [`index.html`](index.html) | O convite-cardápio interativo (o "mergulho") |
 | 📸 [`fotos.html`](fotos.html) | Galeria colaborativa — os convidados enviam fotos da festa pelo celular e todo mundo vê |
+| 🍾 [`capsula.html`](capsula.html) | **Mensagem na Garrafa** — cápsula do tempo digital: os convidados escrevem recados, conselhos e histórias que ficam selados numa planilha do Google Drive até o Enzo crescer |
 
 ---
 
@@ -131,6 +132,28 @@ flowchart LR
   Cloudinary ("Festa do Enzo - 3 anos (2026)"), além de camada-escudo sobre a imagem, bloqueio de
   clique-direito/arrastar e `-webkit-touch-callout: none` (sem popup de salvar no toque longo do iOS).
 
+### 🍾 A cápsula do tempo (`capsula.html`)
+
+O "livro de assinaturas" da festa virou uma **mensagem na garrafa**: o convidado escreve um
+💌 recado carinhoso, um 🧭 conselho pro futuro ou uma 📖 história pra lembrar — e "lança a garrafa
+ao mar". A mensagem cai **direto numa planilha do Google Drive** dos papais, selada até o Enzo crescer:
+
+```mermaid
+flowchart LR
+    A["✍️ Convidado escreve<br>nome + relação + mensagem"] --> B["🍾 Lançar a garrafa ao mar<br>(fetch POST, sem preflight)"]
+    B --> C["📜 Google Apps Script<br>(app da web, doPost)"]
+    C --> D[("📊 Planilha no Drive<br>aba Mensagens")]
+```
+
+- 🔒 **Seladas de verdade** — as mensagens não aparecem no site; só os papais veem a planilha;
+- 🐙 **Pergunta do polvo** — campo *honeypot* invisível descarta envios de robôs;
+- 💾 Nome e relação ficam lembrados no aparelho (`localStorage`), como na galeria;
+- 🌊 Ao enviar, a garrafinha **zarpa navegando pelas ondas** na animação de sucesso;
+- ⚙️ **Configuração** (uma vez só): criar a planilha, colar o
+  [`capsula-apps-script.gs`](capsula-apps-script.gs) em Extensões → Apps Script, publicar como
+  *App da Web* (acesso: "Qualquer pessoa") e colar a URL `/exec` na constante `SCRIPT_URL`
+  da `capsula.html` — o passo a passo completo está comentado no próprio `.gs`.
+
 ---
 
 ## 🎨 Design system
@@ -186,9 +209,11 @@ Todo o visual nasce de **tokens CSS** (`:root`) inspirados no mundo do *Baby Sha
 
 ```
 festa/
-├── index.html          # Convite-cardápio interativo (página principal)
-├── fotos.html          # Galeria colaborativa de fotos (Cloudinary)
-├── robots.txt          # Crawl liberado p/ o Google ler o noindex
+├── index.html               # Convite-cardápio interativo (página principal)
+├── fotos.html               # Galeria colaborativa de fotos (Cloudinary)
+├── capsula.html             # Cápsula do tempo "Mensagem na Garrafa" (Google Sheets)
+├── capsula-apps-script.gs   # Backend da cápsula (colar no Apps Script da planilha)
+├── robots.txt               # Crawl liberado p/ o Google ler o noindex
 ├── img/                # Fotos da família + personagens Baby Shark
 │   ├── hero-baby.jpg   #   imagem principal do hero
 │   ├── enzo.jpeg       #   o aniversariante 🎉
