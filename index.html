@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<script>window.addEventListener('error', function (e) { document.title = 'ERRO JS: ' + e.message; });</script>
 <style>
 /* ============================================================
    TOKENS — o mundo do Baby Shark's Big Show
@@ -491,6 +492,150 @@ button{font-family:inherit;cursor:pointer}
 #confete{position:fixed;inset:0;z-index:65;pointer-events:none}
 
 /* ============================================================
+   SALINHA DE JOGOS
+   ============================================================ */
+.curso-card--jogos{flex-direction:column !important;text-align:center}
+.curso-card--jogos .curso-info{max-width:60ch}
+.curso-card--jogos .depth{background:var(--verde)}
+.jogo-abas{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.1rem}
+.jogo-aba{
+  font-family:var(--display);font-weight:700;font-size:.92rem;
+  color:var(--navy);background:var(--branco);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.45rem 1.05rem;
+  box-shadow:0 4px 0 rgba(13,59,102,.25);
+  transition:transform .15s ease;
+}
+.jogo-aba:hover{transform:translateY(-2px)}
+.jogo-aba:focus-visible{outline:3px solid var(--laranja);outline-offset:2px}
+.jogo-aba.ativa{background:var(--amarelo);border-color:var(--laranja)}
+.jogo-palco{
+  position:relative;width:100%;max-width:640px;
+  height:clamp(340px,58vw,440px);
+  margin:1.2rem auto 0;
+  border-radius:26px;overflow:hidden;
+  background:linear-gradient(180deg,#7FE0F5,#1D93CE 76%,#FBE9BF 77%,#F2D492);
+  border:4px solid var(--navy);
+  box-shadow:inset 0 -8px 22px rgba(8,63,118,.2), 0 14px 30px rgba(8,63,118,.28);
+  touch-action:manipulation;
+  user-select:none;-webkit-user-select:none;
+}
+.jogo-hud{
+  position:absolute;top:10px;left:10px;right:10px;
+  display:flex;justify-content:space-between;
+  pointer-events:none;z-index:5;
+}
+.hud-chip{
+  font-family:var(--display);font-weight:800;font-size:.9rem;
+  background:rgba(13,59,102,.8);color:var(--branco);
+  border-radius:99px;padding:.25rem .85rem;
+}
+.jogo-shark{
+  position:absolute;left:50%;bottom:6px;transform:translateX(-50%);
+  width:clamp(96px,24%,130px);max-width:none;
+  pointer-events:none;z-index:4;
+  filter:drop-shadow(0 6px 10px rgba(8,63,118,.35));
+  animation:flutua-perso 3.5s ease-in-out infinite;
+}
+.modo-bolhas .jogo-shark{display:none}
+.jogo-shark.nhac{animation:nhac .5s ease}
+@keyframes nhac{
+  0%{transform:translateX(-50%) scale(1) rotate(0)}
+  30%{transform:translateX(-50%) scale(1.25) rotate(-8deg)}
+  60%{transform:translateX(-50%) scale(1.12) rotate(6deg)}
+  100%{transform:translateX(-50%) scale(1)}
+}
+.comida{
+  position:absolute;background:none;border:none;padding:0;
+  font-size:clamp(2rem,7vw,2.6rem);line-height:1;
+  filter:drop-shadow(0 4px 6px rgba(8,63,118,.3));
+  animation:boia 3.4s ease-in-out infinite;
+  cursor:pointer;z-index:3;
+}
+.comida:focus-visible{outline:3px solid var(--amarelo);outline-offset:3px;border-radius:12px}
+@keyframes boia{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-10px) rotate(6deg)}}
+.comida.voando{
+  transition:left .45s ease-in, top .45s ease-in, transform .45s ease-in, opacity .45s ease-in;
+  animation:none;pointer-events:none;opacity:.85;
+}
+.bolha-jogo{
+  position:absolute;bottom:-90px;background:none;border:none;padding:0;
+  cursor:pointer;z-index:3;
+}
+.bolha-jogo:focus-visible{outline:3px solid var(--amarelo);outline-offset:3px;border-radius:50%}
+.bolha-jogo .pele{
+  display:block;width:100%;height:100%;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, rgba(255,255,255,.95), rgba(255,255,255,.18) 55%, rgba(255,255,255,.42));
+  border:2px solid rgba(255,255,255,.8);
+}
+@keyframes sobe-jogo{from{transform:translateY(0)}to{transform:translateY(-580px)}}
+.bolha-jogo.subindo{animation:sobe-jogo linear forwards}
+.bolha-jogo.pop{pointer-events:none;animation-play-state:paused}
+.bolha-jogo.pop .pele{animation:estourou .3s ease forwards}
+@keyframes estourou{to{transform:scale(1.6);opacity:0}}
+.surpresa{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:1.9rem;pointer-events:none;
+  animation:surge .85s ease forwards;
+}
+@keyframes surge{
+  0%{transform:scale(.2);opacity:0}
+  30%{transform:scale(1.3);opacity:1}
+  75%{transform:scale(1);opacity:1}
+  100%{transform:scale(1);opacity:0}
+}
+
+/* --- jogo: memória da família --- */
+.memoria-grade{
+  position:absolute;inset:52px 14px 14px;
+  display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);
+  gap:12px;z-index:3;
+}
+.carta{
+  position:relative;border:none;background:none;padding:0;
+  cursor:pointer;perspective:700px;
+}
+.carta:focus-visible{outline:3px solid var(--amarelo);outline-offset:2px;border-radius:16px}
+.carta-face{
+  position:absolute;inset:0;border-radius:16px;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  transition:transform .45s ease;
+  border:3px solid var(--navy);overflow:hidden;
+  box-shadow:0 6px 14px rgba(8,63,118,.25);
+}
+.carta-verso{
+  background:linear-gradient(160deg,var(--azul),#1D93CE);
+  display:grid;place-items:center;
+  font-size:clamp(1.5rem,6vw,2.2rem);
+}
+.carta-frente{background:var(--branco);transform:rotateY(180deg)}
+.carta-frente img{width:100%;height:100%;object-fit:cover}
+.carta.aberta .carta-verso{transform:rotateY(180deg)}
+.carta.aberta .carta-frente{transform:rotateY(0deg)}
+.carta.certa{animation:sacode .55s ease}
+.carta.certa .carta-frente{border-color:var(--verde)}
+
+/* --- jogo: corrida do cardume --- */
+.corrida-shark{
+  position:absolute;width:clamp(64px,17%,84px);max-width:none;z-index:4;
+  pointer-events:none;
+  filter:drop-shadow(0 5px 8px rgba(8,63,118,.35));
+}
+.peixe-amigo{
+  position:absolute;font-size:clamp(1.7rem,6vw,2.1rem);line-height:1;z-index:3;
+  pointer-events:none;
+  animation:boia 3s ease-in-out infinite;
+  filter:drop-shadow(0 3px 5px rgba(8,63,118,.3));
+}
+.jogo-dica{
+  position:absolute;left:50%;bottom:12px;transform:translateX(-50%);
+  font-family:var(--display);font-weight:700;font-size:.82rem;
+  background:rgba(255,255,255,.85);color:var(--navy);
+  border-radius:99px;padding:.25rem .9rem;white-space:nowrap;
+  pointer-events:none;z-index:5;
+}
+
+/* ============================================================
    MOVIMENTO REDUZIDO
    ============================================================ */
 @media (prefers-reduced-motion: reduce){
@@ -504,6 +649,8 @@ button{font-family:inherit;cursor:pointer}
 .sem-animacao *{animation:none !important;transition:none !important}
 .sem-animacao .curso-card{opacity:1;transform:none}
 .sem-animacao .vela::after{transform:translateX(-50%) scale(1)}
+/* modo de teste (?fotos&sojogos): mostra só a salinha de jogos */
+.so-jogos .hero,.so-jogos .fundo-mar,.so-jogos .curso:not(#jogos){display:none}
 </style>
 </head>
 <body>
@@ -549,6 +696,7 @@ button{font-family:inherit;cursor:pointer}
     <a class="nav-chip" href="#papais">Papais</a>
     <a class="nav-chip nav-chip--bolo" href="#bolo">🎂 Bolo</a>
     <a class="nav-chip" href="#tchau">Tchau!</a>
+    <a class="nav-chip" href="#jogos">🎮 Jogos</a>
   </div>
 </nav>
 
@@ -1001,6 +1149,32 @@ button{font-family:inherit;cursor:pointer}
       </div>
     </div>
   </article>
+
+  <!-- SALINHA DE JOGOS -->
+  <article class="curso" id="jogos">
+    <div class="curso-card curso-card--jogos" style="--acento:var(--verde)">
+      <span class="depth">Bônus!</span>
+      <div class="curso-info">
+        <p class="eyebrow">Salinha de jogos</p>
+        <h2>Hora de brincar! 🎮</h2>
+        <p class="desc">Antes de voltar à superfície, escolha uma brincadeira no fundo do mar:</p>
+        <div class="jogo-abas" role="tablist" aria-label="Escolha o jogo">
+          <button class="jogo-aba ativa" type="button" role="tab" aria-selected="true" data-jogo="comilanca">🦈 Alimente o Baby Shark</button>
+          <button class="jogo-aba" type="button" role="tab" aria-selected="false" data-jogo="bolhas">🫧 Estoura Bolhas</button>
+          <button class="jogo-aba" type="button" role="tab" aria-selected="false" data-jogo="memoria">🃏 Memória da Família</button>
+          <button class="jogo-aba" type="button" role="tab" aria-selected="false" data-jogo="corrida">🐠 Corrida do Cardume</button>
+        </div>
+      </div>
+      <div class="jogo-palco" id="palcoJogo">
+        <div class="jogo-hud">
+          <span class="hud-chip" id="hudPlacar">🍽️ 0</span>
+          <span class="hud-chip" id="hudMeta">Meta: 5</span>
+        </div>
+        <img class="jogo-shark" id="jogoShark" src="img/brooklyn2.png" alt="" aria-hidden="true">
+        <span class="jogo-dica" id="jogoDica">Toque nas comidinhas!</span>
+      </div>
+    </div>
+  </article>
 </main>
 
 <!-- ==================== FUNDO DO MAR ==================== -->
@@ -1045,9 +1219,11 @@ button{font-family:inherit;cursor:pointer}
 (function(){
   'use strict';
   var reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var jogoInicial = (location.search.match(/jogo=(\w+)/) || [])[1] || 'comilanca';
   if (location.search.indexOf('fotos') !== -1) {
     reduzMovimento = true;
     document.body.classList.add('sem-animacao');
+    if (location.search.indexOf('sojogos') !== -1) document.body.classList.add('so-jogos');
     var rolagem = location.search.match(/rolagem=(\d+)/);
     if (rolagem) {
       window.addEventListener('load', function () {
@@ -1287,6 +1463,333 @@ button{font-family:inherit;cursor:pointer}
     });
   });
   placar.textContent = achados + '/' + TOTAL;
+
+  /* ================= salinha de jogos ================= */
+  var palco = document.getElementById('palcoJogo');
+  var jogoShark = document.getElementById('jogoShark');
+  var hudPlacar = document.getElementById('hudPlacar');
+  var hudMeta = document.getElementById('hudMeta');
+  var jogoDica = document.getElementById('jogoDica');
+  var secaoJogos = document.getElementById('jogos');
+  var abas = document.querySelectorAll('.jogo-aba');
+
+  var jogoAtivo = /^(comilanca|bolhas|memoria|corrida)$/.test(jogoInicial) ? jogoInicial : 'comilanca';
+  var jogosVisivel = false;
+  var pontos = { comilanca: 0, bolhas: 0, corrida: 0 };
+  var vitoriasMemoria = 0;
+  var paresAchados = 0;
+  var timerBolhas = null;
+  var rafCorrida = null;
+
+  var ICONES = { comilanca: '🍽️', bolhas: '🫧', corrida: '🐠' };
+  var DICAS = {
+    comilanca: 'Toque nas comidinhas!',
+    bolhas: 'Estoure as bolhas que sobem!',
+    memoria: 'Encontre os pares da família!',
+    corrida: 'Arraste o dedo para nadar!'
+  };
+
+  function proximaMeta(pts) {
+    var degraus = [5, 10, 20, 35, 50];
+    for (var i = 0; i < degraus.length; i++) { if (pts < degraus[i]) return degraus[i]; }
+    return (Math.floor(pts / 25) + 1) * 25;
+  }
+  function ehDegrau(pts) {
+    return pts === 5 || pts === 10 || pts === 20 || pts === 35 || pts === 50 || (pts > 50 && pts % 25 === 0);
+  }
+
+  function nhacSom() { var ac = audio(); if (!ac) return; var t = ac.currentTime; nota(210, t, 0.08, 0.2, 'square'); nota(150, t + 0.09, 0.12, 0.18, 'square'); }
+  function popSom() { var ac = audio(); if (!ac) return; nota(650 + Math.random() * 350, ac.currentTime, 0.1, 0.16, 'sine'); }
+  function fanfarra() { var ac = audio(); if (!ac) return; var t = ac.currentTime; [392, 494, 587, 784].forEach(function (f, i) { nota(f, t + i * 0.11, 0.15, 0.2, 'triangle'); }); }
+
+  function atualizaHud() {
+    if (jogoAtivo === 'memoria') {
+      hudPlacar.textContent = '🃏 Vitórias: ' + vitoriasMemoria;
+      hudMeta.textContent = 'Pares: ' + paresAchados + '/3';
+    } else {
+      var pts = pontos[jogoAtivo];
+      hudPlacar.textContent = ICONES[jogoAtivo] + ' ' + pts;
+      hudMeta.textContent = 'Meta: ' + proximaMeta(pts);
+    }
+    jogoDica.textContent = DICAS[jogoAtivo];
+  }
+
+  function festaNoPalco(msg) {
+    fanfarra();
+    var r = palco.getBoundingClientRect();
+    estoura(r.left + r.width / 2, r.top + r.height / 3, 60);
+    mostraToast(msg);
+  }
+
+  function pontua(jogo) {
+    pontos[jogo]++;
+    var pts = pontos[jogo];
+    atualizaHud();
+    if (ehDegrau(pts)) {
+      var msgs = {
+        comilanca: '🎉 ' + pts + ' comidinhas! O Baby Shark está feliz!',
+        bolhas: '🎉 ' + pts + ' bolhas estouradas! Doo doo doo!',
+        corrida: '🎉 ' + pts + ' amigos no cardume! Go go go!'
+      };
+      festaNoPalco(msgs[jogo]);
+      if (jogo === 'comilanca') { jogoShark.classList.remove('nhac'); void jogoShark.offsetWidth; jogoShark.classList.add('nhac'); }
+    }
+  }
+
+  function limpaPalco() {
+    palco.querySelectorAll('.comida, .bolha-jogo, .memoria-grade, .peixe-amigo, .corrida-shark').forEach(function (el) { el.remove(); });
+  }
+
+  /* --- jogo 1: alimente o baby shark --- */
+  var COMIDAS = ['🍗', '🥟', '🍕', '🍿', '🧁', '🍩', '🥤', '🍓', '🍪', '🍰'];
+  var SLOTS_COMIDA = [[8, 16], [38, 12], [68, 15], [14, 42], [44, 38], [72, 44], [28, 27], [58, 28]];
+  function novaComida() {
+    if (jogoAtivo !== 'comilanca') return;
+    var usados = {};
+    palco.querySelectorAll('.comida').forEach(function (c) { usados[c.dataset.slot] = 1; });
+    var livres = [];
+    for (var i = 0; i < SLOTS_COMIDA.length; i++) { if (!usados[i]) livres.push(i); }
+    if (!livres.length) return;
+    var slot = livres[(Math.random() * livres.length) | 0];
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'comida';
+    b.dataset.slot = slot;
+    b.textContent = COMIDAS[(Math.random() * COMIDAS.length) | 0];
+    b.setAttribute('aria-label', 'Comidinha — toque para alimentar o Baby Shark');
+    b.style.left = (SLOTS_COMIDA[slot][0] + Math.random() * 6 - 3) + '%';
+    b.style.top = (SLOTS_COMIDA[slot][1] + Math.random() * 6 - 3) + '%';
+    b.style.animationDelay = (Math.random() * 2) + 's';
+    b.style.animationDuration = (2.6 + Math.random() * 1.6) + 's';
+    b.addEventListener('pointerdown', comeu);
+    palco.appendChild(b);
+  }
+  function comeu(ev) {
+    var b = ev.currentTarget;
+    if (b.dataset.comido) return;
+    b.dataset.comido = '1';
+    var pr = palco.getBoundingClientRect();
+    var sr = jogoShark.getBoundingClientRect();
+    b.classList.add('voando');
+    b.style.left = (sr.left - pr.left + sr.width / 2 - 16) + 'px';
+    b.style.top = (sr.top - pr.top + 8) + 'px';
+    b.style.transform = 'scale(.25)';
+    jogoShark.classList.remove('nhac'); void jogoShark.offsetWidth; jogoShark.classList.add('nhac');
+    nhacSom();
+    setTimeout(function () { b.remove(); novaComida(); }, 470);
+    pontua('comilanca');
+  }
+
+  /* --- jogo 2: estoura bolhas surpresa --- */
+  var SURPRESAS = ['🦈', '🐠', '🐙', '⭐', '🎁', '🍭', '🦀', '🐬'];
+  function novaBolha() {
+    if (jogoAtivo !== 'bolhas' || !jogosVisivel) return;
+    if (palco.querySelectorAll('.bolha-jogo').length >= 9) return;
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'bolha-jogo';
+    var tam = 46 + Math.random() * 34;
+    b.style.width = tam + 'px';
+    b.style.height = tam + 'px';
+    b.style.left = (4 + Math.random() * 82) + '%';
+    b.innerHTML = '<span class="pele"></span>';
+    b.setAttribute('aria-label', 'Bolha — toque para estourar');
+    if (!reduzMovimento) {
+      b.classList.add('subindo');
+      b.style.animationDuration = (5 + Math.random() * 4) + 's';
+      b.addEventListener('animationend', function () { b.remove(); });
+    } else {
+      b.style.bottom = (12 + Math.random() * 66) + '%';
+    }
+    setTimeout(function () { if (b.parentNode) b.remove(); }, 12000);
+    b.addEventListener('pointerdown', estourouBolha);
+    palco.appendChild(b);
+  }
+  function estourouBolha(ev) {
+    var b = ev.currentTarget;
+    if (b.dataset.pop) return;
+    b.dataset.pop = '1';
+    b.classList.add('pop');
+    popSom();
+    if (Math.random() < 0.28) {
+      var s = document.createElement('span');
+      s.className = 'surpresa';
+      s.textContent = SURPRESAS[(Math.random() * SURPRESAS.length) | 0];
+      b.appendChild(s);
+    }
+    setTimeout(function () { b.remove(); }, 900);
+    pontua('bolhas');
+  }
+
+  /* --- jogo 3: memória da família tubarão --- */
+  var cartaAberta = null;
+  var memoriaTravada = false;
+  var PERSONAGENS = [
+    { id: 'baby', img: 'img/brooklyn2.png', nome: 'Baby Shark' },
+    { id: 'papai', img: 'img/papai-full.jpg', nome: 'Papai Tubarão' },
+    { id: 'mamae', img: 'img/mamae-full.jpg', nome: 'Mamãe Tubarão' }
+  ];
+  function montaMemoria() {
+    paresAchados = 0;
+    cartaAberta = null;
+    memoriaTravada = false;
+    var grade = document.createElement('div');
+    grade.className = 'memoria-grade';
+    var baralho = PERSONAGENS.concat(PERSONAGENS).sort(function () { return Math.random() - 0.5; });
+    baralho.forEach(function (p) {
+      var c = document.createElement('button');
+      c.type = 'button';
+      c.className = 'carta';
+      c.dataset.par = p.id;
+      c.dataset.nome = p.nome;
+      c.setAttribute('aria-label', 'Carta virada para baixo');
+      c.innerHTML = '<span class="carta-face carta-verso">🌊</span>' +
+        '<span class="carta-face carta-frente"><img src="' + p.img + '" alt=""></span>';
+      c.addEventListener('pointerdown', viraCarta);
+      grade.appendChild(c);
+    });
+    palco.appendChild(grade);
+  }
+  function viraCarta(ev) {
+    var c = ev.currentTarget;
+    if (memoriaTravada || c.classList.contains('aberta')) return;
+    c.classList.add('aberta');
+    c.setAttribute('aria-label', c.dataset.nome);
+    popSom();
+    if (!cartaAberta) { cartaAberta = c; return; }
+    var a = cartaAberta;
+    cartaAberta = null;
+    if (a.dataset.par === c.dataset.par) {
+      a.classList.add('certa'); c.classList.add('certa');
+      paresAchados++;
+      atualizaHud();
+      nhacSom();
+      if (paresAchados === 3) {
+        vitoriasMemoria++;
+        memoriaTravada = true;
+        festaNoPalco('🎉 Achou toda a família tubarão! Doo doo doo!');
+        setTimeout(function () {
+          palco.querySelectorAll('.memoria-grade').forEach(function (g) { g.remove(); });
+          if (jogoAtivo === 'memoria') { montaMemoria(); atualizaHud(); }
+        }, 2400);
+      }
+    } else {
+      memoriaTravada = true;
+      setTimeout(function () {
+        a.classList.remove('aberta');
+        c.classList.remove('aberta');
+        a.setAttribute('aria-label', 'Carta virada para baixo');
+        c.setAttribute('aria-label', 'Carta virada para baixo');
+        memoriaTravada = false;
+      }, 950);
+    }
+  }
+
+  /* --- jogo 4: corrida do cardume --- */
+  var sharkCorrida = null;
+  var alvoX = 0, alvoY = 0, posX = 0, posY = 0, dirShark = 1;
+  var AMIGOS = ['🐠', '🐟', '🐡', '🦐', '🐙'];
+  function montaCorrida() {
+    sharkCorrida = document.createElement('img');
+    sharkCorrida.src = 'img/brooklyn2.png';
+    sharkCorrida.alt = '';
+    sharkCorrida.className = 'corrida-shark';
+    palco.appendChild(sharkCorrida);
+    posX = alvoX = palco.clientWidth / 2;
+    posY = alvoY = palco.clientHeight / 2;
+    for (var i = 0; i < 4; i++) novoAmigo();
+    if (!rafCorrida) rafCorrida = requestAnimationFrame(nadaCorrida);
+  }
+  function novoAmigo() {
+    var l = 8 + Math.random() * 80, t = 14 + Math.random() * 68;
+    for (var tent = 0; tent < 10; tent++) {
+      var dx = l / 100 * palco.clientWidth - posX;
+      var dy = t / 100 * palco.clientHeight - posY;
+      if (dx * dx + dy * dy > 12100) break; /* pelo menos 110px do tubarão */
+      l = 8 + Math.random() * 80; t = 14 + Math.random() * 68;
+    }
+    var p = document.createElement('span');
+    p.className = 'peixe-amigo';
+    p.textContent = AMIGOS[(Math.random() * AMIGOS.length) | 0];
+    p.style.left = l + '%';
+    p.style.top = t + '%';
+    p.style.animationDelay = (Math.random() * 2) + 's';
+    palco.appendChild(p);
+  }
+  function nadaCorrida() {
+    rafCorrida = null;
+    if (jogoAtivo !== 'corrida' || !jogosVisivel || !sharkCorrida) return;
+    posX += (alvoX - posX) * 0.09;
+    posY += (alvoY - posY) * 0.09;
+    if (Math.abs(alvoX - posX) > 2) dirShark = alvoX > posX ? 1 : -1;
+    sharkCorrida.style.left = posX + 'px';
+    sharkCorrida.style.top = posY + 'px';
+    sharkCorrida.style.transform = 'translate(-50%,-50%) scaleX(' + dirShark + ')';
+    palco.querySelectorAll('.peixe-amigo').forEach(function (p) {
+      var px = p.offsetLeft + p.offsetWidth / 2;
+      var py = p.offsetTop + p.offsetHeight / 2;
+      var dx = px - posX, dy = py - posY;
+      if (dx * dx + dy * dy < 2500) {
+        p.remove();
+        popSom();
+        pontua('corrida');
+        novoAmigo();
+      }
+    });
+    rafCorrida = requestAnimationFrame(nadaCorrida);
+  }
+  function mirar(ev) {
+    if (jogoAtivo !== 'corrida') return;
+    var r = palco.getBoundingClientRect();
+    alvoX = Math.max(0, Math.min(r.width, ev.clientX - r.left));
+    alvoY = Math.max(0, Math.min(r.height, ev.clientY - r.top));
+  }
+  palco.addEventListener('pointermove', mirar);
+  palco.addEventListener('pointerdown', mirar);
+
+  /* --- troca de abas + liga/desliga --- */
+  function iniciaJogo() {
+    limpaPalco();
+    palco.classList.toggle('modo-bolhas', jogoAtivo !== 'comilanca');
+    palco.style.touchAction = (jogoAtivo === 'corrida') ? 'none' : 'manipulation';
+    if (jogoAtivo === 'comilanca') { for (var i = 0; i < 6; i++) novaComida(); }
+    if (jogoAtivo === 'bolhas') { for (var j = 0; j < 3; j++) novaBolha(); }
+    if (jogoAtivo === 'memoria') montaMemoria();
+    if (jogoAtivo === 'corrida') montaCorrida();
+    atualizaHud();
+  }
+  abas.forEach(function (a) {
+    a.addEventListener('click', function () {
+      jogoAtivo = a.dataset.jogo;
+      sincronizaAbas();
+      iniciaJogo();
+    });
+  });
+  function sincronizaAbas() {
+    abas.forEach(function (x) {
+      x.classList.toggle('ativa', x.dataset.jogo === jogoAtivo);
+      x.setAttribute('aria-selected', x.dataset.jogo === jogoAtivo ? 'true' : 'false');
+    });
+  }
+
+  function ligaDesligaJogos(visivel) {
+    jogosVisivel = visivel;
+    if (visivel && !timerBolhas) timerBolhas = setInterval(novaBolha, 850);
+    if (!visivel && timerBolhas) { clearInterval(timerBolhas); timerBolhas = null; }
+    if (visivel && jogoAtivo === 'corrida' && !rafCorrida) rafCorrida = requestAnimationFrame(nadaCorrida);
+  }
+  if ('IntersectionObserver' in window) {
+    var ioJogos = new IntersectionObserver(function (ents) {
+      ents.forEach(function (e) { ligaDesligaJogos(e.isIntersecting); });
+    }, { threshold: 0.15 });
+    ioJogos.observe(secaoJogos);
+  } else {
+    ligaDesligaJogos(true);
+  }
+  sincronizaAbas();
+  iniciaJogo();
+
+  document.documentElement.setAttribute('data-js-ok', '1');
 })();
 </script>
 
