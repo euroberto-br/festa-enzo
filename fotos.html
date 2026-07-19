@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1D93CE">
+<title>📸 Fotos da Festa — Enzo faz 3! 🦈</title>
+<meta name="description" content="Envie suas fotos da festa do Enzo e veja a galeria compartilhada de todos os convidados!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ceu:#C9F3FF;
+  --agua-rasa:#7FE0F5;
+  --agua:#3FC0E8;
+  --agua-media:#1D93CE;
+  --oceano:#0F6FB5;
+  --profundo:#083F76;
+  --navy:#0D3B66;
+  --amarelo:#FFD23F;
+  --laranja:#F49B33;
+  --rosa:#F26DB3;
+  --verde:#58C472;
+  --vermelho:#E8564A;
+  --branco:#FFFFFF;
+  --display:'Baloo 2','Arial Rounded MT Bold',system-ui,sans-serif;
+  --texto:'Nunito','Segoe UI',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--texto);
+  color:var(--navy);
+  line-height:1.6;
+  min-height:100svh;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  background:linear-gradient(180deg,
+    var(--ceu) 0%,
+    var(--agua-rasa) 6%,
+    var(--agua) 22%,
+    var(--agua-media) 48%,
+    var(--oceano) 78%,
+    var(--profundo) 100%);
+}
+img,svg{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer}
+
+/* ambiente: bolhas */
+.oceano-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bolha{
+  position:absolute;bottom:-70px;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, rgba(255,255,255,.85), rgba(255,255,255,.1) 58%, rgba(255,255,255,.3));
+  animation:subir linear infinite;opacity:0;
+}
+@keyframes subir{
+  0%{transform:translateY(0) translateX(0);opacity:0}
+  8%{opacity:.7}
+  92%{opacity:.55}
+  100%{transform:translateY(-110vh) translateX(5vw);opacity:0}
+}
+
+.pagina{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:1.4rem 1.1rem 4rem}
+
+.voltar{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-family:var(--display);font-weight:700;font-size:.95rem;
+  color:var(--navy);text-decoration:none;
+  background:var(--branco);border:3px solid var(--navy);border-radius:99px;
+  padding:.35rem 1.05rem;
+  box-shadow:0 4px 0 rgba(13,59,102,.3);
+  transition:transform .15s ease;
+}
+.voltar:hover{transform:translateY(-2px)}
+
+.topo{text-align:center;margin:1.6rem 0 2rem}
+.topo .eyebrow{
+  display:inline-block;
+  font-family:var(--display);font-weight:700;
+  color:var(--navy);background:var(--branco);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.3rem 1.1rem;font-size:clamp(.8rem,3vw,1rem);
+  box-shadow:0 5px 0 rgba(13,59,102,.28);
+  animation:balancar 4.5s ease-in-out infinite;
+}
+@keyframes balancar{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.topo h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(2rem,8vw,3.6rem);
+  line-height:1;margin:.9rem 0 .4rem;color:var(--branco);
+  text-shadow:0 .05em 0 var(--rosa), 0 .12em 0 rgba(13,59,102,.9), 0 .2em 1.6rem rgba(8,63,118,.4);
+}
+.topo p{color:var(--branco);font-weight:700;max-width:32rem;margin:0 auto;text-shadow:0 1px 6px rgba(8,63,118,.5)}
+
+/* cartão de envio */
+.card-envio{
+  background:linear-gradient(180deg,#FFFFFF 0%,#F2F8FD 100%);
+  border-radius:30px;padding:1.6rem 1.4rem;
+  max-width:34rem;margin:0 auto 2.6rem;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.9), 0 8px 0 rgba(4,32,64,.35), 0 22px 34px rgba(8,63,118,.35);
+  text-align:center;
+}
+.card-envio h2{font-family:var(--display);font-weight:800;font-size:1.35rem;margin-bottom:.2rem}
+.card-envio .dica{font-size:.9rem;opacity:.8;margin-bottom:1rem}
+.campo-nome{
+  width:100%;
+  font-family:var(--texto);font-weight:700;font-size:1.05rem;
+  color:var(--navy);
+  border:3px solid var(--navy);border-radius:16px;
+  padding:.7rem 1rem;margin-bottom:1rem;
+  background:var(--branco);
+  outline:none;
+}
+.campo-nome:focus{border-color:var(--agua-media);box-shadow:0 0 0 4px rgba(63,192,232,.35)}
+.btn-enviar{
+  font-family:var(--display);font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  width:100%;
+  font-size:clamp(1.05rem,4.2vw,1.25rem);
+  color:var(--navy);background:var(--amarelo);
+  padding:.95rem 1.6rem;border-radius:99px;
+  border:4px solid var(--navy);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 6px 0 var(--navy), 0 16px 26px rgba(8,63,118,.35);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn-enviar:hover{transform:translateY(3px);box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 3px 0 var(--navy), 0 10px 18px rgba(8,63,118,.3)}
+.btn-enviar:active{transform:translateY(5px)}
+.btn-enviar:disabled{opacity:.6;cursor:wait;transform:none}
+.btn-enviar:focus-visible{outline:4px solid var(--branco);outline-offset:3px}
+#inputFotos{display:none}
+
+/* fila de envio */
+.fila{display:flex;flex-direction:column;gap:.55rem;margin-top:1rem;text-align:left}
+.fila-item{
+  display:flex;align-items:center;gap:.7rem;
+  background:var(--branco);border:2px solid rgba(13,59,102,.25);border-radius:14px;
+  padding:.45rem .6rem;
+}
+.fila-item img{width:44px;height:44px;object-fit:cover;border-radius:10px;flex:0 0 auto}
+.fila-info{flex:1;min-width:0}
+.fila-nome{font-size:.8rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fila-barra{height:8px;border-radius:99px;background:rgba(13,59,102,.15);overflow:hidden;margin-top:.25rem}
+.fila-barra i{display:block;height:100%;width:0;background:var(--verde);border-radius:99px;transition:width .2s ease}
+.fila-status{font-size:1.1rem;flex:0 0 auto}
+.fila-item.erro .fila-barra i{background:var(--vermelho)}
+
+/* galeria */
+.galeria-cabeca{
+  display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap;
+  margin-bottom:1.2rem;text-align:center;
+}
+.galeria-cabeca h2{
+  font-family:var(--display);font-weight:800;color:var(--branco);
+  font-size:clamp(1.4rem,5.5vw,2rem);
+  text-shadow:0 .08em 0 rgba(13,59,102,.9);
+}
+.contagem{
+  font-family:var(--display);font-weight:700;font-size:.9rem;
+  color:var(--navy);background:var(--amarelo);
+  border:2px solid var(--navy);border-radius:99px;padding:.15rem .8rem;
+  box-shadow:0 3px 0 rgba(13,59,102,.35);
+}
+.btn-atualizar{
+  font-family:var(--display);font-weight:700;font-size:.9rem;
+  color:var(--branco);background:rgba(255,255,255,.16);
+  border:2px solid rgba(255,255,255,.4);border-radius:99px;
+  padding:.2rem .9rem;
+}
+.btn-atualizar:hover{background:rgba(255,255,255,.3)}
+
+.grade{
+  display:grid;gap:.7rem;
+  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+}
+@media (min-width:720px){.grade{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}}
+.foto{
+  position:relative;aspect-ratio:1;overflow:hidden;
+  border-radius:20px;border:3px solid var(--branco);
+  box-shadow:0 5px 0 rgba(4,32,64,.35), 0 14px 22px rgba(8,63,118,.3);
+  background:rgba(255,255,255,.15);
+  padding:0;
+  animation:aparecer .4s ease both;
+}
+@keyframes aparecer{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.foto img{width:100%;height:100%;object-fit:cover}
+.foto .autor{
+  position:absolute;left:0;right:0;bottom:0;
+  font-family:var(--display);font-weight:700;font-size:.72rem;
+  color:var(--branco);text-align:left;
+  padding:.9rem .55rem .35rem;
+  background:linear-gradient(180deg,transparent,rgba(8,63,118,.85));
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.foto:hover{transform:translateY(-3px)}
+.foto{transition:transform .18s ease}
+
+.estado{
+  text-align:center;color:var(--branco);font-weight:700;
+  padding:2.2rem 1rem;
+  background:rgba(255,255,255,.1);border:2px dashed rgba(255,255,255,.45);border-radius:24px;
+}
+.estado .peixe{font-size:2.4rem;display:block;margin-bottom:.4rem;animation:balancar 3s ease-in-out infinite}
+
+/* rodapé: voltar ao topo */
+.rodape{text-align:center;margin-top:3rem}
+.cta-topo{
+  font-family:var(--display);font-weight:800;
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:clamp(1rem,3.8vw,1.15rem);
+  color:var(--navy);background:var(--amarelo);
+  padding:.8rem 1.8rem;border-radius:99px;text-decoration:none;
+  border:4px solid var(--navy);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 6px 0 var(--navy), 0 16px 26px rgba(8,63,118,.35);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.cta-topo:hover{transform:translateY(3px);box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 3px 0 var(--navy), 0 10px 18px rgba(8,63,118,.3)}
+.cta-topo:focus-visible{outline:4px solid var(--branco);outline-offset:3px}
+
+/* lightbox */
+.lightbox{
+  position:fixed;inset:0;z-index:80;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(4,24,47,.92);
+  padding:1rem;
+}
+.lightbox.aberto{display:flex}
+.lightbox img{
+  max-width:min(94vw,1100px);max-height:78vh;object-fit:contain;
+  border-radius:18px;border:4px solid var(--branco);
+  box-shadow:0 24px 60px rgba(0,0,0,.6);
+}
+.lb-autor{
+  position:absolute;bottom:calc(1.2rem + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+  font-family:var(--display);font-weight:700;color:var(--navy);
+  background:var(--amarelo);border:3px solid var(--navy);border-radius:99px;
+  padding:.3rem 1.2rem;max-width:86vw;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.lb-btn{
+  position:absolute;z-index:2;
+  width:48px;height:48px;border-radius:50%;
+  font-size:1.3rem;line-height:1;
+  color:var(--navy);background:var(--branco);
+  border:3px solid var(--navy);
+  box-shadow:0 4px 0 rgba(4,32,64,.4);
+  display:flex;align-items:center;justify-content:center;
+}
+.lb-fechar{top:calc(.9rem + env(safe-area-inset-top));right:.9rem}
+.lb-ant{left:.6rem;top:50%;transform:translateY(-50%)}
+.lb-prox{right:.6rem;top:50%;transform:translateY(-50%)}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
+  z-index:90;opacity:0;pointer-events:none;
+  font-family:var(--display);font-weight:800;
+  background:var(--amarelo);color:var(--navy);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.6rem 1.4rem;font-size:1rem;text-align:center;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.5), 0 5px 0 var(--navy), 0 14px 26px rgba(8,63,118,.45);
+  transition:opacity .35s ease, transform .35s ease;
+  max-width:92vw;
+}
+.toast.mostra{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion:reduce){
+  .bolha,.topo .eyebrow,.estado .peixe{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="oceano-bg" id="oceanoBg" aria-hidden="true"></div>
+
+<div class="pagina" id="topo">
+  <a class="voltar" href="index.html">🐟 Voltar ao cardápio</a>
+
+  <header class="topo">
+    <p class="eyebrow">🎶 Click click click click click click 🎶</p>
+    <h1>📸 Fotos da Festa</h1>
+    <p>Tirou uma foto legal na festa do Enzo? Envie aqui e ela aparece na galeria de todo mundo!</p>
+  </header>
+
+  <!-- envio -->
+  <section class="card-envio" aria-label="Enviar fotos">
+    <h2>Mande suas fotos! 🦈</h2>
+    <p class="dica">Pode escolher várias de uma vez, direto da galeria do celular.</p>
+    <input class="campo-nome" id="campoNome" type="text" maxlength="40" autocomplete="name"
+           placeholder="Seu nome (ex.: Tia Ana)" aria-label="Seu nome">
+    <input id="inputFotos" type="file" accept="image/*" multiple>
+    <button class="btn-enviar" id="btnEnviar" type="button">Escolher fotos 📷</button>
+    <div class="fila" id="fila" aria-live="polite"></div>
+  </section>
+
+  <!-- galeria -->
+  <section aria-label="Galeria compartilhada">
+    <div class="galeria-cabeca">
+      <h2>🌊 Galeria dos convidados</h2>
+      <span class="contagem" id="contagem" hidden>0 fotos</span>
+      <button class="btn-atualizar" id="btnAtualizar" type="button">↺ Atualizar</button>
+    </div>
+    <div class="grade" id="grade"></div>
+    <div class="estado" id="estado">
+      <span class="peixe">🐠</span>
+      Carregando a galeria…
+    </div>
+  </section>
+
+  <footer class="rodape">
+    <a class="cta-topo" href="#topo">Voltar ao topo 🫧⬆️</a>
+  </footer>
+</div>
+
+<!-- lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto ampliada">
+  <button class="lb-btn lb-fechar" id="lbFechar" aria-label="Fechar">✕</button>
+  <button class="lb-btn lb-ant" id="lbAnt" aria-label="Foto anterior">‹</button>
+  <img id="lbImg" src="" alt="Foto da festa">
+  <button class="lb-btn lb-prox" id="lbProx" aria-label="Próxima foto">›</button>
+  <span class="lb-autor" id="lbAutor"></span>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO — só valores públicos (seguros de expor)
+   ============================================================ */
+var CLOUD_NAME = 'znbneca7';
+var UPLOAD_PRESET = 'festa_enzo';
+var TAG = 'festa-enzo';
+
+var UPLOAD_URL = 'https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/image/upload';
+var LIST_URL = 'https://res.cloudinary.com/' + CLOUD_NAME + '/image/list/' + TAG + '.json';
+var BASE_IMG = 'https://res.cloudinary.com/' + CLOUD_NAME + '/image/upload/';
+
+var $ = function (id) { return document.getElementById(id); };
+
+/* ---------- bolhas de fundo ---------- */
+(function () {
+  var bg = $('oceanoBg');
+  for (var i = 0; i < 14; i++) {
+    var b = document.createElement('div');
+    b.className = 'bolha';
+    var t = 8 + Math.random() * 20;
+    b.style.width = b.style.height = t + 'px';
+    b.style.left = Math.random() * 100 + 'vw';
+    b.style.animationDuration = (9 + Math.random() * 9) + 's';
+    b.style.animationDelay = (Math.random() * 10) + 's';
+    bg.appendChild(b);
+  }
+})();
+
+/* ---------- toast ---------- */
+var toastTimer = null;
+function toast(msg) {
+  var t = $('toast');
+  t.textContent = msg;
+  t.classList.add('mostra');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove('mostra'); }, 3200);
+}
+
+/* ---------- nome do convidado (lembrado no aparelho) ---------- */
+var campoNome = $('campoNome');
+try { campoNome.value = localStorage.getItem('festa-enzo-nome') || ''; } catch (e) {}
+campoNome.addEventListener('change', function () {
+  try { localStorage.setItem('festa-enzo-nome', campoNome.value.trim()); } catch (e) {}
+});
+
+/* ---------- comprime a foto no navegador antes de enviar ---------- */
+var MAX_LADO = 1600;
+function comprimir(file) {
+  return new Promise(function (resolve) {
+    if (!/^image\//.test(file.type) && file.type !== '') { resolve(file); return; }
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function () {
+      var w = img.naturalWidth, h = img.naturalHeight;
+      var escala = Math.min(1, MAX_LADO / Math.max(w, h));
+      var cw = Math.round(w * escala), ch = Math.round(h * escala);
+      var canvas = document.createElement('canvas');
+      canvas.width = cw; canvas.height = ch;
+      canvas.getContext('2d').drawImage(img, 0, 0, cw, ch);
+      URL.revokeObjectURL(url);
+      canvas.toBlob(function (blob) {
+        // usa a versão comprimida só se realmente ficou menor
+        if (blob && blob.size < file.size) {
+          blob.name = 'foto.jpg';
+          resolve(blob);
+        } else {
+          resolve(file);
+        }
+      }, 'image/jpeg', 0.82);
+    };
+    img.onerror = function () { URL.revokeObjectURL(url); resolve(file); };
+    img.src = url;
+  });
+}
+
+/* ---------- envio ---------- */
+var btnEnviar = $('btnEnviar');
+var inputFotos = $('inputFotos');
+var fila = $('fila');
+var enviosProntos = []; // fotos enviadas nesta visita (aparecem antes do cache da lista)
+
+btnEnviar.addEventListener('click', function () {
+  if (!campoNome.value.trim()) {
+    campoNome.focus();
+    toast('Primeiro escreva seu nome! ✏️');
+    return;
+  }
+  inputFotos.click();
+});
+
+inputFotos.addEventListener('change', function () {
+  var arquivos = Array.prototype.slice.call(inputFotos.files);
+  inputFotos.value = '';
+  if (!arquivos.length) return;
+  var nome = campoNome.value.trim().replace(/[|=]/g, ' ');
+  try { localStorage.setItem('festa-enzo-nome', nome); } catch (e) {}
+  arquivos.forEach(function (f) { enviarUma(f, nome); });
+});
+
+function enviarUma(file, nome) {
+  var item = document.createElement('div');
+  item.className = 'fila-item';
+  item.innerHTML =
+    '<img alt="">' +
+    '<div class="fila-info"><div class="fila-nome"></div>' +
+    '<div class="fila-barra"><i></i></div></div>' +
+    '<span class="fila-status">🌊</span>';
+  item.querySelector('.fila-nome').textContent = file.name || 'foto';
+  var prevUrl = URL.createObjectURL(file);
+  item.querySelector('img').src = prevUrl;
+  fila.appendChild(item);
+  var barra = item.querySelector('.fila-barra i');
+  var status = item.querySelector('.fila-status');
+
+  comprimir(file).then(function (blob) {
+    var fd = new FormData();
+    fd.append('file', blob, blob.name || file.name || 'foto.jpg');
+    fd.append('upload_preset', UPLOAD_PRESET);
+    fd.append('context', 'caption=' + nome);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', UPLOAD_URL);
+    xhr.upload.onprogress = function (e) {
+      if (e.lengthComputable) barra.style.width = Math.round(e.loaded / e.total * 100) + '%';
+    };
+    xhr.onload = function () {
+      URL.revokeObjectURL(prevUrl);
+      if (xhr.status >= 200 && xhr.status < 300) {
+        var resp = JSON.parse(xhr.responseText);
+        barra.style.width = '100%';
+        status.textContent = '✅';
+        setTimeout(function () { item.remove(); }, 2500);
+        enviosProntos.unshift({
+          public_id: resp.public_id,
+          version: resp.version,
+          format: resp.format,
+          autor: nome,
+          enviadoEm: Date.now()
+        });
+        renderizar();
+        toast('Foto na galeria! 🦈🎉');
+      } else {
+        falhou();
+      }
+    };
+    xhr.onerror = falhou;
+    function falhou() {
+      item.classList.add('erro');
+      barra.style.width = '100%';
+      status.textContent = '❌';
+      toast('Ops, essa foto não subiu. Tente de novo! 🌊');
+      setTimeout(function () { item.remove(); }, 6000);
+    }
+    xhr.send(fd);
+  });
+}
+
+/* ---------- galeria ---------- */
+var fotos = [];        // vindas da lista pública
+var listaOk = false;   // a listagem já respondeu alguma vez?
+
+function urlThumb(f) {
+  return BASE_IMG + 'c_fill,w_420,h_420,g_auto,q_auto,f_auto/v' + f.version + '/' + f.public_id + '.jpg';
+}
+function urlGrande(f) {
+  return BASE_IMG + 'c_limit,w_1600,h_1600,q_auto,f_auto/v' + f.version + '/' + f.public_id + '.jpg';
+}
+
+function carregar(manual) {
+  // cache-buster muda a cada 30s (a lista da Cloudinary tem cache de ~1 min)
+  fetch(LIST_URL + '?t=' + Math.floor(Date.now() / 30000))
+    .then(function (r) {
+      // 404 = a tag não tem nenhuma foto (galeria vazia), não é erro
+      if (r.status === 404) return { resources: [] };
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function (dados) {
+      listaOk = true;
+      // após ~2 min a lista já reflete os envios desta visita; a partir daí
+      // ela é a fonte da verdade (assim fotos apagadas no console somem daqui)
+      var agora = Date.now();
+      enviosProntos = enviosProntos.filter(function (f) {
+        return agora - f.enviadoEm < 120000;
+      });
+      fotos = (dados.resources || []).map(function (r) {
+        var autor = '';
+        if (r.context && r.context.custom && r.context.custom.caption) autor = r.context.custom.caption;
+        return { public_id: r.public_id, version: r.version, format: r.format, autor: autor };
+      });
+      renderizar();
+      if (manual) toast('Galeria atualizada! 🐟');
+    })
+    .catch(function () {
+      if (!listaOk) renderizar();
+      if (manual) toast('Não consegui atualizar agora 🌊');
+    });
+}
+
+function renderizar() {
+  var vistos = {};
+  var todas = [];
+  enviosProntos.concat(fotos).forEach(function (f) {
+    if (vistos[f.public_id]) return;
+    vistos[f.public_id] = true;
+    todas.push(f);
+  });
+  // mais recentes primeiro (version é um timestamp)
+  todas.sort(function (a, b) { return b.version - a.version; });
+
+  var grade = $('grade');
+  var estado = $('estado');
+  var contagem = $('contagem');
+
+  grade.innerHTML = '';
+  if (!todas.length) {
+    estado.hidden = false;
+    estado.innerHTML = listaOk
+      ? '<span class="peixe">🐠</span>Nenhuma foto ainda… seja o primeiro a mandar a sua!'
+      : '<span class="peixe">🐠</span>A galeria está sendo preparada… envie sua foto que ela já fica guardadinha!';
+    contagem.hidden = true;
+    return;
+  }
+  estado.hidden = true;
+  contagem.hidden = false;
+  contagem.textContent = todas.length + (todas.length === 1 ? ' foto' : ' fotos');
+
+  todas.forEach(function (f, i) {
+    var btn = document.createElement('button');
+    btn.className = 'foto';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Ampliar foto' + (f.autor ? ' de ' + f.autor : ''));
+    var img = document.createElement('img');
+    img.loading = 'lazy';
+    // foto apagada no console mas ainda no cache da lista: esconde o quadrinho
+    img.onerror = function () { btn.remove(); };
+    img.src = urlThumb(f);
+    img.alt = f.autor ? 'Foto enviada por ' + f.autor : 'Foto da festa';
+    btn.appendChild(img);
+    if (f.autor) {
+      var autor = document.createElement('span');
+      autor.className = 'autor';
+      autor.textContent = '📷 ' + f.autor;
+      btn.appendChild(autor);
+    }
+    btn.addEventListener('click', function () { abrirLightbox(i); });
+    grade.appendChild(btn);
+  });
+
+  galeriaAtual = todas;
+}
+
+/* ---------- lightbox ---------- */
+var galeriaAtual = [];
+var lbIndice = 0;
+var lightbox = $('lightbox');
+
+function abrirLightbox(i) {
+  lbIndice = i;
+  mostrarLb();
+  lightbox.classList.add('aberto');
+  document.body.style.overflow = 'hidden';
+}
+function fecharLightbox() {
+  lightbox.classList.remove('aberto');
+  document.body.style.overflow = '';
+}
+function mostrarLb() {
+  var f = galeriaAtual[lbIndice];
+  if (!f) return;
+  $('lbImg').src = urlGrande(f);
+  var autor = $('lbAutor');
+  autor.textContent = f.autor ? '📷 ' + f.autor : '📷 Festa do Enzo';
+}
+function lbAndar(passo) {
+  lbIndice = (lbIndice + passo + galeriaAtual.length) % galeriaAtual.length;
+  mostrarLb();
+}
+$('lbFechar').addEventListener('click', fecharLightbox);
+$('lbAnt').addEventListener('click', function () { lbAndar(-1); });
+$('lbProx').addEventListener('click', function () { lbAndar(1); });
+lightbox.addEventListener('click', function (e) { if (e.target === lightbox) fecharLightbox(); });
+document.addEventListener('keydown', function (e) {
+  if (!lightbox.classList.contains('aberto')) return;
+  if (e.key === 'Escape') fecharLightbox();
+  if (e.key === 'ArrowLeft') lbAndar(-1);
+  if (e.key === 'ArrowRight') lbAndar(1);
+});
+// swipe no celular
+var touchX = null;
+lightbox.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+lightbox.addEventListener('touchend', function (e) {
+  if (touchX === null) return;
+  var dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 50) lbAndar(dx > 0 ? -1 : 1);
+  touchX = null;
+}, { passive: true });
+
+/* ---------- inicialização + atualização automática ---------- */
+$('btnAtualizar').addEventListener('click', function () { carregar(true); });
+carregar();
+setInterval(carregar, 45000);
+document.addEventListener('visibilitychange', function () {
+  if (!document.hidden) carregar();
+});
+</script>
+</body>
+</html>
