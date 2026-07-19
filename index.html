@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1D93CE">
+<title>Enzo faz 3! 🦈 Cardápio da Festa — Baby Shark</title>
+<meta name="description" content="Mergulhe no cardápio da festa de 3 anos do Enzo — tema Baby Shark. Doo doo doo doo doo doo!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS — o mundo do Baby Shark's Big Show
+   ============================================================ */
+:root{
+  --ceu:#C9F3FF;
+  --agua-rasa:#7FE0F5;
+  --agua:#3FC0E8;
+  --agua-media:#1D93CE;
+  --oceano:#0F6FB5;
+  --profundo:#083F76;
+  --areia:#FBE9BF;
+  --navy:#0D3B66;
+  --amarelo:#FFD23F;
+  --laranja:#F49B33;
+  --rosa:#F26DB3;
+  --coral:#FF7FA0;
+  --azul:#2E6FD8;
+  --verde:#58C472;
+  --vermelho:#E8564A;
+  --branco:#FFFFFF;
+  --display:'Baloo 2','Arial Rounded MT Bold',system-ui,sans-serif;
+  --texto:'Nunito','Segoe UI',system-ui,sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--texto);
+  color:var(--navy);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  background:linear-gradient(180deg,
+    var(--ceu) 0%,
+    var(--agua-rasa) 5%,
+    var(--agua) 18%,
+    var(--agua-media) 40%,
+    var(--oceano) 68%,
+    var(--profundo) 100%);
+}
+img,svg{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer}
+
+/* ============================================================
+   AMBIENTE: bolhas + raios de luz
+   ============================================================ */
+.oceano-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bolha{
+  position:absolute;bottom:-70px;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, rgba(255,255,255,.85), rgba(255,255,255,.1) 58%, rgba(255,255,255,.3));
+  animation:subir linear infinite;opacity:0;
+}
+@keyframes subir{
+  0%{transform:translateY(0) translateX(0);opacity:0}
+  8%{opacity:.7}
+  92%{opacity:.55}
+  100%{transform:translateY(-110vh) translateX(5vw);opacity:0}
+}
+.raios{
+  position:absolute;inset:0 0 auto 0;height:120vh;
+  background:
+    linear-gradient(100deg, transparent 16%, rgba(255,255,255,.30) 21%, transparent 26%),
+    linear-gradient(100deg, transparent 44%, rgba(255,255,255,.22) 49%, transparent 55%),
+    linear-gradient(100deg, transparent 70%, rgba(255,255,255,.26) 75%, transparent 81%);
+  mask-image:linear-gradient(180deg,#000 25%,transparent 95%);
+  -webkit-mask-image:linear-gradient(180deg,#000 25%,transparent 95%);
+}
+
+/* ============================================================
+   HERO — a superfície do mar
+   ============================================================ */
+.hero{
+  position:relative;z-index:1;
+  min-height:100svh;
+  display:grid;place-items:center;
+  padding:2.6rem 1.2rem 5.4rem;
+}
+.hero-grade{
+  display:flex;flex-direction:column;align-items:center;gap:2rem;
+  max-width:1040px;width:100%;
+}
+.hero-texto{text-align:center;max-width:34rem}
+.hero-eyebrow{
+  display:inline-block;
+  font-family:var(--display);font-weight:700;
+  color:var(--navy);background:var(--branco);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.35rem 1.2rem;
+  font-size:clamp(.85rem,3.2vw,1.05rem);letter-spacing:.03em;
+  box-shadow:0 5px 0 rgba(13,59,102,.28);
+  animation:balancar 4.5s ease-in-out infinite;
+}
+@keyframes balancar{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.hero h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(2.5rem,10.5vw,6.4rem);
+  line-height:.95;margin:1.2rem 0 .6rem;color:var(--branco);
+  text-shadow:
+    0 .05em 0 var(--laranja),
+    0 .12em 0 rgba(13,59,102,.9),
+    0 .2em 1.6rem rgba(8,63,118,.4);
+}
+.hero h1 .tres{
+  display:inline-block;color:var(--amarelo);
+  transform:rotate(7deg) scale(1.18);
+  text-shadow:0 .05em 0 var(--coral), 0 .12em 0 rgba(13,59,102,.9);
+  animation:pulinho 2.6s ease-in-out infinite;
+}
+@keyframes pulinho{0%,100%{transform:rotate(7deg) scale(1.18)}50%{transform:rotate(7deg) scale(1.28)}}
+.hero-sub{
+  font-size:clamp(1rem,4vw,1.3rem);font-weight:800;color:var(--navy);
+  max-width:32ch;margin:0 auto 1.6rem;
+}
+.cta{
+  font-family:var(--display);font-weight:800;
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:clamp(1.1rem,4.4vw,1.3rem);
+  color:var(--navy);background:var(--amarelo);
+  padding:.95rem 2.1rem;border-radius:99px;text-decoration:none;
+  border:4px solid var(--navy);
+  box-shadow:0 6px 0 var(--navy);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.cta:hover{transform:translateY(3px);box-shadow:0 3px 0 var(--navy)}
+.cta:active{transform:translateY(5px);box-shadow:0 1px 0 var(--navy)}
+.cta:focus-visible{outline:4px solid var(--branco);outline-offset:3px}
+.cta .seta{animation:desce 1.6s ease-in-out infinite;display:inline-block}
+@keyframes desce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* retrato: Baby Shark + bolha do Enzo */
+.hero-retrato{position:relative;width:min(78vw,400px)}
+.hero-quadro{
+  width:100%;height:auto;border-radius:34px;
+  border:7px solid var(--branco);
+  box-shadow:0 24px 50px rgba(8,63,118,.45);
+  transform:rotate(-2.5deg);
+  animation:flutuar 6s ease-in-out infinite;
+}
+.hero-bolha-enzo{
+  position:absolute;bottom:-26px;left:-24px;
+  width:42%;aspect-ratio:1;
+  animation:flutuar 5s ease-in-out infinite reverse;
+}
+.hero-bolha-enzo img{
+  width:100%;height:100%;object-fit:cover;border-radius:50%;
+  border:6px solid var(--branco);
+  box-shadow:0 0 0 5px rgba(255,255,255,.35), 0 14px 30px rgba(8,63,118,.45);
+}
+.selo-3{
+  position:absolute;top:-16px;right:-14px;
+  width:clamp(70px,20vw,92px);aspect-ratio:1;border-radius:50%;
+  background:var(--amarelo);border:5px solid var(--branco);
+  display:grid;place-items:center;text-align:center;
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(.85rem,2.6vw,1rem);line-height:1.05;
+  color:var(--navy);transform:rotate(9deg);
+  box-shadow:0 10px 22px rgba(8,63,118,.4);
+  animation:balancar 3.8s ease-in-out infinite;
+}
+@keyframes flutuar{0%,100%{transform:translateY(0) rotate(-2.5deg)}50%{transform:translateY(-13px) rotate(-1.5deg)}}
+
+@media (min-width:880px){
+  .hero-grade{flex-direction:row;justify-content:space-between;gap:3rem}
+  .hero-texto{text-align:left}
+  .hero-sub{margin-left:0}
+}
+
+.onda-divisor{display:block;width:100%;height:64px;position:absolute;bottom:-2px;left:0}
+
+/* ============================================================
+   NAVEGAÇÃO GRUDADA
+   ============================================================ */
+.nav-cardapio{
+  position:sticky;top:0;z-index:50;
+  background:rgba(15,111,181,.82);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border-bottom:3px solid rgba(255,255,255,.25);
+  padding:.55rem .6rem;
+}
+.nav-trilho{
+  display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none;
+  max-width:1100px;margin:0 auto;
+  -webkit-overflow-scrolling:touch;
+}
+.nav-trilho::-webkit-scrollbar{display:none}
+.nav-chip{
+  flex:0 0 auto;
+  font-family:var(--display);font-weight:700;font-size:.86rem;
+  color:var(--branco);text-decoration:none;
+  background:rgba(255,255,255,.14);
+  border:2px solid rgba(255,255,255,.35);
+  border-radius:99px;padding:.3rem .85rem;
+  transition:background .2s ease, transform .2s ease;
+  white-space:nowrap;
+}
+.nav-chip:hover{background:rgba(255,255,255,.3);transform:translateY(-2px)}
+.nav-chip:focus-visible{outline:3px solid var(--amarelo);outline-offset:2px}
+.nav-chip--bolo{background:var(--amarelo);color:var(--navy);border-color:var(--branco)}
+
+/* ============================================================
+   CARDÁPIO — o mergulho
+   ============================================================ */
+.cardapio{
+  position:relative;z-index:1;
+  max-width:1060px;margin:0 auto;
+  padding:3.6rem 1.1rem 2.5rem;
+  display:flex;flex-direction:column;gap:2.6rem;
+}
+.cardapio-titulo{text-align:center;color:var(--branco)}
+.cardapio-titulo .mini{
+  font-family:var(--display);font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;
+  font-size:.82rem;opacity:.92;
+}
+.cardapio-titulo h2{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(2rem,8vw,3.3rem);
+  text-shadow:0 4px 0 rgba(8,63,118,.4);
+}
+
+.curso{scroll-margin-top:76px}
+.curso-card{
+  --acento:var(--azul);
+  position:relative;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:1.3rem;
+  background:var(--branco);
+  border:3px solid rgba(13,59,102,.12);
+  border-radius:34px;
+  padding:2rem 1.3rem 2.1rem;
+  box-shadow:0 18px 40px rgba(8,63,118,.3);
+  opacity:0;transform:translateY(38px) rotate(-.6deg);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.curso-card.visivel{opacity:1;transform:translateY(0) rotate(0)}
+
+.depth{
+  position:absolute;top:-15px;left:22px;
+  font-family:var(--display);font-weight:800;font-size:.88rem;
+  background:var(--navy);color:var(--branco);
+  padding:.24rem .8rem;border-radius:99px;
+  box-shadow:0 5px 12px rgba(8,63,118,.35);
+}
+
+/* vitrine do personagem */
+.curso-vitrine{position:relative;flex:0 0 auto;width:min(56vw,215px)}
+.bolha-perso{
+  width:100%;aspect-ratio:1;border-radius:50%;
+  background:var(--branco);
+  border:6px solid var(--acento);
+  box-shadow:0 0 0 5px rgba(255,255,255,.5), 0 14px 30px rgba(8,63,118,.22);
+  overflow:hidden;display:grid;place-items:center;
+  cursor:pointer;user-select:none;-webkit-user-select:none;
+  transition:transform .2s ease;
+}
+.bolha-perso img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.bolha-perso.contem img{object-fit:contain;padding:10%}
+.curso-card.visivel .bolha-perso{animation:flutua-perso 5.6s ease-in-out infinite}
+@keyframes flutua-perso{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.bolha-perso.mexe{animation:sacode .55s ease !important}
+@keyframes sacode{
+  0%,100%{transform:rotate(0) scale(1)}
+  25%{transform:rotate(-7deg) scale(1.06)}
+  55%{transform:rotate(6deg) scale(1.06)}
+  80%{transform:rotate(-3deg) scale(1.02)}
+}
+.perso-tag{
+  position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);
+  font-family:var(--display);font-weight:700;font-size:.78rem;
+  background:var(--acento);color:var(--branco);
+  padding:.2rem .75rem;border-radius:99px;white-space:nowrap;
+  box-shadow:0 4px 10px rgba(8,63,118,.3);
+}
+.prato-sticker{
+  position:absolute;top:-14px;right:-16px;
+  width:clamp(66px,18vw,84px);aspect-ratio:1;
+  background:var(--branco);border-radius:50%;
+  border:3px dashed var(--acento);
+  display:grid;place-items:center;padding:9px;
+  box-shadow:0 8px 18px rgba(8,63,118,.25);
+  transform:rotate(8deg);
+}
+.curso-card.visivel .prato-sticker{animation:balancar 5s ease-in-out infinite}
+
+/* texto do curso */
+.curso-info{max-width:56ch}
+.eyebrow{
+  font-family:var(--display);font-weight:700;
+  color:var(--acento);letter-spacing:.13em;text-transform:uppercase;
+  font-size:.78rem;
+}
+.curso-info h2{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(1.75rem,7vw,2.4rem);
+  line-height:1.05;margin:.15rem 0 .5rem;
+}
+.desc{font-size:1.02rem;font-weight:700}
+.itens{
+  list-style:none;display:flex;flex-wrap:wrap;justify-content:center;
+  gap:.42rem;margin-top:1rem;
+}
+.itens li{
+  font-size:.85rem;font-weight:800;
+  background:var(--branco);color:var(--navy);
+  border:2px solid var(--acento);
+  padding:.3rem .8rem;border-radius:99px;
+}
+.itens li.top{background:var(--amarelo);border-color:var(--laranja)}
+.nota{
+  display:inline-block;margin-top:1.1rem;
+  font-size:.85rem;font-weight:800;
+  background:rgba(13,59,102,.08);border-radius:14px;
+  padding:.5rem 1rem;
+}
+
+/* telas grandes: duas colunas alternadas */
+@media (min-width:780px){
+  .curso-card{
+    flex-direction:row;text-align:left;
+    gap:2.6rem;padding:2.4rem 2.6rem;
+  }
+  .curso:nth-of-type(even) .curso-card{flex-direction:row-reverse}
+  .curso-info{flex:1}
+  .itens{justify-content:flex-start}
+}
+
+/* --- variante: área dos papais (escura) --- */
+.curso-card--papais{background:var(--navy);border-color:rgba(255,255,255,.2);color:var(--areia)}
+.curso-card--papais h2{color:var(--amarelo)}
+.curso-card--papais .desc{color:var(--areia)}
+.curso-card--papais .itens li{background:rgba(255,255,255,.12);color:var(--areia);border-color:rgba(255,255,255,.35)}
+.curso-card--papais .nota{background:rgba(255,255,255,.12)}
+.curso-card--papais .depth{background:var(--amarelo);color:var(--navy)}
+.curso-card--papais .bolha-perso,.curso-card--papais .prato-sticker{background:#12507F}
+
+/* --- variante: BOLO, o gran finale --- */
+.curso-card--bolo{
+  flex-direction:column !important;text-align:center;
+  background:linear-gradient(165deg,#FFF8E3,#FFE9AE);
+  border:5px dashed var(--laranja);
+}
+.curso-card--bolo .itens{justify-content:center}
+.curso-card--bolo h2{font-size:clamp(2rem,8.5vw,3rem)}
+.curso-card--bolo .curso-info{max-width:60ch}
+.faixa-parabens{
+  font-family:var(--display);font-weight:800;
+  display:inline-block;
+  background:var(--rosa);color:var(--branco);
+  padding:.35rem 1.3rem;border-radius:99px;
+  transform:rotate(-2deg);
+  box-shadow:0 6px 0 rgba(13,59,102,.25);
+  font-size:clamp(.95rem,3.6vw,1.15rem);
+  margin-bottom:1rem;
+}
+.velas{display:flex;gap:14px;justify-content:center;margin:.8rem 0 .4rem}
+.vela{width:14px;height:52px;border-radius:7px;position:relative}
+.vela:nth-child(1){background:var(--azul)}
+.vela:nth-child(2){background:var(--rosa);height:62px}
+.vela:nth-child(3){background:var(--verde)}
+.vela::before{ /* pavio */
+  content:"";position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  width:3px;height:9px;background:var(--navy);border-radius:2px;
+}
+.vela::after{ /* chama */
+  content:"";position:absolute;top:-26px;left:50%;transform:translateX(-50%) scale(0);
+  width:16px;height:22px;
+  background:radial-gradient(circle at 50% 72%, #FFF3B0 28%, var(--laranja) 62%, transparent 70%);
+  border-radius:50% 50% 50% 50% / 62% 62% 38% 38%;
+  transition:transform .5s ease .3s;
+}
+.festejar .vela::after{transform:translateX(-50%) scale(1);animation:tremula 1.1s ease-in-out infinite alternate}
+.festejar .vela:nth-child(2)::after{animation-delay:.25s}
+.festejar .vela:nth-child(3)::after{animation-delay:.5s}
+@keyframes tremula{from{transform:translateX(-50%) scale(1) rotate(-4deg)}to{transform:translateX(-52%) scale(1.12) rotate(4deg)}}
+
+/* ============================================================
+   PEIXINHOS ESCONDIDOS (caça)
+   ============================================================ */
+.peixinho{
+  position:absolute;width:52px;height:40px;
+  background:none;border:none;padding:0;
+  z-index:3;
+  filter:drop-shadow(0 4px 8px rgba(8,63,118,.35));
+  animation:nada-peixe 4.2s ease-in-out infinite;
+  transition:transform .35s ease, opacity .45s ease;
+}
+@keyframes nada-peixe{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-8px) rotate(4deg)}}
+.peixinho:hover{transform:scale(1.15)}
+.peixinho:focus-visible{outline:3px solid var(--amarelo);outline-offset:3px;border-radius:50%}
+.peixinho.achado{transform:scale(0);opacity:0;pointer-events:none}
+.contador-peixes{
+  position:fixed;bottom:14px;left:12px;z-index:60;
+  display:flex;align-items:center;gap:.45rem;
+  font-family:var(--display);font-weight:800;font-size:.92rem;
+  background:rgba(13,59,102,.85);color:var(--branco);
+  border:2px solid rgba(255,255,255,.4);
+  border-radius:99px;padding:.34rem .9rem;
+  backdrop-filter:blur(4px);
+  box-shadow:0 8px 18px rgba(8,63,118,.4);
+}
+.contador-peixes svg{width:26px;height:20px}
+
+/* ============================================================
+   BOTÃO DE MÚSICA
+   ============================================================ */
+.btn-musica{
+  position:fixed;bottom:14px;right:12px;z-index:60;
+  width:58px;height:58px;border-radius:50%;
+  background:var(--amarelo);border:4px solid var(--navy);
+  box-shadow:0 6px 0 var(--navy), 0 12px 24px rgba(8,63,118,.4);
+  display:grid;place-items:center;
+  font-size:1.5rem;line-height:1;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn-musica:hover{transform:translateY(2px);box-shadow:0 4px 0 var(--navy),0 10px 20px rgba(8,63,118,.4)}
+.btn-musica:focus-visible{outline:4px solid var(--branco);outline-offset:3px}
+.btn-musica.tocando{animation:bate 0.9s ease-in-out infinite}
+@keyframes bate{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.1) rotate(4deg)}}
+
+/* ============================================================
+   TRILHA DE MERGULHO (telas grandes)
+   ============================================================ */
+.trilha{display:none}
+@media (min-width:1180px){
+  .trilha{
+    position:fixed;right:26px;top:50%;transform:translateY(-50%);
+    z-index:40;display:flex;flex-direction:column;align-items:center;gap:8px;
+  }
+  .trilha-linha{
+    position:relative;width:5px;height:56vh;border-radius:5px;
+    background:repeating-linear-gradient(180deg, rgba(255,255,255,.65) 0 8px, transparent 8px 18px);
+  }
+  .trilha-nadador{
+    position:absolute;left:50%;top:0;transform:translate(-50%,-50%) rotate(18deg);
+    width:54px;max-width:none;height:auto;
+    filter:drop-shadow(0 4px 8px rgba(0,0,0,.3));
+    transition:top .18s ease-out;
+  }
+  .trilha-label{
+    font-family:var(--display);font-weight:800;font-size:.82rem;color:var(--branco);
+    background:rgba(13,59,102,.6);padding:.16rem .6rem;border-radius:99px;
+  }
+}
+
+/* ============================================================
+   ENCERRAMENTO + FUNDO DO MAR
+   ============================================================ */
+.fundo-mar{
+  position:relative;z-index:1;text-align:center;color:var(--branco);
+  padding:3.2rem 1.3rem 5rem;
+}
+.fundo-mar .cenario{width:min(430px,82%);margin:0 auto 1.4rem;opacity:.95}
+.fundo-mar h2{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(1.5rem,6.5vw,2.4rem);margin-bottom:.5rem;
+}
+.fundo-mar p{max-width:46ch;margin:0 auto;font-weight:700;opacity:.94}
+.fundo-mar .doo{
+  font-family:var(--display);font-weight:800;color:var(--amarelo);
+  font-size:1.1rem;letter-spacing:.06em;margin-top:1.4rem;
+}
+.fundo-mar .credito{font-size:.72rem;opacity:.55;margin-top:2rem;font-weight:400}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(20px);
+  z-index:70;opacity:0;pointer-events:none;
+  font-family:var(--display);font-weight:800;
+  background:var(--amarelo);color:var(--navy);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.6rem 1.4rem;font-size:1rem;text-align:center;
+  box-shadow:0 10px 26px rgba(8,63,118,.45);
+  transition:opacity .35s ease, transform .35s ease;
+  max-width:92vw;
+}
+.toast.mostra{opacity:1;transform:translateX(-50%) translateY(0)}
+
+#confete{position:fixed;inset:0;z-index:65;pointer-events:none}
+
+/* ============================================================
+   MOVIMENTO REDUZIDO
+   ============================================================ */
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+  .curso-card{opacity:1;transform:none}
+  .bolha{display:none}
+  .vela::after{transform:translateX(-50%) scale(1)}
+}
+/* modo estático (?fotos): usado para tirar fotos da página */
+.sem-animacao *{animation:none !important;transition:none !important}
+.sem-animacao .curso-card{opacity:1;transform:none}
+.sem-animacao .vela::after{transform:translateX(-50%) scale(1)}
+</style>
+</head>
+<body>
+
+<div class="oceano-bg" id="oceanoBg" aria-hidden="true"><div class="raios"></div></div>
+
+<!-- ==================== HERO ==================== -->
+<header class="hero">
+  <div class="hero-grade">
+    <div class="hero-texto">
+      <p class="hero-eyebrow">🎶 Doo doo doo doo doo doo 🎶</p>
+      <h1>Enzo faz <span class="tres">3!</span></h1>
+      <p class="hero-sub">Mergulhe com a família tubarão no cardápio da festa mais esperada do oceano.</p>
+      <a class="cta" href="#entrada">Mergulhar no cardápio <span class="seta">🤿</span></a>
+    </div>
+    <div class="hero-retrato">
+      <img class="hero-quadro" src="img/hero-baby.jpg" alt="Baby Shark e o peixinho William nadando no fundo do mar" width="900" height="1029">
+      <div class="hero-bolha-enzo">
+        <img src="img/enzo.jpeg" alt="Enzo, o aniversariante, sorrindo">
+      </div>
+      <span class="selo-3">3<br>anos</span>
+    </div>
+  </div>
+  <svg class="onda-divisor" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,40 C180,70 360,10 540,35 C720,60 900,15 1080,38 C1260,60 1380,30 1440,42 L1440,70 L0,70 Z" fill="rgba(255,255,255,.14)"/>
+    <path d="M0,52 C200,25 420,62 640,45 C860,28 1080,60 1440,38 L1440,70 L0,70 Z" fill="rgba(255,255,255,.10)"/>
+  </svg>
+</header>
+
+<!-- ==================== NAVEGAÇÃO ==================== -->
+<nav class="nav-cardapio" aria-label="Categorias do cardápio">
+  <div class="nav-trilho">
+    <a class="nav-chip" href="#entrada">Entrada</a>
+    <a class="nav-chip" href="#salgados">Salgados</a>
+    <a class="nav-chip" href="#fingerfoods">Finger Foods</a>
+    <a class="nav-chip" href="#lanchonete">Lanchonete</a>
+    <a class="nav-chip" href="#picnic">Pic-nic Kids</a>
+    <a class="nav-chip" href="#salada">Salada</a>
+    <a class="nav-chip" href="#pratoquente">Prato Quente</a>
+    <a class="nav-chip" href="#sobremesas">Sobremesas</a>
+    <a class="nav-chip" href="#docinhos">Docinhos</a>
+    <a class="nav-chip" href="#bebidas">Bebidas</a>
+    <a class="nav-chip" href="#papais">Papais</a>
+    <a class="nav-chip nav-chip--bolo" href="#bolo">🎂 Bolo</a>
+    <a class="nav-chip" href="#tchau">Tchau!</a>
+  </div>
+</nav>
+
+<!-- ==================== CARDÁPIO ==================== -->
+<main class="cardapio">
+  <div class="cardapio-titulo">
+    <p class="mini">Quanto mais fundo, mais gostoso</p>
+    <h2>O cardápio da festa 🌊</h2>
+  </div>
+
+  <!-- ENTRADA — William -->
+  <article class="curso" id="entrada">
+    <div class="curso-card" style="--acento:var(--laranja)">
+      <span class="depth">−2 m</span>
+      <div class="curso-vitrine">
+        <div class="bolha-perso contem" data-perso><img src="img/william.png" alt="William, o peixe-piloto"></div>
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <path d="M40 66 L100 66 L91 122 L49 122 Z" fill="#FF7FA0" stroke="#C74767" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M44 76 L96 76 L94 88 L46 88 Z" fill="rgba(255,255,255,.4)"/>
+            <rect x="50" y="22" width="13" height="52" rx="6.5" fill="#FFD23F" stroke="#C99414" stroke-width="4" transform="rotate(-8 56 48)"/>
+            <rect x="64" y="16" width="13" height="58" rx="6.5" fill="#FFDE6A" stroke="#C99414" stroke-width="4"/>
+            <rect x="78" y="22" width="13" height="52" rx="6.5" fill="#FFD23F" stroke="#C99414" stroke-width="4" transform="rotate(8 84 48)"/>
+          </svg>
+        </div>
+        <span class="perso-tag">William abre o caminho</span>
+      </div>
+      <div class="curso-info">
+        <p class="eyebrow">Para abrir o apetite</p>
+        <h2>Entrada</h2>
+        <p class="desc">Mandioca com carne seca ao cream cheese — a primeira braçada desse mergulho delicioso.</p>
+      </div>
+      <button class="peixinho" data-peixe style="top:-18px;left:8%" aria-label="Peixinho escondido! Toque para capturar">
+        <svg viewBox="0 0 62 46" aria-hidden="true"><path d="M8 23 L2 10 Q14 12 20 18 Q30 8 44 12 Q58 17 58 26 Q52 38 38 38 Q26 38 19 30 Q13 35 3 36 Z" fill="#F49B33" stroke="#B5641A" stroke-width="3" stroke-linejoin="round"/><circle cx="44" cy="21" r="6" fill="#fff"/><circle cx="46" cy="22" r="3" fill="#123"/></svg>
+      </button>
+    </div>
+  </article>
+
+  <!-- SALGADOS — Papai -->
+  <article class="curso" id="salgados">
+    <div class="curso-card" style="--acento:var(--azul)">
+      <span class="depth">−5 m</span>
+      <div class="curso-vitrine">
+        <div class="bolha-perso" data-perso><img src="img/papai-full.jpg" alt="Papai Tubarão"></div>
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <path d="M70 16 C48 44 34 74 36 98 C38 114 52 124 70 124 C88 124 102 114 104 98 C106 74 92 44 70 16 Z" fill="#F5A623" stroke="#B06E0E" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M40 102 C48 112 58 118 70 118 C82 118 92 112 100 102" fill="none" stroke="#B06E0E" stroke-width="5" stroke-linecap="round"/>
+            <path d="M60 34 C54 44 49 54 47 64" stroke="rgba(255,255,255,.6)" stroke-width="6" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <span class="perso-tag">Papai Tubarão</span>
+      </div>
+      <div class="curso-info">
+        <p class="eyebrow">Os queridinhos da festa</p>
+        <h2>Salgados</h2>
+        <p class="desc">Um cardume inteiro de salgadinhos fresquinhos, nadando em círculos a festa inteira:</p>
+        <ul class="itens">
+          <li class="top">Coxinha de frango</li>
+          <li>Bolinha de queijo</li>
+          <li>Quiche de peito de peru</li>
+          <li>Croquete de carne</li>
+          <li>Esfiha de carne</li>
+          <li>Esfiha de calabresa</li>
+          <li>Empada de palmito</li>
+          <li>Pastel de brócolis</li>
+          <li>Pastel de frango com queijo</li>
+          <li>Bolinha de mandioquinha com provolone</li>
+          <li>Kibe de carne</li>
+          <li>Espetinho de frango</li>
+          <li>Mini pizza</li>
+          <li>Tartelete de catupiry com tomate seco e rúcula</li>
+          <li>Risolis de presunto e queijo</li>
+          <li>Risolis de palmito</li>
+          <li>Croquete de bacalhau</li>
+          <li>Bolinho de carne seca com abóbora</li>
+          <li>Crespim de milho com queijo</li>
+          <li>Bolinho de pernil</li>
+          <li>Bolinho de cheddar com bacon</li>
+          <li>Bolinha de catupiry com damasco</li>
+          <li>Bolinha de cenoura com gorgonzola</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- FINGER FOODS — Mamãe -->
+  <article class="curso" id="fingerfoods">
+    <div class="curso-card" style="--acento:var(--rosa)">
+      <span class="depth">−8 m</span>
+      <div class="curso-vitrine">
+        <div class="bolha-perso" data-perso><img src="img/mamae-full.jpg" alt="Mamãe Tubarão"></div>
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <line x1="70" y1="14" x2="70" y2="126" stroke="#8A5A33" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="70" cy="44" r="17" fill="#E8564A" stroke="#A72F25" stroke-width="4"/>
+            <path d="M60 36 Q66 30 74 32" stroke="rgba(255,255,255,.55)" stroke-width="4" stroke-linecap="round" fill="none"/>
+            <circle cx="70" cy="78" r="16" fill="#FFF6E0" stroke="#D9BE8C" stroke-width="4"/>
+            <circle cx="70" cy="110" r="15" fill="#58C472" stroke="#2E8A47" stroke-width="4"/>
+          </svg>
+        </div>
+        <span class="perso-tag">Mamãe Tubarão</span>
+      </div>
+      <div class="curso-info">
+        <p class="eyebrow">Petiscos do capitão</p>
+        <h2>Finger Foods</h2>
+        <p class="desc">Mordidinhas gourmet para comer com a mão, direto do fundo do mar:</p>
+        <ul class="itens">
+          <li class="top">Camarão crocante com maionese de wasabi</li>
+          <li>Batatinhas com cheddar e bacon</li>
+          <li>Espetinho caprese com molho pesto</li>
+          <li>Queijo coalho com calabresa e melado de cana</li>
+          <li>Mini kafta ao molho tahine</li>
+          <li>Berinjela com tomate seco e iogurte de hortelã</li>
+          <li>Bolinho de feijoada com molho de pimenta</li>
+          <li>Mini dog gourmet com barbecue e batata palha</li>
+          <li>Dadinho de tapioca com geleia de jalapeño</li>
+          <li>Coxinha creme com maionese de fumaça</li>
+        </ul>
+      </div>
+      <button class="peixinho" data-peixe style="bottom:-16px;right:6%" aria-label="Peixinho escondido! Toque para capturar">
+        <svg viewBox="0 0 62 46" aria-hidden="true"><path d="M8 23 L2 10 Q14 12 20 18 Q30 8 44 12 Q58 17 58 26 Q52 38 38 38 Q26 38 19 30 Q13 35 3 36 Z" fill="#58C472" stroke="#2E8A47" stroke-width="3" stroke-linejoin="round"/><circle cx="44" cy="21" r="6" fill="#fff"/><circle cx="46" cy="22" r="3" fill="#123"/></svg>
+      </button>
+    </div>
+  </article>
+
+  <!-- LANCHONETE — Baby clássico -->
+  <article class="curso" id="lanchonete">
+    <div class="curso-card" style="--acento:var(--amarelo)">
+      <span class="depth">−11 m</span>
+      <div class="curso-vitrine">
+        <div class="bolha-perso contem" data-perso><img src="img/brooklyn2.png" alt="Baby Shark"></div>
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <path d="M32 64 C32 34 108 34 108 64 Z" fill="#F5A623" stroke="#B06E0E" stroke-width="4" stroke-linejoin="round"/>
+            <ellipse cx="56" cy="48" rx="4" ry="2.6" fill="rgba(255,255,255,.85)"/>
+            <ellipse cx="74" cy="43" rx="4" ry="2.6" fill="rgba(255,255,255,.85)"/>
+            <ellipse cx="90" cy="49" rx="4" ry="2.6" fill="rgba(255,255,255,.85)"/>
+            <path d="M34 64 L106 64 L106 68 L98 78 L88 68 L78 78 L68 68 L58 78 L48 68 L42 78 L34 68 Z" fill="#58C472" stroke="#2E8A47" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="34" y="76" width="72" height="14" rx="7" fill="#8C5A3B" stroke="#5E3A22" stroke-width="4"/>
+            <path d="M36 94 L104 94 C104 110 36 110 36 94 Z" fill="#F5A623" stroke="#B06E0E" stroke-width="4" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="perso-tag">Baby Shark</span>
+      </div>
+      <div class="curso-info">
+        <p class="eyebrow">Cantinho da lanchonete</p>
+        <h2>Lanchonete</h2>
+        <p class="desc">Uma lanchonete submarina completa, para todas as idades:</p>
+        <ul class="itens">
+          <li class="top">X-burguer</li>
+          <li>Crepe de chocolate com morango</li>
+          <li>Crepe de presunto e queijo</li>
+          <li>Pipoca</li>
+          <li>Suco de uva</li>
+          <li>Suco de laranja</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- PIC-NIC — Baby com microfone -->
+  <article class="curso" id="picnic">
+    <div class="curso-card" style="--acento:var(--coral)">
+      <span class="depth">−14 m</span>
+      <div class="curso-vitrine">
+        <div class="bolha-perso contem" data-perso><img src="img/babyshark.png" alt="Baby Shark cantando no microfone"></div>
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <path d="M34 62 L106 62 L98 118 L42 118 Z" fill="#B07B4F" stroke="#7A4E2A" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M34 62 L106 62 L102 76 L38 76 Z" fill="#8A5A33"/>
+            <path d="M46 62 C46 30 94 30 94 62" fill="none" stroke="#7A4E2A" stroke-width="7" stroke-linecap="round"/>
+            <path d="M42 88 L98 88 M46 102 L94 102 M56 76 L54 118 M70 76 L70 118 M84 76 L86 118" stroke="rgba(255,255,255,.35)" stroke-width="4"/>
+          </svg>
+        </div>
+        <span class="perso-tag">Show dos pequenos</span>
+      </div>
+      <div class="curso-info">
+        <p class="eyebrow">Cardápio dos pequenos</p>
+        <h2>Pic-nic Kids</h2>
+        <p class="desc">Feito sob medida para os bebês tubarões da festa:</p>
+        <ul class="itens">
+          <li class="top">Batata smile</li>
+          <li>Coxinha</li>
+          <li>Bolinha de queijo</li>
+          <li>Pão de queijo</li>
+          <li>Enroladinho de salsicha</li>
+          <li>Pipoca</li>
+          <li>Suco de uva</li>
+          <li>Suco de laranja</li>
+        </ul>
+      </div>
+      <button class="peixinho" data-peixe style="top:34%;right:-14px" aria-label="Peixinho escondido! Toque para capturar">
+        <svg viewBox="0 0 62 46" aria-hidden="true"><path d="M8 23 L2 10 Q14 12 20 18 Q30 8 44 12 Q58 17 58 26 Q52 38 38 38 Q26 38 19 30 Q13 35 3 36 Z" fill="#F26DB3" stroke="#B03A7E" stroke-width="3" stroke-linejoin="round"/><circle cx="44" cy="21" r="6" fill="#fff"/><circle cx="46" cy="22" r="3" fill="#123"/></svg>
+      </button>
+    </div>
+  </article>
+
+  <!-- SALADA — Vovô -->
+  <article class="curso" id="salada">
+    <div class="curso-card" style="--acento:var(--verde)">
+      <span class="depth">−17 m</span>
+      <div class="curso-vitrine">
+        <div class="bolha-perso" data-perso><img src="img/vovo.jpg" alt="Vovô Tubarão"></div>
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <ellipse cx="52" cy="62" rx="16" ry="12" fill="#58C472" stroke="#2E8A47" stroke-width="4"/>
+            <ellipse cx="76" cy="54" rx="18" ry="13" fill="#7BD694" stroke="#2E8A47" stroke-width="4"/>
+            <ellipse cx="96" cy="64" rx="13" ry="10" fill="#46B25F" stroke="#2E8A47" stroke-width="4"/>
+            <rect x="56" y="64" width="30" height="6" rx="3" fill="#F49B33" stroke="#B5641A" stroke-width="3" transform="rotate(-10 71 67)"/>
+            <path d="M30 72 L110 72 C110 102 92 118 70 118 C48 118 30 102 30 72 Z" fill="#3FC0E8" stroke="#1875A8" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M32 72 L108 72 L106 82 L34 82 Z" fill="rgba(255,255,255,.35)"/>
+          </svg>
+        </div>
+        <span class="perso-tag">Vovô Tubarão</span>
+      </div>
+      <div class="curso-info">
+        <p class="eyebrow">Frescor do mar</p>
+        <h2>Salada</h2>
+        <p class="desc">Mix de folhas verdes, manga e cenoura ralada com molho de mostarda e mel — leve como uma água-viva.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- PRATO QUENTE — Mamãe close -->
+  <article class="curso" id="pratoquente">
+    <div class="curso-card" style="--acento:var(--vermelho)">
+      <span class="depth">−20 m</span>
+      <div class="curso-vitrine">
+        <div class="bolha-perso" data-perso><img src="img/mamae.jpg" alt="Mamãe Tubarão sorrindo"></div>
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <path d="M56 22 C51 32 61 36 56 46 M84 18 C79 28 89 32 84 42" stroke="#9AB6CE" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <ellipse cx="70" cy="96" rx="52" ry="16" fill="#fff" stroke="#9AB6CE" stroke-width="4"/>
+            <circle cx="48" cy="80" r="18" fill="#FFE9B8" stroke="#D19E36" stroke-width="4"/>
+            <circle cx="92" cy="80" r="18" fill="#FFE9B8" stroke="#D19E36" stroke-width="4"/>
+            <circle cx="70" cy="72" r="20" fill="#FFF1CC" stroke="#D19E36" stroke-width="4"/>
+            <path d="M34 76 Q70 52 106 76" stroke="#E8564A" stroke-width="8" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <span class="perso-tag">Receita da Mamãe</span>
+      </div>
+      <div class="curso-info">
+        <p class="eyebrow">O prato principal</p>
+        <h2>Prato Quente</h2>
+        <p class="desc">Rondelli misto e quatro queijos, acompanhado de molho branco, molho ao sugo e parmesão ralado gratinado. O tesouro quente do navio pirata!</p>
+      </div>
+      <button class="peixinho" data-peixe style="bottom:-14px;left:12%" aria-label="Peixinho escondido! Toque para capturar">
+        <svg viewBox="0 0 62 46" aria-hidden="true"><path d="M8 23 L2 10 Q14 12 20 18 Q30 8 44 12 Q58 17 58 26 Q52 38 38 38 Q26 38 19 30 Q13 35 3 36 Z" fill="#2E6FD8" stroke="#1B4693" stroke-width="3" stroke-linejoin="round"/><circle cx="44" cy="21" r="6" fill="#fff"/><circle cx="46" cy="22" r="3" fill="#123"/></svg>
+      </button>
+    </div>
+  </article>
+
+  <!-- SOBREMESAS — Vovó (série) -->
+  <article class="curso" id="sobremesas">
+    <div class="curso-card" style="--acento:var(--laranja)">
+      <span class="depth">−24 m</span>
+      <div class="curso-vitrine">
+        <div class="bolha-perso" data-perso><img src="img/vovoa-show.png" alt="Vovó Tubarão"></div>
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <rect x="42" y="16" width="13" height="62" rx="6.5" fill="#D89720" stroke="#8F5E0C" stroke-width="4" transform="rotate(-9 48 47)"/>
+            <rect x="63" y="10" width="13" height="68" rx="6.5" fill="#E0A32E" stroke="#8F5E0C" stroke-width="4"/>
+            <rect x="84" y="16" width="13" height="62" rx="6.5" fill="#D89720" stroke="#8F5E0C" stroke-width="4" transform="rotate(9 90 47)"/>
+            <path d="M40 88 L100 88 L92 124 L48 124 Z" fill="#FF7FA0" stroke="#C74767" stroke-width="4" stroke-linejoin="round"/>
+            <ellipse cx="70" cy="88" rx="31" ry="8" fill="#6B4226" stroke="#43290F" stroke-width="3"/>
+          </svg>
+        </div>
+        <span class="perso-tag">Doces da Vovó</span>
+      </div>
+      <div class="curso-info">
+        <p class="eyebrow">A recompensa doce</p>
+        <h2>Sobremesas</h2>
+        <p class="desc">Depois do mergulho salgado, a maré vira e fica doce:</p>
+        <ul class="itens">
+          <li class="top">Churros gourmet com doce de leite e paçoca</li>
+          <li>Pastelzinho de chocolate</li>
+          <li>Pudim de leite condensado com chantilly</li>
+          <li>Carrinho de sorvete com sabores variados</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- DOCINHOS — Vovó clássica -->
+  <article class="curso" id="docinhos">
+    <div class="curso-card" style="--acento:var(--rosa)">
+      <span class="depth">−28 m</span>
+      <div class="curso-vitrine">
+        <div class="bolha-perso contem" data-perso><img src="img/vovoa2.jpg" alt="Vovó Tubarão de óculos"></div>
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <circle cx="70" cy="66" r="34" fill="#6B4226" stroke="#43290F" stroke-width="5"/>
+            <path d="M50 52 l10 4 M64 42 l8 -3 M82 50 l9 4 M56 72 l9 4 M78 72 l10 -3 M68 60 l8 3" stroke="#43290F" stroke-width="4" stroke-linecap="round"/>
+            <path d="M42 92 L98 92 L90 124 L50 124 Z" fill="#FF7FA0" stroke="#C74767" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M56 94 L54 122 M70 94 L70 122 M84 94 L86 122" stroke="rgba(255,255,255,.4)" stroke-width="4"/>
+          </svg>
+        </div>
+        <span class="perso-tag">Mesa da Vovó</span>
+      </div>
+      <div class="curso-info">
+        <p class="eyebrow">Mesa de doces</p>
+        <h2>Docinhos</h2>
+        <p class="desc">O recife mais doce do oceano, colorido de brigadeiro:</p>
+        <ul class="itens">
+          <li class="top">Brigadeiro</li>
+          <li>Beijinho</li>
+          <li>Bicho de pé</li>
+          <li>Brigadeiro Nescauball</li>
+          <li>Leite Ninho</li>
+          <li>Ouro branco crocante</li>
+          <li>Sensação</li>
+          <li>Cajuzinho</li>
+          <li>Negresco</li>
+          <li>Docinho de limão</li>
+        </ul>
+      </div>
+      <button class="peixinho" data-peixe style="top:-16px;right:14%" aria-label="Peixinho escondido! Toque para capturar">
+        <svg viewBox="0 0 62 46" aria-hidden="true"><path d="M8 23 L2 10 Q14 12 20 18 Q30 8 44 12 Q58 17 58 26 Q52 38 38 38 Q26 38 19 30 Q13 35 3 36 Z" fill="#FFD23F" stroke="#C99414" stroke-width="3" stroke-linejoin="round"/><circle cx="44" cy="21" r="6" fill="#fff"/><circle cx="46" cy="22" r="3" fill="#123"/></svg>
+      </button>
+    </div>
+  </article>
+
+  <!-- BEBIDAS — GO GO GO -->
+  <article class="curso" id="bebidas">
+    <div class="curso-card" style="--acento:var(--azul)">
+      <span class="depth">−32 m</span>
+      <div class="curso-vitrine">
+        <div class="bolha-perso contem" data-perso><img src="img/familia-go.png" alt="Família tubarão comemorando: go, go, go!"></div>
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <path d="M82 14 L96 20 L80 62 L68 56 Z" fill="#FF7FA0" stroke="#C74767" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M44 42 L100 42 L92 124 L52 124 Z" fill="rgba(200,236,250,.7)" stroke="#1875A8" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M48 66 L96 66 L91 118 L53 118 Z" fill="#F49B33"/>
+            <circle cx="62" cy="84" r="4" fill="rgba(255,255,255,.75)"/>
+            <circle cx="76" cy="102" r="3.4" fill="rgba(255,255,255,.75)"/>
+            <circle cx="42" cy="40" r="13" fill="#F49B33" stroke="#B5641A" stroke-width="4"/>
+            <path d="M42 29 L42 51 M31 40 L53 40" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="perso-tag">Go, go, go!</span>
+      </div>
+      <div class="curso-info">
+        <p class="eyebrow">Para matar a sede</p>
+        <h2>Bebidas</h2>
+        <p class="desc">Tem onda de refresco para todo mundo:</p>
+        <ul class="itens">
+          <li class="top">Suco de uva</li>
+          <li class="top">Suco de laranja</li>
+          <li>Refrigerante normal</li>
+          <li>Refrigerante zero</li>
+          <li>Água mineral</li>
+          <li>Água com gás</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- PAPAIS — adultos -->
+  <article class="curso" id="papais">
+    <div class="curso-card curso-card--papais" style="--acento:var(--amarelo)">
+      <span class="depth">−34 m</span>
+      <div class="curso-vitrine">
+        <div class="bolha-perso" data-perso><img src="img/papai.jpg" alt="Papai Tubarão sorrindo"></div>
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <path d="M76 68 C92 68 92 96 76 96" stroke="#B06E0E" stroke-width="8" fill="none"/>
+            <rect x="34" y="52" width="46" height="62" rx="8" fill="#FFD23F" stroke="#B06E0E" stroke-width="5"/>
+            <rect x="42" y="62" width="8" height="42" rx="4" fill="rgba(255,255,255,.45)"/>
+            <path d="M30 44 L84 44 L84 54 L30 54 Z" fill="#fff" stroke="#C9D6E2" stroke-width="3" rx="5"/>
+            <circle cx="40" cy="40" r="8" fill="#fff"/><circle cx="56" cy="35" r="10" fill="#fff"/><circle cx="72" cy="40" r="8" fill="#fff"/>
+            <path d="M92 56 L120 56 C120 74 92 74 92 56 Z" fill="rgba(226,120,164,.9)" stroke="#8E2B5B" stroke-width="4"/>
+            <line x1="106" y1="73" x2="106" y2="100" stroke="#8E2B5B" stroke-width="4"/>
+            <path d="M96 102 L116 102" stroke="#8E2B5B" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="perso-tag">Área dos adultos</span>
+      </div>
+      <div class="curso-info">
+        <p class="eyebrow">Enquanto os pequenos nadam</p>
+        <h2>Papai Tubarão 🦈</h2>
+        <p class="desc">Os grandes também brindam o aniversariante:</p>
+        <ul class="itens">
+          <li>Cerveja gelada</li>
+          <li>Vinho tinto seco</li>
+        </ul>
+        <span class="nota">🔞 Exclusivo para os papais e mamães tubarão — maiores de 18 anos.</span>
+      </div>
+      <button class="peixinho" data-peixe style="bottom:-14px;right:10%" aria-label="Peixinho escondido! Toque para capturar">
+        <svg viewBox="0 0 62 46" aria-hidden="true"><path d="M8 23 L2 10 Q14 12 20 18 Q30 8 44 12 Q58 17 58 26 Q52 38 38 38 Q26 38 19 30 Q13 35 3 36 Z" fill="#7FE0F5" stroke="#1875A8" stroke-width="3" stroke-linejoin="round"/><circle cx="44" cy="21" r="6" fill="#fff"/><circle cx="46" cy="22" r="3" fill="#123"/></svg>
+      </button>
+    </div>
+  </article>
+
+  <!-- BOLO — gran finale -->
+  <article class="curso" id="bolo">
+    <div class="curso-card curso-card--bolo" style="--acento:var(--laranja)">
+      <span class="depth">−38 m</span>
+      <div class="curso-vitrine">
+        <div class="bolha-perso" data-perso><img src="img/enzo.jpeg" alt="Enzo, o aniversariante"></div>
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <ellipse cx="70" cy="122" rx="52" ry="9" fill="#fff" stroke="#C9D6E2" stroke-width="3"/>
+            <rect x="46" y="62" width="48" height="28" rx="7" fill="#FFE9B8" stroke="#D19E36" stroke-width="4"/>
+            <rect x="34" y="88" width="72" height="32" rx="8" fill="#FF7FA0" stroke="#C74767" stroke-width="4"/>
+            <path d="M34 92 C40 106 46 106 52 92 C58 106 64 106 70 92 C76 106 82 106 88 92 C94 106 100 106 106 94 L106 88 L34 88 Z" fill="#FFE9B8"/>
+            <rect x="52" y="42" width="6" height="22" rx="3" fill="#2E6FD8"/>
+            <rect x="67" y="36" width="6" height="28" rx="3" fill="#F26DB3"/>
+            <rect x="82" y="42" width="6" height="22" rx="3" fill="#58C472"/>
+            <ellipse cx="55" cy="35" rx="4.5" ry="7" fill="#F49B33"/>
+            <ellipse cx="70" cy="29" rx="4.5" ry="7" fill="#F49B33"/>
+            <ellipse cx="85" cy="35" rx="4.5" ry="7" fill="#F49B33"/>
+          </svg>
+        </div>
+        <span class="perso-tag">O aniversariante!</span>
+      </div>
+      <div class="curso-info">
+        <span class="faixa-parabens">🎉 Parabéns, Enzo! 🎉</span>
+        <p class="eyebrow">A hora do parabéns</p>
+        <h2>O Bolo do Enzo 🎂</h2>
+        <div class="velas" aria-hidden="true"><span class="vela"></span><span class="vela"></span><span class="vela"></span></div>
+        <p class="desc">Bolo sabor <strong>Belga</strong> — três velinhas, um desejo e a família tubarão inteira cantando parabéns. Doo doo doo doo doo doo!</p>
+      </div>
+      <button class="peixinho" data-peixe style="top:24%;left:-12px" aria-label="Peixinho escondido! Toque para capturar">
+        <svg viewBox="0 0 62 46" aria-hidden="true"><path d="M8 23 L2 10 Q14 12 20 18 Q30 8 44 12 Q58 17 58 26 Q52 38 38 38 Q26 38 19 30 Q13 35 3 36 Z" fill="#E8564A" stroke="#A72F25" stroke-width="3" stroke-linejoin="round"/><circle cx="44" cy="21" r="6" fill="#fff"/><circle cx="46" cy="22" r="3" fill="#123"/></svg>
+      </button>
+    </div>
+  </article>
+
+  <!-- ENCERRAMENTO — família -->
+  <article class="curso" id="tchau">
+    <div class="curso-card" style="--acento:var(--agua-media)">
+      <span class="depth">−40 m</span>
+      <div class="curso-vitrine" style="width:min(74vw,300px)">
+        <img src="img/familia-grupo.jpg" alt="A família tubarão reunida: Vovó, Vovô, Papai e Mamãe" style="border-radius:24px;border:5px solid var(--branco);box-shadow:0 12px 26px rgba(8,63,118,.3)">
+        <div class="prato-sticker" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <path d="M58 26 C53 36 63 40 58 50 M82 22 C77 32 87 36 82 46" stroke="#9AB6CE" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <ellipse cx="70" cy="112" rx="46" ry="10" fill="#fff" stroke="#9AB6CE" stroke-width="3"/>
+            <path d="M96 66 C112 68 112 88 94 92" stroke="#C74767" stroke-width="8" fill="none"/>
+            <path d="M40 58 L100 58 L94 108 L46 108 Z" fill="#FF7FA0" stroke="#C74767" stroke-width="4" stroke-linejoin="round"/>
+            <ellipse cx="70" cy="58" rx="30" ry="7" fill="#6B4226" stroke="#43290F" stroke-width="3"/>
+          </svg>
+        </div>
+      </div>
+      <div class="curso-info">
+        <p class="eyebrow">Antes de dizer tchau</p>
+        <h2>Encerramento</h2>
+        <p class="desc">Um cafezinho quentinho no fundo do mar para fechar a festa com carinho e acordar para a viagem de volta à superfície.</p>
+      </div>
+    </div>
+  </article>
+</main>
+
+<!-- ==================== FUNDO DO MAR ==================== -->
+<footer class="fundo-mar">
+  <svg class="cenario" viewBox="0 0 460 100" aria-hidden="true">
+    <path d="M0 100 Q60 82 120 92 Q200 78 280 90 Q370 80 460 94 L460 100 Z" fill="rgba(251,233,191,.28)"/>
+    <path d="M34 96 Q26 66 38 48 Q48 32 40 12 Q56 30 48 52 Q42 70 50 96 Z" fill="rgba(88,196,114,.55)"/>
+    <path d="M74 96 Q82 72 72 56 Q62 38 74 18 Q86 40 78 58 Q74 74 86 96 Z" fill="rgba(63,192,232,.5)"/>
+    <path d="M380 96 Q372 68 384 50 Q394 34 386 16 Q402 32 394 54 Q388 72 396 96 Z" fill="rgba(63,192,232,.5)"/>
+    <path d="M418 96 Q426 74 416 58 Q406 40 418 22 Q430 42 422 60 Q418 76 430 96 Z" fill="rgba(88,196,114,.55)"/>
+    <path d="M208 74 L222 46 L236 74 L263 60 L252 88 L222 92 L192 88 L181 60 Z" fill="#F49B33" stroke="#B5641A" stroke-width="3" stroke-linejoin="round" transform="rotate(-8 222 70)"/>
+    <circle cx="150" cy="72" r="5" fill="rgba(255,255,255,.4)"/>
+    <circle cx="166" cy="54" r="3.4" fill="rgba(255,255,255,.32)"/>
+    <circle cx="300" cy="64" r="4.2" fill="rgba(255,255,255,.36)"/>
+    <circle cx="316" cy="46" r="2.8" fill="rgba(255,255,255,.3)"/>
+  </svg>
+  <h2>Chegamos ao fundo do mar! 🐚</h2>
+  <p>A família do Enzo agradece por mergulhar com a gente nessa aventura. Prepare o apetite: dia da festa é dia de comer como um tubarão!</p>
+  <p class="doo">Baby Shark, doo doo doo doo doo doo 🎶</p>
+  <p class="credito">Feito com 💛 para o Enzo</p>
+</footer>
+
+<!-- ==================== FIXOS ==================== -->
+<div class="trilha" aria-hidden="true">
+  <div class="trilha-linha">
+    <img class="trilha-nadador" id="nadador" src="img/brooklyn2.png" alt="">
+  </div>
+  <span class="trilha-label" id="trilhaLabel">0 m</span>
+</div>
+
+<div class="contador-peixes" id="contadorPeixes" role="status" aria-live="polite">
+  <svg viewBox="0 0 62 46" aria-hidden="true"><path d="M8 23 L2 10 Q14 12 20 18 Q30 8 44 12 Q58 17 58 26 Q52 38 38 38 Q26 38 19 30 Q13 35 3 36 Z" fill="#F49B33" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><circle cx="44" cy="21" r="6" fill="#fff"/><circle cx="46" cy="22" r="3" fill="#123"/></svg>
+  <span id="placarPeixes">0/6</span>
+</div>
+
+<button class="btn-musica" id="btnMusica" aria-label="Tocar a música do Baby Shark" aria-pressed="false">🎵</button>
+
+<div class="toast" id="toast"></div>
+<canvas id="confete" aria-hidden="true"></canvas>
+
+<script>
+(function(){
+  'use strict';
+  var reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (location.search.indexOf('fotos') !== -1) {
+    reduzMovimento = true;
+    document.body.classList.add('sem-animacao');
+  }
+
+  /* ---------- bolhas ambiente ---------- */
+  if (!reduzMovimento) {
+    var bg = document.getElementById('oceanoBg');
+    for (var i = 0; i < 16; i++) {
+      var b = document.createElement('span');
+      var tam = 8 + Math.random() * 26;
+      b.className = 'bolha';
+      b.style.width = tam + 'px';
+      b.style.height = tam + 'px';
+      b.style.left = Math.random() * 100 + 'vw';
+      b.style.animationDuration = 9 + Math.random() * 14 + 's';
+      b.style.animationDelay = Math.random() * 12 + 's';
+      bg.appendChild(b);
+    }
+  }
+
+  /* ---------- revelar cartões ---------- */
+  var cards = document.querySelectorAll('.curso-card');
+  if ('IntersectionObserver' in window && !reduzMovimento) {
+    var io = new IntersectionObserver(function (ents) {
+      ents.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visivel'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    cards.forEach(function (c) { io.observe(c); });
+  } else {
+    cards.forEach(function (c) { c.classList.add('visivel'); });
+  }
+
+  /* ---------- trilha de mergulho ---------- */
+  var nadador = document.getElementById('nadador');
+  var trilhaLabel = document.getElementById('trilhaLabel');
+  function atualizaTrilha() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    if (nadador) nadador.style.top = (p * 100) + '%';
+    if (trilhaLabel) trilhaLabel.textContent = '−' + Math.round(p * 40) + ' m';
+  }
+  window.addEventListener('scroll', atualizaTrilha, { passive: true });
+  window.addEventListener('resize', atualizaTrilha);
+  atualizaTrilha();
+
+  /* ---------- áudio: contexto compartilhado ---------- */
+  var ctxAudio = null;
+  function audio() {
+    if (!ctxAudio) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) ctxAudio = new AC();
+    }
+    if (ctxAudio && ctxAudio.state === 'suspended') ctxAudio.resume();
+    return ctxAudio;
+  }
+
+  function nota(freq, quando, dur, vol, tipo) {
+    var ac = audio(); if (!ac) return;
+    var o = ac.createOscillator();
+    var g = ac.createGain();
+    o.type = tipo || 'triangle';
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(0.0001, quando);
+    g.gain.linearRampToValueAtTime(vol, quando + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, quando + dur);
+    o.connect(g); g.connect(ac.destination);
+    o.start(quando); o.stop(quando + dur + 0.05);
+  }
+
+  function squeak() {
+    var ac = audio(); if (!ac) return;
+    var t = ac.currentTime;
+    var o = ac.createOscillator();
+    var g = ac.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(500, t);
+    o.frequency.exponentialRampToValueAtTime(950, t + 0.09);
+    g.gain.setValueAtTime(0.12, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
+    o.connect(g); g.connect(ac.destination);
+    o.start(t); o.stop(t + 0.2);
+  }
+
+  /* ---------- música: Baby Shark ---------- */
+  var tocando = false, loopTimer = null;
+  var btnMusica = document.getElementById('btnMusica');
+  var D = 293.66, E = 329.63, G = 392.00, FS = 369.99;
+
+  function tocaFrase() {
+    var ac = audio(); if (!ac) return;
+    var t = ac.currentTime + 0.06;
+    var u = 0.22, vol = 0.16;
+    var seq = [];
+    for (var r = 0; r < 3; r++) {
+      var base = r * 8 * u;
+      seq.push([D, base, u], [E, base + u, u]);
+      for (var k = 0; k < 6; k++) seq.push([G, base + (2 + k) * u * 0.98, u * 0.9]);
+    }
+    var fim = 24 * u;
+    seq.push([D, fim, u], [E, fim + u, u], [G, fim + 2 * u, u * 2.4], [FS, fim + 4.6 * u, u * 1.6]);
+    seq.forEach(function (n) { nota(n[0], t + n[1], n[2], vol, 'triangle'); nota(n[0] / 2, t + n[1], n[2], vol * 0.4, 'sine'); });
+    var duracaoTotal = (fim + 7 * u) * 1000;
+    loopTimer = setTimeout(function () { if (tocando) tocaFrase(); }, duracaoTotal);
+  }
+
+  btnMusica.addEventListener('click', function () {
+    tocando = !tocando;
+    btnMusica.classList.toggle('tocando', tocando);
+    btnMusica.setAttribute('aria-pressed', String(tocando));
+    btnMusica.textContent = tocando ? '🔊' : '🎵';
+    btnMusica.setAttribute('aria-label', tocando ? 'Parar a música' : 'Tocar a música do Baby Shark');
+    if (tocando) { tocaFrase(); }
+    else if (loopTimer) { clearTimeout(loopTimer); loopTimer = null; }
+  });
+
+  /* ---------- personagens que reagem ---------- */
+  document.querySelectorAll('[data-perso]').forEach(function (p) {
+    p.addEventListener('click', function () {
+      p.classList.remove('mexe');
+      void p.offsetWidth; /* reinicia a animação */
+      p.classList.add('mexe');
+      squeak();
+    });
+  });
+
+  /* ---------- confete ---------- */
+  var canvas = document.getElementById('confete');
+  var cx = canvas.getContext('2d');
+  var particulas = [];
+  var CORES = ['#FFD23F', '#F49B33', '#F26DB3', '#FF7FA0', '#2E6FD8', '#58C472', '#7FE0F5', '#FFFFFF'];
+  var animando = false;
+
+  function dimensiona() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  dimensiona();
+  window.addEventListener('resize', dimensiona);
+
+  function estoura(x, y, qtd) {
+    if (reduzMovimento) return;
+    for (var i = 0; i < qtd; i++) {
+      particulas.push({
+        x: x, y: y,
+        vx: (Math.random() - 0.5) * 11,
+        vy: -Math.random() * 10 - 3,
+        w: 6 + Math.random() * 6,
+        h: 4 + Math.random() * 5,
+        rot: Math.random() * Math.PI,
+        vr: (Math.random() - 0.5) * 0.3,
+        cor: CORES[(Math.random() * CORES.length) | 0],
+        vida: 90 + Math.random() * 50
+      });
+    }
+    if (!animando) { animando = true; requestAnimationFrame(passo); }
+  }
+
+  function passo() {
+    cx.clearRect(0, 0, canvas.width, canvas.height);
+    particulas = particulas.filter(function (p) { return p.vida > 0 && p.y < canvas.height + 30; });
+    particulas.forEach(function (p) {
+      p.vx *= 0.985; p.vy += 0.22;
+      p.x += p.vx; p.y += p.vy;
+      p.rot += p.vr; p.vida--;
+      cx.save();
+      cx.translate(p.x, p.y);
+      cx.rotate(p.rot);
+      cx.globalAlpha = Math.min(1, p.vida / 40);
+      cx.fillStyle = p.cor;
+      cx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      cx.restore();
+    });
+    if (particulas.length) { requestAnimationFrame(passo); }
+    else { animando = false; cx.clearRect(0, 0, canvas.width, canvas.height); }
+  }
+
+  /* ---------- festa no bolo ---------- */
+  var secaoBolo = document.getElementById('bolo');
+  var jaFestejou = false;
+  if ('IntersectionObserver' in window) {
+    var ioBolo = new IntersectionObserver(function (ents) {
+      ents.forEach(function (e) {
+        if (e.isIntersecting && !jaFestejou) {
+          jaFestejou = true;
+          secaoBolo.querySelector('.curso-card').classList.add('festejar');
+          var r = e.target.getBoundingClientRect();
+          estoura(window.innerWidth * 0.3, r.top + 60, 70);
+          estoura(window.innerWidth * 0.7, r.top + 60, 70);
+          ioBolo.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.35 });
+    ioBolo.observe(secaoBolo);
+  } else {
+    secaoBolo.querySelector('.curso-card').classList.add('festejar');
+  }
+
+  /* ---------- caça aos peixinhos ---------- */
+  var peixes = document.querySelectorAll('[data-peixe]');
+  var TOTAL = peixes.length;
+  var achados = 0;
+  var placar = document.getElementById('placarPeixes');
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+
+  function mostraToast(msg, ms) {
+    toast.textContent = msg;
+    toast.classList.add('mostra');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('mostra'); }, ms || 2600);
+  }
+
+  try {
+    var salvos = JSON.parse(localStorage.getItem('peixes-enzo') || '[]');
+  } catch (err) { salvos = []; }
+
+  peixes.forEach(function (p, idx) {
+    if (salvos.indexOf(idx) !== -1) { p.classList.add('achado'); achados++; }
+    p.addEventListener('click', function () {
+      if (p.classList.contains('achado')) return;
+      p.classList.add('achado');
+      achados++;
+      salvos.push(idx);
+      try { localStorage.setItem('peixes-enzo', JSON.stringify(salvos)); } catch (err) {}
+      placar.textContent = achados + '/' + TOTAL;
+      squeak();
+      var r = p.getBoundingClientRect();
+      estoura(r.left + r.width / 2, r.top + r.height / 2, 18);
+      if (achados === TOTAL) {
+        mostraToast('🐠 Você achou todos os ' + TOTAL + ' peixinhos! Doo doo doo! 🎉', 4200);
+        estoura(window.innerWidth / 2, window.innerHeight / 3, 130);
+      } else {
+        mostraToast('🐠 Peixinho capturado! Faltam ' + (TOTAL - achados) + '.');
+      }
+    });
+  });
+  placar.textContent = achados + '/' + TOTAL;
+})();
+</script>
+
+</body>
+</html>
