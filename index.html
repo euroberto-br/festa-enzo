@@ -1048,6 +1048,12 @@ button{font-family:inherit;cursor:pointer}
   if (location.search.indexOf('fotos') !== -1) {
     reduzMovimento = true;
     document.body.classList.add('sem-animacao');
+    var rolagem = location.search.match(/rolagem=(\d+)/);
+    if (rolagem) {
+      window.addEventListener('load', function () {
+        window.scrollTo(0, parseInt(rolagem[1], 10));
+      });
+    }
   }
 
   /* ---------- bolhas ambiente ---------- */
