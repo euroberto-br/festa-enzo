@@ -413,6 +413,17 @@ button{font-family:inherit;cursor:pointer}
   box-shadow:0 8px 18px rgba(8,63,118,.4);
 }
 .contador-peixes svg{width:26px;height:20px}
+.reinicia-peixes{
+  width:26px;height:26px;border-radius:50%;
+  background:var(--amarelo);color:var(--navy);
+  border:2px solid var(--branco);
+  font-size:1rem;line-height:1;font-weight:700;
+  display:grid;place-items:center;padding:0;
+  margin-left:.15rem;
+  transition:transform .2s ease;
+}
+.reinicia-peixes:hover{transform:rotate(-90deg)}
+.reinicia-peixes:focus-visible{outline:3px solid var(--amarelo);outline-offset:2px}
 
 /* ============================================================
    BOTÃO DE MÚSICA
@@ -1205,9 +1216,10 @@ button{font-family:inherit;cursor:pointer}
   <span class="trilha-label" id="trilhaLabel">0 m</span>
 </div>
 
-<div class="contador-peixes" id="contadorPeixes" role="status" aria-live="polite">
+<div class="contador-peixes" id="contadorPeixes">
   <svg viewBox="0 0 62 46" aria-hidden="true"><path d="M8 23 L2 10 Q14 12 20 18 Q30 8 44 12 Q58 17 58 26 Q52 38 38 38 Q26 38 19 30 Q13 35 3 36 Z" fill="#F49B33" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><circle cx="44" cy="21" r="6" fill="#fff"/><circle cx="46" cy="22" r="3" fill="#123"/></svg>
-  <span id="placarPeixes">0/6</span>
+  <span id="placarPeixes" role="status" aria-live="polite">0/7</span>
+  <button class="reinicia-peixes" id="btnReiniciaPeixes" type="button" aria-label="Recomeçar a caça aos peixinhos">↺</button>
 </div>
 
 <button class="btn-musica" id="btnMusica" aria-label="Tocar a música do Baby Shark" aria-pressed="false">🎵</button>
@@ -1463,6 +1475,16 @@ button{font-family:inherit;cursor:pointer}
     });
   });
   placar.textContent = achados + '/' + TOTAL;
+
+  document.getElementById('btnReiniciaPeixes').addEventListener('click', function () {
+    achados = 0;
+    salvos = [];
+    try { localStorage.removeItem('peixes-enzo'); } catch (err) {}
+    peixes.forEach(function (p) { p.classList.remove('achado'); });
+    placar.textContent = achados + '/' + TOTAL;
+    squeak();
+    mostraToast('🐠 Os peixinhos se esconderam de novo. Boa caça!');
+  });
 
   /* ================= salinha de jogos ================= */
   var palco = document.getElementById('palcoJogo');
