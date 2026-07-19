@@ -226,10 +226,75 @@ button{font-family:inherit;cursor:pointer}
   padding:1rem;
 }
 .lightbox.aberto{display:flex}
-.lightbox img{
-  max-width:min(94vw,1100px);max-height:78vh;object-fit:contain;
-  border-radius:18px;border:4px solid var(--branco);
-  box-shadow:0 24px 60px rgba(0,0,0,.6);
+
+/* molduras temáticas Baby Shark (sorteada por foto) */
+.lb-moldura{
+  position:relative;
+  padding:clamp(10px,2.4vw,18px);
+  border-radius:28px;
+  border:4px solid var(--navy);
+  background:linear-gradient(165deg,var(--agua-rasa) 0%,var(--agua) 38%,var(--agua-media) 72%,var(--oceano) 100%);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 10px 0 rgba(4,32,64,.5), 0 26px 60px rgba(0,0,0,.6);
+}
+.lb-moldura.m2{background:linear-gradient(165deg,#FFDCEE 0%,var(--rosa) 42%,#C2447F 100%)}
+.lb-moldura.m3{background:linear-gradient(165deg,#FFF3C4 0%,var(--amarelo) 40%,var(--laranja) 100%)}
+.lb-moldura.m4{background:linear-gradient(165deg,#D8F7E0 0%,var(--verde) 45%,#2E8B4A 100%)}
+.lb-moldura.m5{background:linear-gradient(165deg,var(--agua-media) 0%,var(--oceano) 45%,var(--profundo) 100%)}
+.lb-moldura::before{ /* bolhas espalhadas pela moldura */
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:
+    radial-gradient(circle at 4% 18%, rgba(255,255,255,.7) 0 3px, transparent 4px),
+    radial-gradient(circle at 7% 55%, rgba(255,255,255,.5) 0 5px, transparent 6px),
+    radial-gradient(circle at 3% 82%, rgba(255,255,255,.6) 0 3px, transparent 4px),
+    radial-gradient(circle at 96% 25%, rgba(255,255,255,.6) 0 4px, transparent 5px),
+    radial-gradient(circle at 94% 65%, rgba(255,255,255,.5) 0 3px, transparent 4px),
+    radial-gradient(circle at 97% 88%, rgba(255,255,255,.65) 0 5px, transparent 6px),
+    radial-gradient(circle at 25% 97%, rgba(255,255,255,.55) 0 4px, transparent 5px),
+    radial-gradient(circle at 70% 96%, rgba(255,255,255,.5) 0 3px, transparent 4px),
+    radial-gradient(circle at 30% 3%, rgba(255,255,255,.55) 0 4px, transparent 5px),
+    radial-gradient(circle at 62% 4%, rgba(255,255,255,.5) 0 3px, transparent 4px);
+}
+.lightbox img.lb-foto{
+  max-width:min(94vw - 2*clamp(10px,2.4vw,18px) - 8px,1100px);
+  max-height:72vh;object-fit:contain;
+  border-radius:16px;border:3px solid var(--branco);
+  box-shadow:0 6px 18px rgba(4,24,47,.45);
+}
+.lb-shark{ /* Baby Shark espiando por cima da moldura */
+  position:absolute;top:-2.6rem;right:.6rem;
+  width:clamp(64px,14vw,104px);
+  transform:rotate(8deg);
+  filter:drop-shadow(0 6px 10px rgba(4,24,47,.55));
+  pointer-events:none;
+  animation:nadar 3.6s ease-in-out infinite;
+}
+@keyframes nadar{0%,100%{transform:rotate(8deg) translateY(0)}50%{transform:rotate(3deg) translateY(-6px)}}
+/* William e a família são imagens largas: mascote um pouco maior */
+.m3 .lb-shark,.m4 .lb-shark{width:clamp(84px,17vw,132px);top:-2.2rem}
+/* mar profundo: Baby Shark espelhado, espiando pela esquerda */
+.m5 .lb-shark{
+  left:.6rem;right:auto;
+  transform:scaleX(-1) rotate(8deg);
+  animation-name:nadarEsq;
+}
+@keyframes nadarEsq{0%,100%{transform:scaleX(-1) rotate(8deg) translateY(0)}50%{transform:scaleX(-1) rotate(3deg) translateY(-6px)}}
+.lb-deco{
+  position:absolute;font-size:clamp(1.2rem,4vw,1.7rem);
+  pointer-events:none;
+  text-shadow:0 3px 6px rgba(4,24,47,.5);
+}
+.lb-deco-tl{top:-.9rem;left:-.6rem;transform:rotate(-18deg)}
+.lb-deco-bl{bottom:-.8rem;left:1rem;transform:rotate(10deg)}
+.lb-deco-br{bottom:-.9rem;right:-.5rem;transform:rotate(-8deg)}
+
+/* proteção: dificulta salvar/copiar as fotos */
+.foto img,.lb-foto{
+  user-select:none;-webkit-user-select:none;
+  -webkit-user-drag:none;
+  -webkit-touch-callout:none; /* iOS: sem popup de salvar no toque longo */
+}
+.lb-escudo{ /* camada invisível sobre a foto ampliada */
+  position:absolute;inset:0;border-radius:inherit;z-index:1;
 }
 .lb-autor{
   position:absolute;bottom:calc(1.2rem + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
@@ -266,7 +331,7 @@ button{font-family:inherit;cursor:pointer}
 .toast.mostra{opacity:1;transform:translateX(-50%) translateY(0)}
 
 @media (prefers-reduced-motion:reduce){
-  .bolha,.topo .eyebrow,.estado .peixe{animation:none}
+  .bolha,.topo .eyebrow,.estado .peixe,.lb-shark,.m5 .lb-shark{animation:none}
 }
 </style>
 </head>
@@ -317,7 +382,14 @@ button{font-family:inherit;cursor:pointer}
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto ampliada">
   <button class="lb-btn lb-fechar" id="lbFechar" aria-label="Fechar">✕</button>
   <button class="lb-btn lb-ant" id="lbAnt" aria-label="Foto anterior">‹</button>
-  <img id="lbImg" src="" alt="Foto da festa">
+  <figure class="lb-moldura" id="lbMoldura">
+    <img class="lb-foto" id="lbImg" src="" alt="Foto da festa" draggable="false">
+    <img class="lb-shark" id="lbMascote" src="img/babyshark.png" alt="" aria-hidden="true">
+    <span class="lb-deco lb-deco-tl" aria-hidden="true">🐠</span>
+    <span class="lb-deco lb-deco-bl" aria-hidden="true">🫧</span>
+    <span class="lb-deco lb-deco-br" aria-hidden="true">⭐</span>
+    <span class="lb-escudo" aria-hidden="true"></span>
+  </figure>
   <button class="lb-btn lb-prox" id="lbProx" aria-label="Próxima foto">›</button>
   <span class="lb-autor" id="lbAutor"></span>
 </div>
@@ -486,11 +558,15 @@ function enviarUma(file, nome) {
 var fotos = [];        // vindas da lista pública
 var listaOk = false;   // a listagem já respondeu alguma vez?
 
+// marca d'água aplicada pela própria Cloudinary (vai junto se alguém baixar)
+// obs.: emoji no texto do overlay causa erro 400 — só texto simples
+var MARCA = 'l_text:Arial_40_bold:Festa%20do%20Enzo%20-%203%20anos%20(2026),co_white,o_55,e_shadow,g_south_east,x_24,y_24';
+
 function urlThumb(f) {
   return BASE_IMG + 'c_fill,w_420,h_420,g_auto,q_auto,f_auto/v' + f.version + '/' + f.public_id + '.jpg';
 }
 function urlGrande(f) {
-  return BASE_IMG + 'c_limit,w_1600,h_1600,q_auto,f_auto/v' + f.version + '/' + f.public_id + '.jpg';
+  return BASE_IMG + 'c_limit,w_1600,h_1600,q_auto,f_auto/' + MARCA + '/v' + f.version + '/' + f.public_id + '.jpg';
 }
 
 function carregar(manual) {
@@ -592,10 +668,30 @@ function fecharLightbox() {
   lightbox.classList.remove('aberto');
   document.body.style.overflow = '';
 }
+/* 5 molduras temáticas — cada foto sorteia a sua (estável: mesma foto,
+   mesma moldura sempre, pra não "piscar" ao navegar pra frente e pra trás) */
+var MOLDURAS = [
+  { classe: 'm1', mascote: 'img/babyshark.png',  decos: ['🐠', '🫧', '⭐'] }, // oceano
+  { classe: 'm2', mascote: 'img/brooklyn2.png',  decos: ['🐚', '🌺', '🫧'] }, // coral rosa
+  { classe: 'm3', mascote: 'img/william.png',    decos: ['🌞', '⭐', '🐚'] }, // sol amarelo
+  { classe: 'm4', mascote: 'img/familia-go.png', decos: ['🐢', '🌿', '🐡'] }, // alga verde
+  { classe: 'm5', mascote: 'img/babyshark.png',  decos: ['🐋', '🌙', '✨'] }  // mar profundo
+];
+function sortearMoldura(id) {
+  var h = 0;
+  for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return MOLDURAS[h % MOLDURAS.length];
+}
+
 function mostrarLb() {
   var f = galeriaAtual[lbIndice];
   if (!f) return;
   $('lbImg').src = urlGrande(f);
+  var m = sortearMoldura(f.public_id);
+  $('lbMoldura').className = 'lb-moldura ' + m.classe;
+  $('lbMascote').src = m.mascote;
+  var decos = document.querySelectorAll('.lb-deco');
+  for (var i = 0; i < decos.length; i++) decos[i].textContent = m.decos[i];
   var autor = $('lbAutor');
   autor.textContent = f.autor ? '📷 ' + f.autor : '📷 Festa do Enzo';
 }
@@ -622,6 +718,14 @@ lightbox.addEventListener('touchend', function (e) {
   if (Math.abs(dx) > 50) lbAndar(dx > 0 ? -1 : 1);
   touchX = null;
 }, { passive: true });
+
+/* ---------- proteção: bloqueia menu de salvar e arrastar ---------- */
+document.addEventListener('contextmenu', function (e) {
+  if (e.target.closest && e.target.closest('.foto, .lb-moldura')) e.preventDefault();
+});
+document.addEventListener('dragstart', function (e) {
+  if (e.target.tagName === 'IMG') e.preventDefault();
+});
 
 /* ---------- inicialização + atualização automática ---------- */
 $('btnAtualizar').addEventListener('click', function () { carregar(true); });
