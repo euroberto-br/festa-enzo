@@ -36,6 +36,7 @@ O site tem três páginas:
 | 🍽️ [`index.html`](index.html) | O convite-cardápio interativo (o "mergulho") |
 | 📸 [`fotos.html`](fotos.html) | Galeria colaborativa — os convidados enviam fotos da festa pelo celular e todo mundo vê |
 | 🍾 [`capsula.html`](capsula.html) | **Mensagem na Garrafa** — cápsula do tempo digital: os convidados escrevem recados, conselhos e histórias que ficam selados numa planilha do Google Drive até o Enzo crescer |
+| 🎨 [`tubarao.html`](tubarao.html) | **Vire um Tubarão!** — o convidado manda uma selfie e a IA (Azure `gpt-image-2`) devolve um desenho dele no estilo Baby Shark, para baixar e publicar na galeria de desenhos |
 
 ---
 
@@ -154,6 +155,44 @@ flowchart LR
   *App da Web* (acesso: "Qualquer pessoa") e colar a URL `/exec` na constante `SCRIPT_URL`
   da `capsula.html` — o passo a passo completo está comentado no próprio `.gs`.
 
+### 🎨 Vire um Tubarão! (`tubarao.html`)
+
+O convidado tira uma selfie (ou escolhe da galeria) e a IA transforma a foto num
+**personagem do universo Baby Shark** — para baixar, compartilhar e exibir no "cardume de desenhos":
+
+```mermaid
+flowchart LR
+    A["🤳 Selfie do convidado"] --> B["🗜️ Compressão no navegador<br>(canvas, máx. 1024px)"]
+    B --> C["📜 Google Apps Script<br>(proxy — a chave fica aqui)"]
+    C --> D["🤖 Azure AI Foundry<br>(gpt-image-2, /images/edits)"]
+    D --> E["🖼️ Desenho estilo Baby Shark"]
+    E --> F["⬇️ Baixar / 📲 Compartilhar"]
+    E --> G[("☁️ Cloudinary<br>tag festa-enzo-ia")]
+    G --> H["🌊 Cardume de desenhos<br>(galeria pública)"]
+```
+
+- 🔐 **A chave da API nunca aparece no site** — o navegador fala com um Web App do Apps Script
+  ([`tubarao-apps-script.gs`](tubarao-apps-script.gs)), que guarda a `AZURE_API_KEY` nas
+  *Propriedades do script* e repassa a selfie ao endpoint `/images/edits` do Azure
+  (`input_fidelity: high` para preservar o rosto);
+- 🎨 **Prompt no servidor** — o estilo (desenho Baby Shark, cores chapadas, oceano, bolhas) fica
+  no `.gs`; ninguém troca o prompt pelo navegador. A IA é proibida de escrever qualquer texto
+  ou logo; a **faixa em pt-BR** — frase temática sorteada ("Doo doo doo!", "Virei um
+  tubarão!"…) + selo **"Festa Enzo - 03 anos (2026)"** — é **carimbada pela própria página no
+  canvas** (fonte Baloo 2, pílula amarela com borda navy), com grafia sempre perfeita;
+- 🎟️ **Limite de uso** — 5 transformações por aparelho (`localStorage`); o proxy conta as
+  gerações do dia (visível no teste de saúde do `/exec`), sem teto global;
+- 🤳 **Dois caminhos de foto** — "Tirar selfie" (`capture="user"`) ou "Escolher da galeria";
+- 🫧 **Espera divertida** — enquanto a IA trabalha (~30 s), um Baby Shark patrulha a tela e as
+  fases da "mágica" se revezam ("misturando as tintas do oceano…");
+- ⬇️ **Download direto** — o desenho chega em base64, é **recomprimido no navegador para
+  JPEG de no máximo 500 KB** (baixando qualidade/escala em degraus até caber) e vira download
+  local (sem passar pelo Cloudinary), com botão **Compartilhar** (Web Share API) quando o
+  aparelho suporta;
+- 🌊 **Galeria opcional** — com o consentimento marcado, o desenho sobe para o Cloudinary
+  (preset `festa_enzo_ia`, tag `festa-enzo-ia`) e entra no cardume com o nome do autor,
+  molduras temáticas no lightbox e atualização automática, como na galeria de fotos.
+
 ---
 
 ## 🎨 Design system
@@ -213,6 +252,8 @@ festa/
 ├── fotos.html               # Galeria colaborativa de fotos (Cloudinary)
 ├── capsula.html             # Cápsula do tempo "Mensagem na Garrafa" (Google Sheets)
 ├── capsula-apps-script.gs   # Backend da cápsula (colar no Apps Script da planilha)
+├── tubarao.html             # "Vire um Tubarão!" — selfie → desenho com IA (Gemini)
+├── tubarao-apps-script.gs   # Proxy da IA (guarda a chave do Gemini no Apps Script)
 ├── robots.txt               # Crawl liberado p/ o Google ler o noindex
 ├── img/                # Fotos da família + personagens Baby Shark
 │   ├── hero-baby.jpg   #   imagem principal do hero
@@ -234,9 +275,12 @@ A galeria usa apenas **valores públicos** (seguros de expor em site estático):
 
 | Configuração | Valor | Onde fica |
 |---|---|---|
-| Cloud name | `znbneca7` | `fotos.html` |
-| Upload preset | `festa_enzo` (*unsigned*) | Cloudinary → Settings → Upload |
+| Cloud name | `znbneca7` | `fotos.html` e `tubarao.html` |
+| Upload preset (fotos) | `festa_enzo` (*unsigned*) | Cloudinary → Settings → Upload |
 | Tag das fotos | `festa-enzo` | aplicada pelo preset |
+| Upload preset (desenhos IA) | `festa_enzo_ia` (*unsigned*) | Cloudinary → Settings → Upload |
+| Tag dos desenhos IA | `festa-enzo-ia` | aplicada pelo preset `festa_enzo_ia` |
+| Pasta dos desenhos IA | `festa-enzo-ia` | `asset_folder` enviado pela `tubarao.html` |
 | Listagem pública | `Resource list` **habilitado** | Cloudinary → Settings → Security |
 
 Fluxo de URLs:

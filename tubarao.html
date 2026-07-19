@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1D93CE">
+<title>🎨 Vire um Tubarão! — Enzo faz 3! 🦈</title>
+<meta name="description" content="Mande uma selfie e a mágica do oceano transforma você num personagem do Baby Shark! Baixe seu desenho e entre para a galeria da festa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ceu:#C9F3FF;
+  --agua-rasa:#7FE0F5;
+  --agua:#3FC0E8;
+  --agua-media:#1D93CE;
+  --oceano:#0F6FB5;
+  --profundo:#083F76;
+  --navy:#0D3B66;
+  --amarelo:#FFD23F;
+  --laranja:#F49B33;
+  --rosa:#F26DB3;
+  --verde:#58C472;
+  --vermelho:#E8564A;
+  --branco:#FFFFFF;
+  --display:'Baloo 2','Arial Rounded MT Bold',system-ui,sans-serif;
+  --texto:'Nunito','Segoe UI',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--texto);
+  color:var(--navy);
+  line-height:1.6;
+  min-height:100svh;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  background:linear-gradient(180deg,
+    var(--ceu) 0%,
+    var(--agua-rasa) 6%,
+    var(--agua) 22%,
+    var(--agua-media) 48%,
+    var(--oceano) 78%,
+    var(--profundo) 100%);
+}
+img,svg{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer}
+
+/* ambiente: bolhas */
+.oceano-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bolha{
+  position:absolute;bottom:-70px;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, rgba(255,255,255,.85), rgba(255,255,255,.1) 58%, rgba(255,255,255,.3));
+  animation:subir linear infinite;opacity:0;
+}
+@keyframes subir{
+  0%{transform:translateY(0) translateX(0);opacity:0}
+  8%{opacity:.7}
+  92%{opacity:.55}
+  100%{transform:translateY(-110vh) translateX(5vw);opacity:0}
+}
+
+.pagina{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:1.4rem 1.1rem 4rem}
+
+.voltar{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-family:var(--display);font-weight:700;font-size:.95rem;
+  color:var(--navy);text-decoration:none;
+  background:var(--branco);border:3px solid var(--navy);border-radius:99px;
+  padding:.35rem 1.05rem;
+  box-shadow:0 4px 0 rgba(13,59,102,.3);
+  transition:transform .15s ease;
+}
+.voltar:hover{transform:translateY(-2px)}
+
+.topo{text-align:center;margin:1.6rem 0 2rem}
+.topo .eyebrow{
+  display:inline-block;
+  font-family:var(--display);font-weight:700;
+  color:var(--navy);background:var(--branco);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.3rem 1.1rem;font-size:clamp(.8rem,3vw,1rem);
+  box-shadow:0 5px 0 rgba(13,59,102,.28);
+  animation:balancar 4.5s ease-in-out infinite;
+}
+@keyframes balancar{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.topo h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(2rem,8vw,3.6rem);
+  line-height:1;margin:.9rem 0 .4rem;color:var(--branco);
+  text-shadow:0 .05em 0 var(--laranja), 0 .12em 0 rgba(13,59,102,.9), 0 .2em 1.6rem rgba(8,63,118,.4);
+}
+.topo p{color:var(--branco);font-weight:700;max-width:34rem;margin:0 auto;text-shadow:0 1px 6px rgba(8,63,118,.5)}
+
+/* cartão do estúdio */
+.card-estudio{
+  background:linear-gradient(180deg,#FFFFFF 0%,#F2F8FD 100%);
+  border-radius:30px;padding:1.6rem 1.4rem;
+  max-width:34rem;margin:0 auto 2.6rem;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.9), 0 8px 0 rgba(4,32,64,.35), 0 22px 34px rgba(8,63,118,.35);
+  text-align:center;
+}
+.card-estudio h2{font-family:var(--display);font-weight:800;font-size:1.35rem;margin-bottom:.2rem}
+.card-estudio .dica{font-size:.9rem;opacity:.8;margin-bottom:1rem}
+.campo-nome{
+  width:100%;
+  font-family:var(--texto);font-weight:700;font-size:1.05rem;
+  color:var(--navy);
+  border:3px solid var(--navy);border-radius:16px;
+  padding:.7rem 1rem;margin-bottom:1rem;
+  background:var(--branco);
+  outline:none;
+}
+.campo-nome:focus{border-color:var(--agua-media);box-shadow:0 0 0 4px rgba(63,192,232,.35)}
+#inputSelfie,#inputGaleria{display:none}
+
+.escolhas{display:flex;gap:.7rem;flex-wrap:wrap}
+.btn-escolher{
+  font-family:var(--display);font-weight:700;
+  flex:1;min-width:9.5rem;
+  font-size:.98rem;
+  color:var(--navy);background:var(--branco);
+  padding:.7rem 1rem;border-radius:99px;
+  border:3px solid var(--navy);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.7), 0 4px 0 rgba(13,59,102,.3);
+  transition:transform .15s ease;
+}
+.btn-escolher:hover{transform:translateY(-2px)}
+.btn-escolher:focus-visible{outline:3px solid var(--laranja);outline-offset:2px}
+
+/* prévia da selfie escolhida */
+.previa{position:relative;width:min(210px,60vw);margin:1.1rem auto 0;display:none}
+.previa.tem{display:block}
+.previa img{
+  width:100%;aspect-ratio:1;object-fit:cover;
+  border-radius:24px;border:4px solid var(--navy);
+  box-shadow:0 6px 0 rgba(4,32,64,.35), 0 16px 24px rgba(8,63,118,.3);
+}
+.previa .tirar{
+  position:absolute;top:-.7rem;right:-.7rem;
+  width:40px;height:40px;border-radius:50%;
+  font-size:1.05rem;line-height:1;
+  color:var(--branco);background:var(--vermelho);
+  border:3px solid var(--navy);
+  box-shadow:0 3px 0 rgba(4,32,64,.4);
+}
+
+.opcao-galeria{
+  display:flex;align-items:center;justify-content:center;gap:.55rem;
+  font-weight:800;font-size:.92rem;
+  margin:1.1rem 0 .2rem;cursor:pointer;user-select:none;-webkit-user-select:none;
+}
+.opcao-galeria input{width:1.25rem;height:1.25rem;accent-color:var(--agua-media);cursor:pointer}
+
+.btn-magica{
+  font-family:var(--display);font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  width:100%;margin-top:1rem;
+  font-size:clamp(1.05rem,4.2vw,1.25rem);
+  color:var(--navy);background:var(--amarelo);
+  padding:.95rem 1.6rem;border-radius:99px;
+  border:4px solid var(--navy);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 6px 0 var(--navy), 0 16px 26px rgba(8,63,118,.35);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn-magica:hover{transform:translateY(3px);box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 3px 0 var(--navy), 0 10px 18px rgba(8,63,118,.3)}
+.btn-magica:active{transform:translateY(5px)}
+.btn-magica:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.btn-magica:focus-visible{outline:4px solid var(--branco);outline-offset:3px}
+
+.fichas{
+  display:inline-block;margin-top:.9rem;
+  font-family:var(--display);font-weight:700;font-size:.85rem;
+  color:var(--navy);background:var(--ceu);
+  border:2px solid var(--navy);border-radius:99px;padding:.15rem .9rem;
+  box-shadow:0 3px 0 rgba(13,59,102,.25);
+}
+
+/* etapa: gerando (o mergulho da selfie) */
+.gerando{display:none;padding:.6rem 0 .4rem}
+.card-estudio.ocupado .formulario{display:none}
+.card-estudio.ocupado .gerando{display:block}
+.card-estudio.pronto .formulario{display:none}
+.card-estudio.pronto .resultado{display:block}
+.mar-magico{
+  position:relative;height:150px;overflow:hidden;
+  border-radius:20px;margin-bottom:1.1rem;
+  background:linear-gradient(180deg,var(--agua-rasa),var(--agua-media) 70%,var(--oceano));
+  border:3px solid var(--navy);
+}
+.mar-magico img{
+  position:absolute;top:38px;left:-90px;width:86px;
+  animation:patrulha 6s ease-in-out infinite;
+  filter:drop-shadow(0 5px 8px rgba(4,24,47,.4));
+}
+@keyframes patrulha{
+  0%{transform:translateX(0) scaleX(1)}
+  49%{transform:translateX(min(430px,72vw)) scaleX(1)}
+  50%{transform:translateX(min(430px,72vw)) scaleX(-1)}
+  99%{transform:translateX(0) scaleX(-1)}
+  100%{transform:translateX(0) scaleX(1)}
+}
+.mar-magico .brilho{
+  position:absolute;font-size:1.3rem;
+  animation:cintilar 1.8s ease-in-out infinite;
+}
+@keyframes cintilar{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+.gerando .fase{
+  font-family:var(--display);font-weight:800;font-size:1.08rem;min-height:1.8em;
+}
+.gerando .paciencia{font-size:.85rem;opacity:.75;margin-top:.3rem}
+
+/* etapa: resultado */
+.resultado{display:none;padding:.2rem 0}
+.quadro-resultado{
+  position:relative;
+  width:min(330px,78vw);margin:0 auto 1.2rem;
+  padding:clamp(10px,2.6vw,14px);
+  border-radius:26px;border:4px solid var(--navy);
+  background:linear-gradient(165deg,var(--agua-rasa) 0%,var(--agua) 38%,var(--agua-media) 72%,var(--oceano) 100%);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 8px 0 rgba(4,32,64,.5), 0 20px 40px rgba(8,63,118,.4);
+}
+.quadro-resultado img.arte{
+  width:100%;border-radius:16px;border:3px solid var(--branco);
+  box-shadow:0 6px 18px rgba(4,24,47,.45);
+}
+.quadro-resultado .espiao{
+  position:absolute;top:-2.4rem;right:.4rem;width:clamp(64px,16vw,92px);
+  transform:rotate(8deg);
+  filter:drop-shadow(0 6px 10px rgba(4,24,47,.55));
+  animation:nadar 3.6s ease-in-out infinite;
+}
+@keyframes nadar{0%,100%{transform:rotate(8deg) translateY(0)}50%{transform:rotate(3deg) translateY(-6px)}}
+.acoes{display:flex;flex-direction:column;gap:.6rem;max-width:22rem;margin:0 auto}
+.btn-acao{
+  font-family:var(--display);font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  width:100%;font-size:1.05rem;
+  color:var(--navy);background:var(--amarelo);
+  padding:.8rem 1.4rem;border-radius:99px;
+  border:4px solid var(--navy);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 5px 0 var(--navy), 0 14px 22px rgba(8,63,118,.3);
+  transition:transform .15s ease, box-shadow .15s ease;
+  text-decoration:none;
+}
+.btn-acao:hover{transform:translateY(2px);box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 3px 0 var(--navy), 0 9px 16px rgba(8,63,118,.28)}
+.btn-acao:focus-visible{outline:4px solid var(--branco);outline-offset:3px}
+.btn-acao.secundario{background:var(--branco);font-weight:700;font-size:.95rem;border-width:3px;box-shadow:inset 0 2px 0 rgba(255,255,255,.7), 0 4px 0 rgba(13,59,102,.3)}
+.resultado .aviso-galeria{font-size:.85rem;font-weight:800;opacity:.75;margin-top:.8rem}
+
+/* galeria */
+.galeria-cabeca{
+  display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap;
+  margin-bottom:1.2rem;text-align:center;
+}
+.galeria-cabeca h2{
+  font-family:var(--display);font-weight:800;color:var(--branco);
+  font-size:clamp(1.4rem,5.5vw,2rem);
+  text-shadow:0 .08em 0 rgba(13,59,102,.9);
+}
+.contagem{
+  font-family:var(--display);font-weight:700;font-size:.9rem;
+  color:var(--navy);background:var(--amarelo);
+  border:2px solid var(--navy);border-radius:99px;padding:.15rem .8rem;
+  box-shadow:0 3px 0 rgba(13,59,102,.35);
+}
+.btn-atualizar{
+  font-family:var(--display);font-weight:700;font-size:.9rem;
+  color:var(--branco);background:rgba(255,255,255,.16);
+  border:2px solid rgba(255,255,255,.4);border-radius:99px;
+  padding:.2rem .9rem;
+}
+.btn-atualizar:hover{background:rgba(255,255,255,.3)}
+
+.grade{
+  display:grid;gap:.7rem;
+  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+}
+@media (min-width:720px){.grade{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}}
+.foto{
+  position:relative;aspect-ratio:1;overflow:hidden;
+  border-radius:20px;border:3px solid var(--branco);
+  box-shadow:0 5px 0 rgba(4,32,64,.35), 0 14px 22px rgba(8,63,118,.3);
+  background:rgba(255,255,255,.15);
+  padding:0;
+  animation:aparecer .4s ease both;
+  transition:transform .18s ease;
+}
+@keyframes aparecer{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.foto img{width:100%;height:100%;object-fit:cover}
+.foto .autor{
+  position:absolute;left:0;right:0;bottom:0;
+  font-family:var(--display);font-weight:700;font-size:.72rem;
+  color:var(--branco);text-align:left;
+  padding:.9rem .55rem .35rem;
+  background:linear-gradient(180deg,transparent,rgba(8,63,118,.85));
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.foto:hover{transform:translateY(-3px)}
+
+.estado{
+  text-align:center;color:var(--branco);font-weight:700;
+  padding:2.2rem 1rem;
+  background:rgba(255,255,255,.1);border:2px dashed rgba(255,255,255,.45);border-radius:24px;
+}
+.estado .peixe{font-size:2.4rem;display:block;margin-bottom:.4rem;animation:balancar 3s ease-in-out infinite}
+
+/* rodapé */
+.rodape{text-align:center;margin-top:3rem}
+.cta-topo{
+  font-family:var(--display);font-weight:800;
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:clamp(1rem,3.8vw,1.15rem);
+  color:var(--navy);background:var(--amarelo);
+  padding:.8rem 1.8rem;border-radius:99px;text-decoration:none;
+  border:4px solid var(--navy);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 6px 0 var(--navy), 0 16px 26px rgba(8,63,118,.35);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.cta-topo:hover{transform:translateY(3px);box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 3px 0 var(--navy), 0 10px 18px rgba(8,63,118,.3)}
+.cta-topo:focus-visible{outline:4px solid var(--branco);outline-offset:3px}
+
+/* lightbox (moldura temática, como na galeria de fotos) */
+.lightbox{
+  position:fixed;inset:0;z-index:80;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(4,24,47,.92);
+  padding:1rem;
+}
+.lightbox.aberto{display:flex}
+.lb-moldura{
+  position:relative;
+  padding:clamp(10px,2.4vw,18px);
+  border-radius:28px;
+  border:4px solid var(--navy);
+  background:linear-gradient(165deg,var(--agua-rasa) 0%,var(--agua) 38%,var(--agua-media) 72%,var(--oceano) 100%);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 10px 0 rgba(4,32,64,.5), 0 26px 60px rgba(0,0,0,.6);
+}
+.lb-moldura.m2{background:linear-gradient(165deg,#FFDCEE 0%,var(--rosa) 42%,#C2447F 100%)}
+.lb-moldura.m3{background:linear-gradient(165deg,#FFF3C4 0%,var(--amarelo) 40%,var(--laranja) 100%)}
+.lb-moldura.m4{background:linear-gradient(165deg,#D8F7E0 0%,var(--verde) 45%,#2E8B4A 100%)}
+.lb-moldura.m5{background:linear-gradient(165deg,var(--agua-media) 0%,var(--oceano) 45%,var(--profundo) 100%)}
+.lb-moldura::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:
+    radial-gradient(circle at 4% 18%, rgba(255,255,255,.7) 0 3px, transparent 4px),
+    radial-gradient(circle at 7% 55%, rgba(255,255,255,.5) 0 5px, transparent 6px),
+    radial-gradient(circle at 3% 82%, rgba(255,255,255,.6) 0 3px, transparent 4px),
+    radial-gradient(circle at 96% 25%, rgba(255,255,255,.6) 0 4px, transparent 5px),
+    radial-gradient(circle at 94% 65%, rgba(255,255,255,.5) 0 3px, transparent 4px),
+    radial-gradient(circle at 97% 88%, rgba(255,255,255,.65) 0 5px, transparent 6px),
+    radial-gradient(circle at 25% 97%, rgba(255,255,255,.55) 0 4px, transparent 5px),
+    radial-gradient(circle at 70% 96%, rgba(255,255,255,.5) 0 3px, transparent 4px),
+    radial-gradient(circle at 30% 3%, rgba(255,255,255,.55) 0 4px, transparent 5px),
+    radial-gradient(circle at 62% 4%, rgba(255,255,255,.5) 0 3px, transparent 4px);
+}
+.lightbox img.lb-foto{
+  max-width:min(94vw - 2*clamp(10px,2.4vw,18px) - 8px,1100px);
+  max-height:72vh;object-fit:contain;
+  border-radius:16px;border:3px solid var(--branco);
+  box-shadow:0 6px 18px rgba(4,24,47,.45);
+}
+.lb-shark{
+  position:absolute;top:-2.6rem;right:.6rem;
+  width:clamp(64px,14vw,104px);
+  transform:rotate(8deg);
+  filter:drop-shadow(0 6px 10px rgba(4,24,47,.55));
+  pointer-events:none;
+  animation:nadar 3.6s ease-in-out infinite;
+}
+.m3 .lb-shark,.m4 .lb-shark{width:clamp(84px,17vw,132px);top:-2.2rem}
+.m5 .lb-shark{
+  left:.6rem;right:auto;
+  transform:scaleX(-1) rotate(8deg);
+  animation-name:nadarEsq;
+}
+@keyframes nadarEsq{0%,100%{transform:scaleX(-1) rotate(8deg) translateY(0)}50%{transform:scaleX(-1) rotate(3deg) translateY(-6px)}}
+.lb-deco{
+  position:absolute;font-size:clamp(1.2rem,4vw,1.7rem);
+  pointer-events:none;
+  text-shadow:0 3px 6px rgba(4,24,47,.5);
+}
+.lb-deco-tl{top:-.9rem;left:-.6rem;transform:rotate(-18deg)}
+.lb-deco-bl{bottom:-.8rem;left:1rem;transform:rotate(10deg)}
+.lb-deco-br{bottom:-.9rem;right:-.5rem;transform:rotate(-8deg)}
+.lb-autor{
+  position:absolute;bottom:calc(1.2rem + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+  font-family:var(--display);font-weight:700;color:var(--navy);
+  background:var(--amarelo);border:3px solid var(--navy);border-radius:99px;
+  padding:.3rem 1.2rem;max-width:86vw;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.lb-btn{
+  position:absolute;z-index:2;
+  width:48px;height:48px;border-radius:50%;
+  font-size:1.3rem;line-height:1;
+  color:var(--navy);background:var(--branco);
+  border:3px solid var(--navy);
+  box-shadow:0 4px 0 rgba(4,32,64,.4);
+  display:flex;align-items:center;justify-content:center;
+}
+.lb-fechar{top:calc(.9rem + env(safe-area-inset-top));right:.9rem}
+.lb-ant{left:.6rem;top:50%;transform:translateY(-50%)}
+.lb-prox{right:.6rem;top:50%;transform:translateY(-50%)}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
+  z-index:90;opacity:0;pointer-events:none;
+  font-family:var(--display);font-weight:800;
+  background:var(--amarelo);color:var(--navy);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.6rem 1.4rem;font-size:1rem;text-align:center;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.5), 0 5px 0 var(--navy), 0 14px 26px rgba(8,63,118,.45);
+  transition:opacity .35s ease, transform .35s ease;
+  max-width:92vw;
+}
+.toast.mostra{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion:reduce){
+  .bolha,.topo .eyebrow,.estado .peixe,.lb-shark,.m5 .lb-shark,
+  .mar-magico img,.mar-magico .brilho,.quadro-resultado .espiao{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="oceano-bg" id="oceanoBg" aria-hidden="true"></div>
+
+<div class="pagina" id="topo">
+  <a class="voltar" href="index.html">🐟 Voltar ao cardápio</a>
+  <a class="voltar" href="fotos.html">📸 Fotos da festa</a>
+  <a class="voltar" href="capsula.html">🍾 Cápsula do Tempo</a>
+
+  <header class="topo">
+    <p class="eyebrow">🎶 Doo doo doo doo doo doo 🎶</p>
+    <h1>🎨 Vire um Tubarão!</h1>
+    <p>Mande uma selfie e a mágica do oceano transforma você num personagem
+       do mundo do Baby Shark! Baixe seu desenho e entre para a galeria da festa. 🦈✨</p>
+  </header>
+
+  <!-- estúdio de transformação -->
+  <section class="card-estudio" id="cardEstudio" aria-label="Transformar selfie em desenho">
+
+    <!-- etapa 1: escolher a selfie -->
+    <div class="formulario" id="etapaForm">
+      <h2>Mande sua selfie! 🤳</h2>
+      <p class="dica">Uma foto de rosto, bem iluminada, funciona melhor. Vale foto da galeria também!</p>
+
+      <input class="campo-nome" id="campoNome" type="text" maxlength="40" autocomplete="name"
+             placeholder="Seu nome (ex.: Tia Ana)" aria-label="Seu nome">
+
+      <input id="inputSelfie" type="file" accept="image/*" capture="user">
+      <input id="inputGaleria" type="file" accept="image/*">
+      <div class="escolhas">
+        <button class="btn-escolher" id="btnSelfie" type="button">Tirar selfie 🤳</button>
+        <button class="btn-escolher" id="btnGaleria" type="button">Escolher da galeria 🖼️</button>
+      </div>
+
+      <div class="previa" id="previa">
+        <img id="previaImg" src="" alt="Prévia da sua selfie">
+        <button class="tirar" id="btnTirar" type="button" aria-label="Remover foto escolhida">✕</button>
+      </div>
+
+      <label class="opcao-galeria">
+        <input type="checkbox" id="checkPublicar" checked>
+        Mostrar meu desenho na galeria da festa 🌊
+      </label>
+
+      <button class="btn-magica" id="btnMagica" type="button" disabled>Virar Baby Shark! 🦈✨</button>
+      <span class="fichas" id="fichas"></span>
+    </div>
+
+    <!-- etapa 2: gerando -->
+    <div class="gerando" aria-live="polite">
+      <div class="mar-magico" aria-hidden="true">
+        <img src="img/babyshark.png" alt="">
+        <span class="brilho" style="top:18px;left:18%">✨</span>
+        <span class="brilho" style="top:70px;left:62%;animation-delay:.5s">🫧</span>
+        <span class="brilho" style="top:24px;left:82%;animation-delay:1s">⭐</span>
+        <span class="brilho" style="top:96px;left:30%;animation-delay:1.4s">✨</span>
+      </div>
+      <p class="fase" id="faseGerando">🦈 Chamando o Baby Shark…</p>
+      <p class="paciencia">A mágica leva uns 30 segundinhos — não feche a página! 🐢</p>
+    </div>
+
+    <!-- etapa 3: resultado -->
+    <div class="resultado">
+      <h2>Olha você aí! 🎉</h2>
+      <div class="quadro-resultado">
+        <img class="arte" id="arteImg" src="" alt="Seu desenho no estilo Baby Shark">
+        <img class="espiao" src="img/babyshark.png" alt="" aria-hidden="true">
+      </div>
+      <div class="acoes">
+        <button class="btn-acao" id="btnBaixar" type="button">Baixar meu desenho ⬇️</button>
+        <button class="btn-acao" id="btnCompartilhar" type="button" hidden>Compartilhar 📲</button>
+        <button class="btn-acao secundario" id="btnOutra" type="button">Fazer outro desenho 🔁</button>
+      </div>
+      <p class="aviso-galeria" id="avisoGaleria" hidden>🌊 Seu desenho já está na galeria aqui embaixo!</p>
+    </div>
+  </section>
+
+  <!-- galeria dos desenhos -->
+  <section aria-label="Galeria de desenhos gerados">
+    <div class="galeria-cabeca">
+      <h2>🖼️ Cardume de desenhos</h2>
+      <span class="contagem" id="contagem" hidden>0 desenhos</span>
+      <button class="btn-atualizar" id="btnAtualizar" type="button">↺ Atualizar</button>
+    </div>
+    <div class="grade" id="grade"></div>
+    <div class="estado" id="estado">
+      <span class="peixe">🐠</span>
+      Carregando o cardume…
+    </div>
+  </section>
+
+  <footer class="rodape">
+    <a class="cta-topo" href="#topo">Voltar ao topo 🫧⬆️</a>
+  </footer>
+</div>
+
+<!-- lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Desenho ampliado">
+  <button class="lb-btn lb-fechar" id="lbFechar" aria-label="Fechar">✕</button>
+  <button class="lb-btn lb-ant" id="lbAnt" aria-label="Desenho anterior">‹</button>
+  <figure class="lb-moldura" id="lbMoldura">
+    <img class="lb-foto" id="lbImg" src="" alt="Desenho gerado na festa" draggable="false">
+    <img class="lb-shark" id="lbMascote" src="img/babyshark.png" alt="" aria-hidden="true">
+    <span class="lb-deco lb-deco-tl" aria-hidden="true">🐠</span>
+    <span class="lb-deco lb-deco-bl" aria-hidden="true">🫧</span>
+    <span class="lb-deco lb-deco-br" aria-hidden="true">⭐</span>
+  </figure>
+  <button class="lb-btn lb-prox" id="lbProx" aria-label="Próximo desenho">›</button>
+  <span class="lb-autor" id="lbAutor"></span>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO
+   - SCRIPT_URL: URL /exec do Apps Script (veja tubarao-apps-script.gs)
+   - Cloudinary: só valores públicos (seguros de expor)
+   ============================================================ */
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwo3AQTcgpnQUdUAXmSYh7Tt1jFwW57jMnF_qWKmmeYp9L5_I4yg3ji20KAx4rFQGt9/exec';
+
+var CLOUD_NAME = 'znbneca7';
+var UPLOAD_PRESET = 'festa_enzo_ia';   // preset unsigned próprio (tag festa-enzo-ia)
+var TAG = 'festa-enzo-ia';
+var LIMITE_APARELHO = 5;               // transformações por aparelho
+
+var UPLOAD_URL = 'https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/image/upload';
+var LIST_URL = 'https://res.cloudinary.com/' + CLOUD_NAME + '/image/list/' + TAG + '.json';
+var BASE_IMG = 'https://res.cloudinary.com/' + CLOUD_NAME + '/image/upload/';
+
+var $ = function (id) { return document.getElementById(id); };
+
+/* ---------- bolhas de fundo ---------- */
+(function () {
+  var bg = $('oceanoBg');
+  for (var i = 0; i < 14; i++) {
+    var b = document.createElement('div');
+    b.className = 'bolha';
+    var t = 8 + Math.random() * 20;
+    b.style.width = b.style.height = t + 'px';
+    b.style.left = Math.random() * 100 + 'vw';
+    b.style.animationDuration = (9 + Math.random() * 9) + 's';
+    b.style.animationDelay = (Math.random() * 10) + 's';
+    bg.appendChild(b);
+  }
+})();
+
+/* ---------- toast ---------- */
+var toastTimer = null;
+function toast(msg) {
+  var t = $('toast');
+  t.textContent = msg;
+  t.classList.add('mostra');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove('mostra'); }, 3200);
+}
+
+/* ---------- nome lembrado no aparelho (compartilhado com as outras páginas) ---------- */
+var campoNome = $('campoNome');
+try { campoNome.value = localStorage.getItem('festa-enzo-nome') || ''; } catch (e) {}
+campoNome.addEventListener('change', function () {
+  try { localStorage.setItem('festa-enzo-nome', campoNome.value.trim()); } catch (e) {}
+});
+
+/* ---------- fichas: limite de transformações por aparelho ---------- */
+function usosFeitos() {
+  try { return parseInt(localStorage.getItem('festa-enzo-ia-usos') || '0', 10) || 0; } catch (e) { return 0; }
+}
+function gastarFicha() {
+  try { localStorage.setItem('festa-enzo-ia-usos', String(usosFeitos() + 1)); } catch (e) {}
+}
+function fichasRestantes() { return Math.max(0, LIMITE_APARELHO - usosFeitos()); }
+function atualizarFichas() {
+  var n = fichasRestantes();
+  $('fichas').textContent = n > 0
+    ? '🎟️ Você tem ' + n + (n === 1 ? ' transformação' : ' transformações')
+    : '🎟️ Suas transformações acabaram — mas a galeria continua aberta!';
+  travarBotao();
+}
+
+/* ---------- escolha da selfie ---------- */
+var fotoEscolhida = null; // { base64: '...', mime: 'image/jpeg', urlPrevia: '...' }
+
+$('btnSelfie').addEventListener('click', function () { $('inputSelfie').click(); });
+$('btnGaleria').addEventListener('click', function () { $('inputGaleria').click(); });
+$('inputSelfie').addEventListener('change', pegarFoto);
+$('inputGaleria').addEventListener('change', pegarFoto);
+
+function pegarFoto(e) {
+  var file = e.target.files && e.target.files[0];
+  e.target.value = '';
+  if (!file) return;
+  comprimir(file).then(function (dados) {
+    if (!dados) { toast('Não consegui ler essa foto. Tente outra! 🌊'); return; }
+    fotoEscolhida = dados;
+    $('previaImg').src = dados.urlPrevia;
+    $('previa').classList.add('tem');
+    travarBotao();
+  });
+}
+
+$('btnTirar').addEventListener('click', function () {
+  fotoEscolhida = null;
+  $('previa').classList.remove('tem');
+  $('previaImg').src = '';
+  travarBotao();
+});
+
+function travarBotao() {
+  $('btnMagica').disabled = !fotoEscolhida || fichasRestantes() <= 0;
+}
+
+/* ---------- comprime a selfie no navegador (máx. 1024px, JPEG 85%) ---------- */
+var MAX_LADO = 1024;
+function comprimir(file) {
+  return new Promise(function (resolve) {
+    if (!/^image\//.test(file.type) && file.type !== '') { resolve(null); return; }
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function () {
+      var w = img.naturalWidth, h = img.naturalHeight;
+      var escala = Math.min(1, MAX_LADO / Math.max(w, h));
+      var cw = Math.round(w * escala), ch = Math.round(h * escala);
+      var canvas = document.createElement('canvas');
+      canvas.width = cw; canvas.height = ch;
+      canvas.getContext('2d').drawImage(img, 0, 0, cw, ch);
+      URL.revokeObjectURL(url);
+      var dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      resolve({
+        base64: dataUrl.split(',')[1],
+        mime: 'image/jpeg',
+        urlPrevia: dataUrl
+      });
+    };
+    img.onerror = function () { URL.revokeObjectURL(url); resolve(null); };
+    img.src = url;
+  });
+}
+
+/* ---------- a mágica: manda a selfie pro Apps Script → Gemini ---------- */
+var card = $('cardEstudio');
+var arteGerada = null; // { base64, mime }
+var FASES = [
+  '🦈 Chamando o Baby Shark…',
+  '🎨 Misturando as tintas do oceano…',
+  '🐠 Desenhando suas nadadeiras…',
+  '🫧 Soprando as bolhas…',
+  '✨ Caprichando nos últimos brilhos…'
+];
+var faseTimer = null;
+
+$('btnMagica').addEventListener('click', function () {
+  var nome = campoNome.value.trim();
+  if (!nome) { campoNome.focus(); toast('Primeiro escreva seu nome! ✏️'); return; }
+  if (!fotoEscolhida) { toast('Escolha uma selfie primeiro! 🤳'); return; }
+  if (!SCRIPT_URL) { toast('Ops! O estúdio ainda não foi ligado à IA 🛠️'); return; }
+  if (fichasRestantes() <= 0) { toast('Suas transformações acabaram! 🎟️'); return; }
+  try { localStorage.setItem('festa-enzo-nome', nome); } catch (e) {}
+
+  card.classList.add('ocupado');
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  var f = 0;
+  $('faseGerando').textContent = FASES[0];
+  faseTimer = setInterval(function () {
+    f = (f + 1) % FASES.length;
+    $('faseGerando').textContent = FASES[f];
+  }, 4000);
+
+  // sem headers customizados = requisição simples, sem preflight (funciona com Apps Script)
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ imagem: fotoEscolhida.base64, mime: fotoEscolhida.mime })
+  })
+    .then(function (r) { return r.json(); })
+    .then(function (dados) {
+      if (!dados || !dados.ok) throw dados || {};
+      return comprimirArte({ base64: dados.imagem, mime: dados.mime || 'image/png' });
+    })
+    .then(function (arte) {
+      arteGerada = arte;
+      gastarFicha();
+      mostrarResultado(nome);
+    })
+    .catch(function (erro) {
+      var msgs = {
+        'limite': 'O oceano de hoje encheu! Tente de novo amanhã 🌊',
+        'cota-ia': 'O pincel mágico precisa descansar um pouquinho. Tente já já! 🖌️',
+        'bloqueada': 'A mágica não funcionou com essa foto. Tente outra, de rosto! 🙈',
+        'sem-chave': 'O estúdio ainda não foi ligado à IA 🛠️',
+        'foto-invalida': 'Essa foto não deu certo. Tente outra! 📷'
+      };
+      if (erro && erro.detalhe) console.warn('Detalhe da IA:', erro.detalhe);
+      toast(msgs[erro && erro.erro] || 'A maré levou seu desenho! Tente de novo 🌊');
+      voltarFormulario();
+    });
+});
+
+function voltarFormulario() {
+  clearInterval(faseTimer);
+  card.classList.remove('ocupado');
+  card.classList.remove('pronto');
+  atualizarFichas();
+}
+
+function mostrarResultado(nome) {
+  clearInterval(faseTimer);
+  $('arteImg').src = 'data:' + arteGerada.mime + ';base64,' + arteGerada.base64;
+  $('btnCompartilhar').hidden = !podeCompartilhar();
+  $('avisoGaleria').hidden = true;
+  card.classList.remove('ocupado');
+  card.classList.add('pronto');
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  toast('Doo doo doo! Você virou desenho! 🦈🎉');
+
+  if ($('checkPublicar').checked) publicarNaGaleria(nome);
+}
+
+$('btnOutra').addEventListener('click', function () {
+  arteGerada = null;
+  fotoEscolhida = null;
+  $('previa').classList.remove('tem');
+  $('previaImg').src = '';
+  $('arteImg').src = '';
+  voltarFormulario();
+});
+
+/* ---------- selo pt-BR carimbado sobre o desenho ---------- */
+var FRASES = [
+  'Doo doo doo doo doo doo!',
+  'Virei um tubarão!',
+  'Bem-vindo ao fundo do mar!',
+  'Glub glub, é festa!',
+  'Bora nadar com o Enzo!'
+];
+var SELO = 'Festa Enzo - 03 anos (2026)';
+
+// menor fonte que faz o texto caber na largura pedida
+function ajustarFonte(ctx, texto, maxLargura, tamanho, peso) {
+  var t = tamanho;
+  do {
+    ctx.font = peso + ' ' + Math.round(t) + 'px "Baloo 2","Arial Rounded MT Bold",sans-serif';
+    if (ctx.measureText(texto).width <= maxLargura) break;
+    t *= 0.94;
+  } while (t > tamanho * 0.5);
+  return ctx.font;
+}
+
+// pílula amarela com borda navy (mesma identidade visual do site)
+function desenharSelo(ctx, w, h, frase) {
+  var fw = w * 0.88, fh = h * 0.15;
+  var x = (w - fw) / 2, y = h - fh - h * 0.028, r = fh * 0.38;
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + fw, y, x + fw, y + fh, r);
+  ctx.arcTo(x + fw, y + fh, x, y + fh, r);
+  ctx.arcTo(x, y + fh, x, y, r);
+  ctx.arcTo(x, y, x + fw, y, r);
+  ctx.closePath();
+  ctx.shadowColor = 'rgba(4,32,64,.45)';
+  ctx.shadowBlur = w * 0.018;
+  ctx.shadowOffsetY = w * 0.007;
+  ctx.fillStyle = '#FFD23F';
+  ctx.fill();
+  ctx.shadowColor = 'transparent';
+  ctx.lineWidth = Math.max(3, w * 0.008);
+  ctx.strokeStyle = '#0D3B66';
+  ctx.stroke();
+  ctx.fillStyle = '#0D3B66';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = ajustarFonte(ctx, frase, fw * 0.9, w * 0.05, '800');
+  ctx.fillText(frase, w / 2, y + fh * 0.34);
+  ctx.font = ajustarFonte(ctx, SELO, fw * 0.9, w * 0.031, '700');
+  ctx.fillText(SELO, w / 2, y + fh * 0.72);
+  ctx.restore();
+}
+
+/* ---------- comprime o desenho gerado (JPEG, máx. 500 KB) + selo ---------- */
+var MAX_ARTE_BYTES = 500 * 1024;
+function comprimirArte(arte) {
+  return new Promise(function (resolve) {
+    var frase = FRASES[Math.floor(Math.random() * FRASES.length)];
+    var img = new Image();
+    img.onload = function () {
+      // tenta [escala, qualidade] do melhor para o pior até caber em 500 KB
+      var tentativas = [[1, .9], [1, .82], [1, .74], [1, .66], [.85, .66], [.75, .6], [.65, .55]];
+      var melhor = null;
+      for (var i = 0; i < tentativas.length; i++) {
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(img.naturalWidth * tentativas[i][0]));
+        canvas.height = Math.max(1, Math.round(img.naturalHeight * tentativas[i][0]));
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        desenharSelo(ctx, canvas.width, canvas.height, frase);
+        var b64 = canvas.toDataURL('image/jpeg', tentativas[i][1]).split(',')[1];
+        melhor = { base64: b64, mime: 'image/jpeg' };
+        if (b64.length * 0.75 <= MAX_ARTE_BYTES) break;
+      }
+      resolve(melhor || arte);
+    };
+    img.onerror = function () { resolve(arte); }; // não conseguiu ler: usa como veio
+    // garante a fonte do selo carregada antes de desenhar
+    var fontes = (document.fonts && document.fonts.load)
+      ? Promise.all([
+          document.fonts.load('800 60px "Baloo 2"'),
+          document.fonts.load('700 40px "Baloo 2"')
+        ]).catch(function () {})
+      : Promise.resolve();
+    fontes.then(function () {
+      img.src = 'data:' + arte.mime + ';base64,' + arte.base64;
+    });
+  });
+}
+
+/* ---------- baixar / compartilhar o desenho ---------- */
+function arteComoBlob() {
+  var bytes = atob(arteGerada.base64);
+  var arr = new Uint8Array(bytes.length);
+  for (var i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
+  return new Blob([arr], { type: arteGerada.mime });
+}
+function extensaoArte() {
+  return arteGerada.mime === 'image/jpeg' ? 'jpg' : 'png';
+}
+
+$('btnBaixar').addEventListener('click', function () {
+  if (!arteGerada) return;
+  var blob = arteComoBlob();
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'virei-tubarao-festa-do-enzo.' + extensaoArte();
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
+  toast('Desenho baixado! 🎨⬇️');
+});
+
+function podeCompartilhar() {
+  if (!navigator.canShare || !arteGerada) return false;
+  try {
+    var f = new File([arteComoBlob()], 'virei-tubarao.' + extensaoArte(), { type: arteGerada.mime });
+    return navigator.canShare({ files: [f] });
+  } catch (e) { return false; }
+}
+
+$('btnCompartilhar').addEventListener('click', function () {
+  if (!arteGerada) return;
+  var f = new File([arteComoBlob()], 'virei-tubarao.' + extensaoArte(), { type: arteGerada.mime });
+  navigator.share({
+    files: [f],
+    title: 'Virei um desenho na festa do Enzo! 🦈'
+  }).catch(function () {});
+});
+
+/* ---------- publica o desenho na galeria (Cloudinary) ---------- */
+function publicarNaGaleria(nome) {
+  var fd = new FormData();
+  fd.append('file', arteComoBlob(), 'desenho.' + extensaoArte());
+  fd.append('upload_preset', UPLOAD_PRESET);
+  fd.append('asset_folder', TAG); // pasta festa-enzo-ia no Cloudinary (igual à festa-enzo)
+  fd.append('context', 'caption=' + nome.replace(/[|=]/g, ' '));
+
+  fetch(UPLOAD_URL, { method: 'POST', body: fd })
+    .then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function (resp) {
+      enviosProntos.unshift({
+        public_id: resp.public_id,
+        version: resp.version,
+        format: resp.format,
+        autor: nome,
+        enviadoEm: Date.now()
+      });
+      renderizar();
+      $('avisoGaleria').hidden = false;
+    })
+    .catch(function () {
+      toast('O desenho é seu, mas a galeria não recebeu. Tente atualizar! 🌊');
+    });
+}
+
+/* ---------- galeria ---------- */
+var fotos = [];
+var listaOk = false;
+var enviosProntos = []; // desenhos publicados nesta visita (antes do cache da lista)
+
+function urlThumb(f) {
+  return BASE_IMG + 'c_fill,w_420,h_420,g_auto,q_auto,f_auto/v' + f.version + '/' + f.public_id + '.jpg';
+}
+function urlGrande(f) {
+  return BASE_IMG + 'c_limit,w_1600,h_1600,q_auto,f_auto/v' + f.version + '/' + f.public_id + '.jpg';
+}
+
+function carregar(manual) {
+  fetch(LIST_URL + '?t=' + Math.floor(Date.now() / 30000))
+    .then(function (r) {
+      if (r.status === 404) return { resources: [] }; // tag ainda sem desenhos
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function (dados) {
+      listaOk = true;
+      var agora = Date.now();
+      enviosProntos = enviosProntos.filter(function (f) {
+        return agora - f.enviadoEm < 120000;
+      });
+      fotos = (dados.resources || []).map(function (r) {
+        var autor = '';
+        if (r.context && r.context.custom && r.context.custom.caption) autor = r.context.custom.caption;
+        return { public_id: r.public_id, version: r.version, format: r.format, autor: autor };
+      });
+      renderizar();
+      if (manual) toast('Cardume atualizado! 🐟');
+    })
+    .catch(function () {
+      if (!listaOk) renderizar();
+      if (manual) toast('Não consegui atualizar agora 🌊');
+    });
+}
+
+function renderizar() {
+  var vistos = {};
+  var todas = [];
+  enviosProntos.concat(fotos).forEach(function (f) {
+    if (vistos[f.public_id]) return;
+    vistos[f.public_id] = true;
+    todas.push(f);
+  });
+  todas.sort(function (a, b) { return b.version - a.version; });
+
+  var grade = $('grade');
+  var estado = $('estado');
+  var contagem = $('contagem');
+
+  grade.innerHTML = '';
+  if (!todas.length) {
+    estado.hidden = false;
+    estado.innerHTML = listaOk
+      ? '<span class="peixe">🐠</span>Nenhum desenho ainda… seja o primeiro a virar tubarão!'
+      : '<span class="peixe">🐠</span>O cardume está sendo preparado… faça seu desenho que ele já entra!';
+    contagem.hidden = true;
+    return;
+  }
+  estado.hidden = true;
+  contagem.hidden = false;
+  contagem.textContent = todas.length + (todas.length === 1 ? ' desenho' : ' desenhos');
+
+  todas.forEach(function (f, i) {
+    var btn = document.createElement('button');
+    btn.className = 'foto';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Ampliar desenho' + (f.autor ? ' de ' + f.autor : ''));
+    var img = document.createElement('img');
+    img.loading = 'lazy';
+    img.onerror = function () { btn.remove(); };
+    img.src = urlThumb(f);
+    img.alt = f.autor ? 'Desenho de ' + f.autor : 'Desenho da festa';
+    btn.appendChild(img);
+    if (f.autor) {
+      var autor = document.createElement('span');
+      autor.className = 'autor';
+      autor.textContent = '🎨 ' + f.autor;
+      btn.appendChild(autor);
+    }
+    btn.addEventListener('click', function () { abrirLightbox(i); });
+    grade.appendChild(btn);
+  });
+
+  galeriaAtual = todas;
+}
+
+/* ---------- lightbox (molduras temáticas, como na galeria de fotos) ---------- */
+var galeriaAtual = [];
+var lbIndice = 0;
+var lightbox = $('lightbox');
+
+var MOLDURAS = [
+  { classe: 'm1', mascote: 'img/babyshark.png',  decos: ['🐠', '🫧', '⭐'] },
+  { classe: 'm2', mascote: 'img/brooklyn2.png',  decos: ['🐚', '🌺', '🫧'] },
+  { classe: 'm3', mascote: 'img/william.png',    decos: ['🌞', '⭐', '🐚'] },
+  { classe: 'm4', mascote: 'img/familia-go.png', decos: ['🐢', '🌿', '🐡'] },
+  { classe: 'm5', mascote: 'img/babyshark.png',  decos: ['🐋', '🌙', '✨'] }
+];
+function sortearMoldura(id) {
+  var h = 0;
+  for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return MOLDURAS[h % MOLDURAS.length];
+}
+
+function abrirLightbox(i) {
+  lbIndice = i;
+  mostrarLb();
+  lightbox.classList.add('aberto');
+  document.body.style.overflow = 'hidden';
+}
+function fecharLightbox() {
+  lightbox.classList.remove('aberto');
+  document.body.style.overflow = '';
+}
+function mostrarLb() {
+  var f = galeriaAtual[lbIndice];
+  if (!f) return;
+  $('lbImg').src = urlGrande(f);
+  var m = sortearMoldura(f.public_id);
+  $('lbMoldura').className = 'lb-moldura ' + m.classe;
+  $('lbMascote').src = m.mascote;
+  var decos = document.querySelectorAll('.lb-deco');
+  for (var i = 0; i < decos.length; i++) decos[i].textContent = m.decos[i];
+  $('lbAutor').textContent = f.autor ? '🎨 ' + f.autor : '🎨 Festa do Enzo';
+}
+function lbAndar(passo) {
+  lbIndice = (lbIndice + passo + galeriaAtual.length) % galeriaAtual.length;
+  mostrarLb();
+}
+$('lbFechar').addEventListener('click', fecharLightbox);
+$('lbAnt').addEventListener('click', function () { lbAndar(-1); });
+$('lbProx').addEventListener('click', function () { lbAndar(1); });
+lightbox.addEventListener('click', function (e) { if (e.target === lightbox) fecharLightbox(); });
+document.addEventListener('keydown', function (e) {
+  if (!lightbox.classList.contains('aberto')) return;
+  if (e.key === 'Escape') fecharLightbox();
+  if (e.key === 'ArrowLeft') lbAndar(-1);
+  if (e.key === 'ArrowRight') lbAndar(1);
+});
+// swipe no celular
+var touchX = null;
+lightbox.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+lightbox.addEventListener('touchend', function (e) {
+  if (touchX === null) return;
+  var dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 50) lbAndar(dx > 0 ? -1 : 1);
+  touchX = null;
+}, { passive: true });
+
+/* ---------- inicialização ---------- */
+atualizarFichas();
+$('btnAtualizar').addEventListener('click', function () { carregar(true); });
+carregar();
+setInterval(carregar, 45000);
+document.addEventListener('visibilitychange', function () {
+  if (!document.hidden) carregar();
+});
+</script>
+</body>
+</html>
