@@ -1295,6 +1295,7 @@ button{font-family:inherit;cursor:pointer}
 </div>
 
 <button class="btn-musica" id="btnMusica" aria-label="Tocar a música do Baby Shark" aria-pressed="false">🎵</button>
+<audio id="audioShark" src="musica/baby-shark.mp3" preload="auto" loop></audio>
 
 <div class="toast" id="toast"></div>
 <canvas id="confete" aria-hidden="true"></canvas>
@@ -1399,6 +1400,9 @@ button{font-family:inherit;cursor:pointer}
   /* ---------- música: Baby Shark ---------- */
   var tocando = false, loopTimer = null;
   var btnMusica = document.getElementById('btnMusica');
+  var audioShark = document.getElementById('audioShark');
+  var mp3Falhou = false; /* se o arquivo não existir, cai na versão sintetizada */
+  audioShark.addEventListener('error', function () { mp3Falhou = true; });
   var D = 293.66, E = 329.63, G = 392.00, FS = 369.99;
 
   function tocaFrase() {
@@ -1424,8 +1428,17 @@ button{font-family:inherit;cursor:pointer}
     btnMusica.setAttribute('aria-pressed', String(tocando));
     btnMusica.textContent = tocando ? '🔊' : '🎵';
     btnMusica.setAttribute('aria-label', tocando ? 'Parar a música' : 'Tocar a música do Baby Shark');
-    if (tocando) { tocaFrase(); }
-    else if (loopTimer) { clearTimeout(loopTimer); loopTimer = null; }
+    if (tocando) {
+      if (mp3Falhou) { tocaFrase(); }
+      else {
+        audioShark.currentTime = 0;
+        var p = audioShark.play();
+        if (p && p.catch) p.catch(function () { mp3Falhou = true; if (tocando) tocaFrase(); });
+      }
+    } else {
+      audioShark.pause();
+      if (loopTimer) { clearTimeout(loopTimer); loopTimer = null; }
+    }
   });
 
   /* ---------- personagens que reagem ---------- */
