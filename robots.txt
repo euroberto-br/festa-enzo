@@ -1,0 +1,5 @@
+# Crawl liberado de propósito: bloquear aqui impediria o Google
+# de ler a meta tag noindex das páginas. A não-indexação é
+# garantida pelo <meta name="robots" content="noindex, nofollow">.
+User-agent: *
+Allow: /
