@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#083F76">
+<title>🏆 Telão — Ranking do Cardume</title>
+<meta name="description" content="Telão ao vivo do Ranking do Cardume — Salinha de Jogos da festa do Enzo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ceu:#C9F3FF;
+  --agua-media:#1D93CE;
+  --oceano:#0F6FB5;
+  --profundo:#083F76;
+  --navy:#0D3B66;
+  --amarelo:#FFD23F;
+  --laranja:#F49B33;
+  --verde:#58C472;
+  --branco:#FFFFFF;
+  --edge-navy:#04182F;
+  --display:'Baloo 2','Arial Rounded MT Bold',system-ui,sans-serif;
+  --texto:'Nunito','Segoe UI',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:var(--texto);color:var(--branco);
+  min-height:100vh;overflow-x:hidden;
+  background:linear-gradient(180deg,var(--agua-media) 0%,var(--oceano) 45%,var(--profundo) 100%);
+  background-attachment:fixed;
+  display:flex;flex-direction:column;align-items:center;
+  padding:2.2rem 1.2rem 2.6rem;
+  text-align:center;
+}
+.bolhas-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bolha{
+  position:absolute;bottom:-70px;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, rgba(255,255,255,.85), rgba(255,255,255,.1) 58%, rgba(255,255,255,.3));
+  animation:subir linear infinite;opacity:0;
+}
+@keyframes subir{
+  0%{transform:translateY(0);opacity:0}
+  8%{opacity:.6}
+  92%{opacity:.45}
+  100%{transform:translateY(-110vh) translateX(5vw);opacity:0}
+}
+header,main,footer{position:relative;z-index:1;width:100%;max-width:860px}
+h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(2rem,6.5vw,4.2rem);line-height:1;
+  text-shadow:0 .06em 0 var(--laranja), 0 .14em 0 rgba(4,24,48,.9);
+}
+.sub{font-weight:800;font-size:clamp(.95rem,2.6vw,1.35rem);margin-top:.5rem;opacity:.95}
+.painel{
+  margin:1.6rem auto 0;
+  background:rgba(4,24,48,.45);
+  border:4px solid rgba(255,255,255,.25);border-radius:30px;
+  padding:1.4rem clamp(.9rem,3.5vw,2.2rem) 1.7rem;
+  backdrop-filter:blur(3px);
+}
+.vista-titulo{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(1.5rem,4.8vw,2.6rem);
+  color:var(--amarelo);
+  animation:entra .5s ease;
+}
+@keyframes entra{from{transform:translateY(10px);opacity:0}to{transform:none;opacity:1}}
+.lista{
+  list-style:none;display:grid;gap:.55rem;
+  max-width:640px;margin:1.1rem auto 0;
+  animation:entra .5s ease;
+}
+.lista li{
+  display:flex;align-items:center;gap:1rem;
+  background:rgba(255,255,255,.12);
+  border:3px solid rgba(255,255,255,.22);border-radius:18px;
+  padding:.5rem 1.2rem;
+  font-weight:800;font-size:clamp(1.05rem,3vw,1.6rem);
+  text-align:left;
+}
+.lista li:nth-child(1){background:var(--amarelo);color:var(--navy);border-color:var(--laranja);transform:scale(1.03)}
+.lista li:nth-child(2){background:rgba(255,255,255,.28)}
+.lista li:nth-child(3){background:rgba(244,155,51,.35)}
+.pos{font-family:var(--display);min-width:2.6rem;font-size:clamp(1.2rem,3.4vw,1.9rem)}
+.nome{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pontos{font-family:var(--display);white-space:nowrap}
+.vazio{padding:1.4rem 0;font-weight:800;font-size:clamp(1rem,3vw,1.4rem);opacity:.85}
+.bolinhas{display:flex;gap:.45rem;justify-content:center;margin-top:1.2rem}
+.bolinha{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.3)}
+.bolinha.ativa{background:var(--amarelo)}
+footer{margin-top:1.4rem;font-weight:800;opacity:.85;font-size:clamp(.85rem,2.2vw,1.05rem)}
+footer .doo{font-family:var(--display)}
+.link-jogos{color:var(--amarelo);text-decoration:underline;text-underline-offset:3px}
+.link-jogos:hover{color:var(--branco)}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+  .bolha{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bolhas-bg" id="bolhasBg" aria-hidden="true"></div>
+
+<header>
+  <h1>🏆 Ranking do Cardume</h1>
+  <p class="sub">Desafios de 30 segundos da Salinha de Jogos — Festa do Enzo 🦈</p>
+</header>
+
+<main>
+  <div class="painel">
+    <h2 class="vista-titulo" id="vistaTitulo">🌊 Ranking Geral</h2>
+    <ol class="lista" id="lista" aria-live="polite"></ol>
+    <div class="bolinhas" id="bolinhas" aria-hidden="true"></div>
+  </div>
+</main>
+
+<footer>
+  <p>🎮 Jogue no celular: abra o site da festa e toque em <a class="link-jogos" href="jogos.html"><strong>Jogos</strong></a>!</p>
+  <p class="doo">Baby Shark, doo doo doo doo doo doo 🎶</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ⚙️ CONFIG: a MESMA URL /exec usada na jogos.html (jogos-apps-script.gs) */
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxGFH_eSVKBWKgdCouOcR-BRUM8-HAf9qID2UHV-cCtPA4fxOJmxd1xeIVZzmv-nu5uqA/exec';
+
+  var GIRO_MS = 10000;      // troca de vista a cada 10s
+  var ATUALIZA_MS = 30000;  // busca dados novos a cada 30s
+
+  var VISTAS = [
+    { id: 'geral', titulo: '🌊 Ranking Geral' },
+    { id: 'comilanca', titulo: '🦈 Alimente o Baby Shark' },
+    { id: 'bolhas', titulo: '🫧 Estoura Bolhas' },
+    { id: 'memoria', titulo: '🃏 Memória da Família' },
+    { id: 'corrida', titulo: '🐠 Corrida do Cardume' }
+  ];
+  var vistaAtual = 0;
+  var dados = null;
+
+  var titulo = document.getElementById('vistaTitulo');
+  var lista = document.getElementById('lista');
+  var bolinhas = document.getElementById('bolinhas');
+
+  /* bolhas de fundo */
+  var reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduzMovimento) {
+    var bg = document.getElementById('bolhasBg');
+    for (var i = 0; i < 16; i++) {
+      var b = document.createElement('span');
+      var tam = 8 + Math.random() * 28;
+      b.className = 'bolha';
+      b.style.width = tam + 'px';
+      b.style.height = tam + 'px';
+      b.style.left = Math.random() * 100 + 'vw';
+      b.style.animationDuration = 9 + Math.random() * 14 + 's';
+      b.style.animationDelay = Math.random() * 12 + 's';
+      bg.appendChild(b);
+    }
+  }
+
+  VISTAS.forEach(function (v, i) {
+    var p = document.createElement('span');
+    p.className = 'bolinha' + (i === 0 ? ' ativa' : '');
+    bolinhas.appendChild(p);
+  });
+
+  function render() {
+    var v = VISTAS[vistaAtual];
+    titulo.textContent = v.titulo;
+    titulo.style.animation = 'none'; void titulo.offsetWidth; titulo.style.animation = '';
+    lista.style.animation = 'none'; void lista.offsetWidth; lista.style.animation = '';
+    lista.innerHTML = '';
+    bolinhas.querySelectorAll('.bolinha').forEach(function (p, i) {
+      p.classList.toggle('ativa', i === vistaAtual);
+    });
+
+    if (!SCRIPT_URL) {
+      lista.innerHTML = '<li class="vazio">O telão ainda não foi ligado à planilha 🛠️<br>Cole a SCRIPT_URL na ranking.html</li>';
+      return;
+    }
+    if (!dados) {
+      lista.innerHTML = '<li class="vazio">Buscando os placares no fundo do mar… 🫧</li>';
+      return;
+    }
+    var linhas = (v.id === 'geral') ? (dados.geral || []) : ((dados.porJogo || {})[v.id] || []);
+    if (!linhas.length) {
+      lista.innerHTML = '<li class="vazio">Ninguém aqui ainda… seja o primeiro tubarão! 🦈</li>';
+      return;
+    }
+    var MEDALHAS = ['🥇', '🥈', '🥉'];
+    linhas.slice(0, 10).forEach(function (l, i) {
+      var li = document.createElement('li');
+      var pos = document.createElement('span');
+      pos.className = 'pos';
+      pos.textContent = MEDALHAS[i] || (i + 1) + 'º';
+      var nome = document.createElement('span');
+      nome.className = 'nome';
+      nome.textContent = l.nome;
+      var pts = document.createElement('span');
+      pts.className = 'pontos';
+      if (v.id === 'geral') pts.textContent = l.total + ' pts · ' + l.jogos + '/4';
+      else if (v.id === 'memoria') pts.textContent = (l.detalhe || (l.pontos + ' pts'));
+      else pts.textContent = l.pontos + ' pts';
+      li.appendChild(pos); li.appendChild(nome); li.appendChild(pts);
+      lista.appendChild(li);
+    });
+  }
+
+  function gira() {
+    vistaAtual = (vistaAtual + 1) % VISTAS.length;
+    render();
+  }
+
+  function atualiza() {
+    if (!SCRIPT_URL) { render(); return; }
+    fetch(SCRIPT_URL + '?ranking=1&t=' + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d || !d.ok) throw new Error();
+        dados = d;
+        render();
+      })
+      .catch(function () { /* mantém os dados anteriores no telão */ });
+  }
+
+  render();
+  atualiza();
+  setInterval(gira, GIRO_MS);
+  setInterval(atualiza, ATUALIZA_MS);
+})();
+</script>
+
+</body>
+</html>

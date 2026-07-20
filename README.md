@@ -26,14 +26,17 @@
 Um site-experiência com o tema **Baby Shark's Big Show** que transforma o cardápio da festa em um
 **mergulho no oceano**: o convidado começa na superfície do mar e vai descendo — de **0 m até −40 m** —
 passando por cada categoria de comida, cada uma apresentada por um personagem da família tubarão,
-até chegar ao bolo e ao fundo do mar. No caminho há peixinhos escondidos para caçar, música,
-confete e uma salinha com 4 mini-jogos.
+até chegar ao bolo e ao fundo do mar. No caminho há peixinhos escondidos para caçar, música
+e confete — e uma **Salinha de Jogos** em página própria, com desafios de 30 segundos,
+ranking ao vivo e o Passaporte do Mergulhador.
 
-O site tem três páginas:
+O site tem seis páginas:
 
 | Página | O que faz |
 |---|---|
 | 🍽️ [`index.html`](index.html) | O convite-cardápio interativo (o "mergulho") |
+| 🎮 [`jogos.html`](jogos.html) | **Salinha de Jogos** — 4 mini-jogos, desafio cronometrado de 30s, Ranking do Cardume e Passaporte do Mergulhador |
+| 📺 [`ranking.html`](ranking.html) | **Telão do ranking** — top 10 gigante com rodízio automático de vistas, para deixar aberto numa TV/tablet na festa |
 | 📸 [`fotos.html`](fotos.html) | Galeria colaborativa — os convidados enviam fotos da festa pelo celular e todo mundo vê |
 | 🍾 [`capsula.html`](capsula.html) | **Mensagem na Garrafa** — cápsula do tempo digital: os convidados escrevem recados, conselhos e histórias que ficam selados numa planilha do Google Drive até o Enzo crescer |
 | 🎨 [`tubarao.html`](tubarao.html) | **Vire um Tubarão!** — o convidado manda uma selfie e a IA (Azure `gpt-image-2`) devolve um desenho dele no estilo Baby Shark, para baixar e publicar na galeria de desenhos |
@@ -62,7 +65,6 @@ O cardápio é dividido em **14 estações de profundidade**, cada uma com um "a
 | −34 m | 🍺 Papais *(área 18+, card escuro)* | Papai Tubarão |
 | −38 m | 🎂 **O Bolo** *(sabor Belga — gran finale)* | O aniversariante! |
 | −40 m | ☕ Encerramento | Família reunida |
-| Bônus | 🎮 Salinha de jogos | Baby Shark |
 
 **Detalhes que dão vida à página:**
 
@@ -80,19 +82,59 @@ O cardápio é dividido em **14 estações de profundidade**, cada uma com um "a
 - 🎂 **Festa no bolo** — ao chegar na seção do bolo, as 3 velinhas se acendem sozinhas e explode confete
   (partículas desenhadas em `<canvas>` com física própria: gravidade, rotação e fade).
 
-### 🎮 A salinha de jogos (4 mini-jogos)
+### 🎮 A Salinha de Jogos (`jogos.html`)
+
+Página própria com 4 mini-jogos, **desafios cronometrados**, **ranking online** e o
+**Passaporte do Mergulhador**:
 
 | Jogo | Como joga |
 |---|---|
-| 🦈 **Alimente o Baby Shark** | Toque nas comidinhas flutuantes — elas voam até a boca do tubarão (*nhac!*) |
-| 🫧 **Estoura Bolhas** | Bolhas sobem pelo aquário; ~1 em cada 4 esconde uma surpresa 🎁 |
-| 🃏 **Memória da Família** | Jogo da memória com as fotos do Papai, da Mamãe e do Baby Shark (3 pares) |
-| 🐠 **Corrida do Cardume** | Arraste o dedo e o Baby Shark nada atrás, colecionando amigos peixes |
+| 🦈 **Alimente o Baby Shark** | Toque nas comidinhas flutuantes antes que fujam — **cada item some em poucos segundos** e dá lugar a outro. E cuidado: tem **lixo do mar** boiando junto (🥾🧦⚓), e tocar nele custa **−2 pontos** |
+| 🫧 **Estoura Bolhas** | Bolhas sobem pelo aquário; ~1 em cada 4 esconde uma surpresa 🎁. No desafio elas **sobem cada vez mais rápido** conforme o relógio corre — nos **últimos 5 segundos vira um frenesi** — e cada bolha que **escapa pelo topo sem estourar custa −1 ponto** |
+| 🃏 **Memória da Família** | 6 pares (12 cartas): o **desenho do Enzo**, Baby Shark, Papai, Mamãe, Vovô e Vovó. No desafio, cada par errado soma **+5s** ao cronômetro |
+| 🐠 **Corrida do Cardume** | Arraste o dedo e o Baby Shark nada atrás, colecionando amigos peixes — **fugindo do baiacu 🐡 e da lula 🦑**, que custam −2 pontos e **trocam de lugar a cada poucos segundos** |
+
+*Toda penalidade toca um som de erro (a da bolha fugida é mais suave), mostra um aviso vermelho
+voando na tela ("−2" / "−1" / "+5s") e o placar nunca fica negativo.*
+
+**Modo livre** (jogar à vontade):
 
 - Metas progressivas (**5 → 10 → 20 → 35 → 50 pontos**) com fanfarra e confete a cada conquista;
-- Placar e HUD por jogo, dicas contextuais;
+- Placar e HUD por jogo, dicas contextuais, **recorde pessoal** salvo no aparelho (`localStorage`);
 - Os jogos **pausam automaticamente** quando saem da tela (`IntersectionObserver`) — nada de gastar bateria à toa;
 - Sons de *nhac*, *pop* e fanfarra 100% sintetizados com Web Audio (sem arquivos de áudio extras).
+
+**⏱️ Modo desafio** (o que vale ranking):
+
+- Nos jogos de ação: contagem regressiva 3-2-1 e **30 segundos no relógio** — quantos pontos você faz?
+- Na memória: **cronômetro** que só dispara no primeiro toque — feche os 6 pares no menor tempo;
+  cada erro soma **+5s**, já refletido ao vivo no HUD (para o ranking geral, o tempo vira pontos:
+  `100 − segundos`);
+- Ao final: placar, recorde do aparelho e botão **"Enviar pro ranking"** com o nome do jogador
+  (reaproveitado da galeria/cápsula via `localStorage`). Os botões do painel final **esperam 1,5s
+  antes de ativar** — o toque frenético do fim de jogo não aciona nada por engano.
+
+**🏆 Ranking do Cardume** (mesmo padrão da cápsula: Google Apps Script + planilha):
+
+- O placar vai via `POST` para o Web App do [`jogos-apps-script.gs`](jogos-apps-script.gs), que valida
+  um **teto de plausibilidade por jogo** (comilança 90 · bolhas 90 · corrida 150 · memória 95 —
+  acima disso é trapaça, rejeitado), grava na aba `Placares` e invalida o cache;
+- O `GET` devolve o **top 10 por jogo** + o **ranking geral** (soma do melhor placar de cada pessoa
+  em cada jogo, com desempate por nº de jogos), com cache de 20s para aliviar a planilha na festa;
+- A salinha mostra o ranking em abas (Geral · por jogo), atualizando a cada 45s e ao voltar à aba;
+- 📺 O **telão** ([`ranking.html`](ranking.html)) roda em TV/tablet: top 10 gigante com **rodízio
+  automático de vistas a cada 10s** (geral → cada jogo) e busca dados novos a cada 30s;
+- ⚙️ **Configuração** (uma vez só, igual à cápsula): criar uma planilha nova, colar o
+  [`jogos-apps-script.gs`](jogos-apps-script.gs) em Extensões → Apps Script, publicar como
+  *App da Web* (acesso: "Qualquer pessoa") e colar a URL `/exec` na constante `SCRIPT_URL`
+  da `jogos.html` **e** da `ranking.html` — o passo a passo completo está comentado no próprio `.gs`.
+  Sem a URL, a salinha funciona normalmente; só o envio/exibição do ranking fica desligado.
+
+**🤿 Passaporte do Mergulhador** (gamificação da festa inteira):
+
+4 missões carimbadas automaticamente no aparelho: completar um desafio na salinha 🎮, mandar uma
+foto pra galeria 📸, lançar uma mensagem na garrafa 🍾 e virar um tubarão com a IA 🎨. Completou
+as 4? Selo de **Mergulhador Oficial** com confete e botão de compartilhar (Web Share API).
 
 ### 📸 A galeria colaborativa (`fotos.html`)
 
@@ -249,11 +291,14 @@ Todo o visual nasce de **tokens CSS** (`:root`) inspirados no mundo do *Baby Sha
 ```
 festa/
 ├── index.html               # Convite-cardápio interativo (página principal)
+├── jogos.html               # Salinha de Jogos: 4 mini-jogos + desafios + ranking + passaporte
+├── jogos-apps-script.gs     # Backend do ranking (colar no Apps Script da planilha de placares)
+├── ranking.html             # Telão do ranking para TV/tablet (rodízio automático)
 ├── fotos.html               # Galeria colaborativa de fotos (Cloudinary)
 ├── capsula.html             # Cápsula do tempo "Mensagem na Garrafa" (Google Sheets)
 ├── capsula-apps-script.gs   # Backend da cápsula (colar no Apps Script da planilha)
-├── tubarao.html             # "Vire um Tubarão!" — selfie → desenho com IA (Gemini)
-├── tubarao-apps-script.gs   # Proxy da IA (guarda a chave do Gemini no Apps Script)
+├── tubarao.html             # "Vire um Tubarão!" — selfie → desenho com IA (Azure gpt-image-2)
+├── tubarao-apps-script.gs   # Proxy da IA (guarda a chave do Azure no Apps Script)
 ├── robots.txt               # Crawl liberado p/ o Google ler o noindex
 ├── img/                # Fotos da família + personagens Baby Shark
 │   ├── hero-baby.jpg   #   imagem principal do hero
@@ -304,9 +349,8 @@ Atalhos usados durante o desenvolvimento (e úteis para tirar prints):
 | URL | Efeito |
 |---|---|
 | `index.html?fotos` | Desliga todas as animações (página estática, ideal para screenshots) |
-| `index.html?fotos&sojogos` | Mostra apenas a salinha de jogos |
 | `index.html?fotos&rolagem=1200` | Abre a página já rolada 1200 px |
-| `index.html?jogo=bolhas` | Abre com um jogo específico ativo (`comilanca` · `bolhas` · `memoria` · `corrida`) |
+| `jogos.html?jogo=bolhas` | Abre a salinha com um jogo específico ativo (`comilanca` · `bolhas` · `memoria` · `corrida`) |
 
 ---
 

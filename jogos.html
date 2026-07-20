@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1D93CE">
+<title>Salinha de Jogos 🎮 — Enzo faz 3!</title>
+<meta name="description" content="A salinha de jogos da festa do Enzo: 4 mini-jogos, desafios de 30 segundos e o Ranking do Cardume!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS — o mundo do Baby Shark's Big Show
+   ============================================================ */
+:root{
+  --ceu:#C9F3FF;
+  --agua-rasa:#7FE0F5;
+  --agua:#3FC0E8;
+  --agua-media:#1D93CE;
+  --oceano:#0F6FB5;
+  --profundo:#083F76;
+  --areia:#FBE9BF;
+  --navy:#0D3B66;
+  --amarelo:#FFD23F;
+  --laranja:#F49B33;
+  --rosa:#F26DB3;
+  --coral:#FF7FA0;
+  --azul:#2E6FD8;
+  --verde:#58C472;
+  --vermelho:#E8564A;
+  --branco:#FFFFFF;
+  --edge-navy:#04182F;
+  --display:'Baloo 2','Arial Rounded MT Bold',system-ui,sans-serif;
+  --texto:'Nunito','Segoe UI',system-ui,sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--texto);
+  color:var(--navy);
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+  -webkit-text-size-adjust:100%;
+  background:linear-gradient(180deg,
+    var(--agua-rasa) 0%,
+    var(--agua) 14%,
+    var(--agua-media) 38%,
+    var(--oceano) 70%,
+    var(--profundo) 100%);
+  background-attachment:fixed;
+}
+img,svg{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer}
+
+/* ---------- ambiente: bolhas + raios ---------- */
+.oceano-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bolha{
+  position:absolute;bottom:-70px;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, rgba(255,255,255,.85), rgba(255,255,255,.1) 58%, rgba(255,255,255,.3));
+  animation:subir linear infinite;opacity:0;
+}
+@keyframes subir{
+  0%{transform:translateY(0) translateX(0);opacity:0}
+  8%{opacity:.7}
+  92%{opacity:.55}
+  100%{transform:translateY(-110vh) translateX(5vw);opacity:0}
+}
+.raios{
+  position:absolute;inset:0 0 auto 0;height:120vh;
+  background:
+    linear-gradient(100deg, transparent 16%, rgba(255,255,255,.30) 21%, transparent 26%),
+    linear-gradient(100deg, transparent 44%, rgba(255,255,255,.22) 49%, transparent 55%),
+    linear-gradient(100deg, transparent 70%, rgba(255,255,255,.26) 75%, transparent 81%);
+  mask-image:linear-gradient(180deg,#000 25%,transparent 95%);
+  -webkit-mask-image:linear-gradient(180deg,#000 25%,transparent 95%);
+}
+
+/* ---------- cabeçalho ---------- */
+.topo{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:2.2rem 1.2rem 1.4rem;
+}
+.voltar{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-family:var(--display);font-weight:700;font-size:.95rem;
+  color:var(--navy);background:var(--branco);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.35rem 1.05rem;text-decoration:none;
+  box-shadow:0 4px 0 rgba(13,59,102,.3);
+  transition:transform .15s ease;
+  margin:0 .15rem 1.1rem;
+}
+.voltar:hover{transform:translateY(-2px)}
+.topo h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(2.1rem,8.5vw,4rem);
+  line-height:1;color:var(--branco);
+  text-shadow:0 .05em 0 var(--laranja), 0 .12em 0 rgba(13,59,102,.9), 0 .2em 1.6rem rgba(8,63,118,.4);
+}
+.topo .sub{
+  font-weight:800;color:var(--navy);
+  font-size:clamp(.95rem,3.6vw,1.15rem);
+  max-width:36ch;margin:.7rem auto 0;
+}
+
+/* ---------- cartões "de plástico" ---------- */
+main{position:relative;z-index:1;padding:0 1rem 3.5rem;display:grid;gap:1.6rem;justify-items:center}
+.card{
+  width:100%;max-width:720px;
+  background:var(--branco);
+  border:4px solid var(--navy);border-radius:30px;
+  padding:1.5rem clamp(1rem,4vw,2rem) 1.8rem;
+  box-shadow:inset 0 4px 0 rgba(255,255,255,.8), 0 8px 0 var(--edge-navy), 0 18px 30px rgba(8,63,118,.35);
+  text-align:center;
+}
+.card .eyebrow{
+  font-family:var(--display);font-weight:700;font-size:.85rem;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--agua-media);
+}
+.card h2{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(1.5rem,5.5vw,2.1rem);line-height:1.1;
+  margin:.15rem 0 .5rem;
+}
+.card .desc{max-width:56ch;margin:0 auto}
+
+/* ---------- quem está jogando ---------- */
+.jogador{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;justify-content:center;padding:1rem 1.4rem}
+.jogador label{font-family:var(--display);font-weight:700;font-size:1rem}
+.jogador input{
+  font-family:var(--texto);font-weight:800;font-size:1rem;color:var(--navy);
+  border:3px solid var(--navy);border-radius:14px;
+  padding:.5rem .9rem;width:min(260px,100%);
+  background:var(--ceu);
+}
+.jogador input:focus-visible{outline:3px solid var(--laranja);outline-offset:2px}
+
+/* ---------- abas dos jogos ---------- */
+.jogo-abas{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.1rem}
+.jogo-aba{
+  font-family:var(--display);font-weight:700;font-size:.92rem;
+  color:var(--navy);background:var(--branco);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.45rem 1.05rem;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.7), 0 4px 0 rgba(13,59,102,.3);
+  transition:transform .15s ease;
+}
+.jogo-aba:hover{transform:translateY(-2px)}
+.jogo-aba:focus-visible{outline:3px solid var(--laranja);outline-offset:2px}
+.jogo-aba.ativa{background:var(--amarelo);border-color:var(--laranja)}
+
+/* ---------- palco ---------- */
+.jogo-palco{
+  position:relative;width:100%;max-width:640px;
+  height:clamp(340px,58vw,440px);
+  margin:1.2rem auto 0;
+  border-radius:26px;overflow:hidden;
+  background:linear-gradient(180deg,#7FE0F5,#1D93CE 76%,#FBE9BF 77%,#F2D492);
+  border:4px solid var(--navy);
+  box-shadow:inset 0 6px 14px rgba(255,255,255,.4), inset 0 -8px 22px rgba(8,63,118,.2), 0 9px 0 var(--edge-navy), 0 20px 34px rgba(8,63,118,.3);
+  touch-action:manipulation;
+  user-select:none;-webkit-user-select:none;
+}
+.jogo-hud{
+  position:absolute;top:10px;left:10px;right:10px;
+  display:flex;justify-content:space-between;gap:.4rem;flex-wrap:wrap;
+  pointer-events:none;z-index:5;
+}
+.hud-chip{
+  font-family:var(--display);font-weight:800;font-size:.9rem;
+  background:rgba(13,59,102,.8);color:var(--branco);
+  border-radius:99px;padding:.25rem .85rem;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.18), 0 3px 0 rgba(4,24,48,.45);
+}
+.hud-chip.urgente{background:var(--vermelho);animation:pisca .5s ease infinite}
+@keyframes pisca{50%{transform:scale(1.08)}}
+.jogo-shark{
+  position:absolute;left:50%;bottom:6px;transform:translateX(-50%);
+  width:clamp(96px,24%,130px);max-width:none;
+  pointer-events:none;z-index:4;
+  filter:drop-shadow(0 6px 10px rgba(8,63,118,.35));
+  animation:flutua-perso 3.5s ease-in-out infinite;
+}
+@keyframes flutua-perso{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+.modo-bolhas .jogo-shark{display:none}
+.jogo-shark.nhac{animation:nhac .5s ease}
+@keyframes nhac{
+  0%{transform:translateX(-50%) scale(1) rotate(0)}
+  30%{transform:translateX(-50%) scale(1.25) rotate(-8deg)}
+  60%{transform:translateX(-50%) scale(1.12) rotate(6deg)}
+  100%{transform:translateX(-50%) scale(1)}
+}
+.comida{
+  position:absolute;background:none;border:none;padding:0;
+  font-size:clamp(2rem,7vw,2.6rem);line-height:1;
+  filter:drop-shadow(0 4px 6px rgba(8,63,118,.3));
+  animation:boia 3.4s ease-in-out infinite;
+  cursor:pointer;z-index:3;
+}
+.comida:focus-visible{outline:3px solid var(--amarelo);outline-offset:3px;border-radius:12px}
+@keyframes boia{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-10px) rotate(6deg)}}
+.comida.voando{
+  transition:left .45s ease-in, top .45s ease-in, transform .45s ease-in, opacity .45s ease-in;
+  animation:none;pointer-events:none;opacity:.85;
+}
+.bolha-jogo{
+  position:absolute;bottom:-90px;background:none;border:none;padding:0;
+  cursor:pointer;z-index:3;
+}
+.bolha-jogo:focus-visible{outline:3px solid var(--amarelo);outline-offset:3px;border-radius:50%}
+.bolha-jogo .pele{
+  display:block;width:100%;height:100%;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, rgba(255,255,255,.95), rgba(255,255,255,.18) 55%, rgba(255,255,255,.42));
+  border:2px solid rgba(255,255,255,.8);
+}
+@keyframes sobe-jogo{from{transform:translateY(0)}to{transform:translateY(-580px)}}
+.bolha-jogo.subindo{animation:sobe-jogo linear forwards}
+.bolha-jogo.pop{pointer-events:none;animation-play-state:paused}
+.bolha-jogo.pop .pele{animation:estourou .3s ease forwards}
+@keyframes estourou{to{transform:scale(1.6);opacity:0}}
+.surpresa{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:1.9rem;pointer-events:none;
+  animation:surge .85s ease forwards;
+}
+@keyframes surge{
+  0%{transform:scale(.2);opacity:0}
+  30%{transform:scale(1.3);opacity:1}
+  75%{transform:scale(1);opacity:1}
+  100%{transform:scale(1);opacity:0}
+}
+
+/* --- itens que perdem pontos (não-comidas / perigos) --- */
+.comida.ruim-tocada{animation:ruim-some .5s ease forwards;pointer-events:none}
+@keyframes ruim-some{to{transform:scale(.3) rotate(35deg);opacity:0}}
+.comida.sumindo{animation:comida-some .38s ease forwards;pointer-events:none}
+@keyframes comida-some{to{transform:scale(.2);opacity:0}}
+.peixe-perigo{
+  position:absolute;font-size:clamp(1.7rem,6vw,2.1rem);line-height:1;z-index:3;
+  pointer-events:none;
+  animation:boia 2.4s ease-in-out infinite;
+  filter:drop-shadow(0 0 7px rgba(232,86,74,.7));
+}
+.peixe-perigo.ai{animation:perigo-ai .5s ease forwards}
+@keyframes perigo-ai{to{transform:scale(1.7) rotate(-20deg);opacity:0}}
+.peixe-perigo.embora{animation:perigo-vai .4s ease forwards}
+@keyframes perigo-vai{to{transform:scale(.2);opacity:0}}
+.pena-flutua{
+  position:absolute;z-index:6;pointer-events:none;
+  font-family:var(--display);font-weight:800;font-size:1.15rem;color:var(--vermelho);
+  text-shadow:0 2px 0 rgba(255,255,255,.75);
+  animation:pena-sobe .9s ease forwards;
+}
+@keyframes pena-sobe{0%{transform:translateY(0);opacity:0}20%{opacity:1}100%{transform:translateY(-46px);opacity:0}}
+
+/* --- memória da família (6 pares / 12 cartas) --- */
+.memoria-grade{
+  position:absolute;inset:52px 12px 12px;
+  display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);
+  gap:9px;z-index:3;
+}
+.carta{
+  position:relative;border:none;background:none;padding:0;
+  cursor:pointer;perspective:700px;
+}
+.carta:focus-visible{outline:3px solid var(--amarelo);outline-offset:2px;border-radius:14px}
+.carta-face{
+  position:absolute;inset:0;border-radius:14px;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  transition:transform .45s ease;
+  border:3px solid var(--navy);overflow:hidden;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.35), 0 4px 0 rgba(4,24,48,.4), 0 8px 14px rgba(8,63,118,.25);
+}
+.carta-verso{
+  background:linear-gradient(160deg,var(--azul),#1D93CE);
+  display:grid;place-items:center;
+  font-size:clamp(1.2rem,5vw,1.9rem);
+}
+.carta-frente{background:var(--branco);transform:rotateY(180deg)}
+.carta-frente img{width:100%;height:100%;object-fit:cover}
+.carta.aberta .carta-verso{transform:rotateY(180deg)}
+.carta.aberta .carta-frente{transform:rotateY(0deg)}
+.carta.certa{animation:sacode .55s ease}
+@keyframes sacode{0%,100%{transform:rotate(0)}25%{transform:rotate(-5deg)}70%{transform:rotate(5deg)}}
+.carta.certa .carta-frente{border-color:var(--verde)}
+
+/* --- corrida do cardume --- */
+.corrida-shark{
+  position:absolute;width:clamp(64px,17%,84px);max-width:none;z-index:4;
+  pointer-events:none;
+  filter:drop-shadow(0 5px 8px rgba(8,63,118,.35));
+}
+.peixe-amigo{
+  position:absolute;font-size:clamp(1.7rem,6vw,2.1rem);line-height:1;z-index:3;
+  pointer-events:none;
+  animation:boia 3s ease-in-out infinite;
+  filter:drop-shadow(0 3px 5px rgba(8,63,118,.3));
+}
+.jogo-dica{
+  position:absolute;left:50%;bottom:12px;transform:translateX(-50%);
+  font-family:var(--display);font-weight:700;font-size:.82rem;
+  background:rgba(255,255,255,.85);color:var(--navy);
+  border-radius:99px;padding:.25rem .9rem;white-space:nowrap;
+  pointer-events:none;z-index:5;
+  max-width:calc(100% - 24px);overflow:hidden;text-overflow:ellipsis;
+}
+
+/* ---------- desafio ---------- */
+.btn-desafio{
+  font-family:var(--display);font-weight:800;font-size:1.1rem;
+  color:var(--navy);background:var(--amarelo);
+  border:4px solid var(--navy);border-radius:99px;
+  padding:.65rem 1.8rem;margin-top:1.1rem;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.55), 0 6px 0 var(--edge-navy), 0 12px 18px rgba(8,63,118,.3);
+  transition:transform .15s ease;
+}
+.btn-desafio:hover{transform:translateY(-2px)}
+.btn-desafio:focus-visible{outline:3px solid var(--laranja);outline-offset:3px}
+.btn-desafio:disabled{opacity:.55;cursor:default;transform:none}
+.contagem-num{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(5rem,26vw,9rem);color:var(--branco);
+  text-shadow:0 .06em 0 var(--laranja), 0 .14em 0 rgba(13,59,102,.9);
+  background:rgba(8,63,118,.45);
+  z-index:7;pointer-events:none;
+}
+.contagem-num span{animation:pulo-contagem .9s ease}
+@keyframes pulo-contagem{0%{transform:scale(.2);opacity:0}35%{transform:scale(1.25);opacity:1}70%{transform:scale(1)}}
+.palco-travado .comida,.palco-travado .bolha-jogo,.palco-travado .carta{pointer-events:none}
+
+/* overlay de fim de desafio */
+.fim-overlay{
+  position:absolute;inset:0;z-index:8;
+  display:grid;place-items:center;
+  background:rgba(8,63,118,.78);
+  padding:1rem;
+}
+.fim-caixa{
+  background:var(--branco);
+  border:4px solid var(--navy);border-radius:24px;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.7), 0 8px 0 var(--edge-navy);
+  padding:1.2rem 1.4rem 1.4rem;
+  text-align:center;max-width:340px;width:100%;
+  animation:caixa-entra .45s ease;
+}
+@keyframes caixa-entra{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.fim-caixa h3{font-family:var(--display);font-weight:800;font-size:1.3rem;line-height:1.15}
+.fim-placar{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(2.4rem,10vw,3.4rem);line-height:1;
+  color:var(--agua-media);margin:.35rem 0 .1rem;
+}
+.fim-recorde{font-weight:800;font-size:.95rem;margin-bottom:.8rem}
+.fim-recorde.novo{color:var(--verde)}
+.fim-botoes{display:flex;flex-direction:column;gap:.55rem}
+.fim-botoes button{
+  font-family:var(--display);font-weight:800;font-size:1rem;
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.55rem 1rem;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.5), 0 4px 0 rgba(4,24,48,.4);
+  transition:opacity .3s ease;
+}
+.fim-botoes button:disabled{opacity:.45;cursor:default}
+.btn-enviar{background:var(--verde);color:var(--branco)}
+.btn-enviar:disabled{opacity:.6;cursor:default}
+.btn-denovo{background:var(--amarelo);color:var(--navy)}
+.btn-fechar{background:var(--branco);color:var(--navy)}
+
+/* ---------- ranking ---------- */
+.rank-abas{display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap;margin:1rem 0 .8rem}
+.rank-aba{
+  font-family:var(--display);font-weight:700;font-size:.85rem;
+  color:var(--navy);background:var(--branco);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.32rem .85rem;
+  box-shadow:0 3px 0 rgba(13,59,102,.3);
+}
+.rank-aba.ativa{background:var(--amarelo);border-color:var(--laranja)}
+.rank-aba:focus-visible{outline:3px solid var(--laranja);outline-offset:2px}
+.rank-lista{list-style:none;display:grid;gap:.45rem;max-width:460px;margin:0 auto}
+.rank-lista li{
+  display:flex;align-items:center;gap:.7rem;
+  background:var(--ceu);
+  border:3px solid var(--navy);border-radius:16px;
+  padding:.4rem .9rem;
+  font-weight:800;text-align:left;
+}
+.rank-lista li:nth-child(1){background:var(--amarelo)}
+.rank-lista li:nth-child(2){background:#E8F1F8}
+.rank-lista li:nth-child(3){background:#FBDCB8}
+.rank-pos{font-family:var(--display);font-weight:800;font-size:1.05rem;min-width:2.1rem}
+.rank-nome{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-pontos{font-family:var(--display);font-weight:800;color:var(--agua-media);white-space:nowrap}
+.rank-vazio{font-weight:800;opacity:.75;padding:.8rem 0}
+.rank-rodape{font-size:.82rem;font-weight:700;opacity:.7;margin-top:.9rem}
+.link-telao{
+  display:inline-block;margin-top:.6rem;
+  font-family:var(--display);font-weight:700;font-size:.9rem;
+  color:var(--navy);text-decoration:none;
+  background:var(--ceu);border:3px solid var(--navy);border-radius:99px;
+  padding:.35rem 1rem;
+  box-shadow:0 4px 0 rgba(13,59,102,.3);
+}
+
+/* ---------- passaporte ---------- */
+.passa-grade{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:.8rem;margin-top:1.1rem;
+}
+.carimbo{
+  display:block;text-decoration:none;color:var(--navy);
+  background:var(--ceu);
+  border:3px dashed var(--navy);border-radius:20px;
+  padding:.9rem .6rem;
+  opacity:.85;
+}
+.carimbo .selo-emoji{display:block;font-size:2rem;line-height:1;filter:grayscale(1);opacity:.5}
+.carimbo .titulo{display:block;font-family:var(--display);font-weight:800;font-size:.92rem;line-height:1.2;margin-top:.3rem}
+.carimbo .estado{display:block;font-size:.8rem;font-weight:800;opacity:.7;margin-top:.2rem}
+.carimbo.feito{
+  border-style:solid;border-color:var(--verde);background:#E9F8EE;opacity:1;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.7), 0 4px 0 rgba(46,116,66,.35);
+}
+.carimbo.feito .selo-emoji{filter:none;opacity:1}
+.carimbo.feito .estado{color:var(--verde)}
+.selo-mestre{
+  display:none;margin:1.2rem auto 0;max-width:420px;
+  background:linear-gradient(160deg,var(--amarelo),#FFC72C);
+  border:4px solid var(--navy);border-radius:24px;
+  padding:1rem 1.2rem;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.6), 0 7px 0 var(--edge-navy);
+}
+.selo-mestre.mostra{display:block;animation:surge-selo .7s ease}
+@keyframes surge-selo{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+.selo-mestre h3{font-family:var(--display);font-weight:800;font-size:1.25rem;line-height:1.15}
+.btn-compartilhar{
+  font-family:var(--display);font-weight:800;font-size:.95rem;
+  background:var(--branco);color:var(--navy);
+  border:3px solid var(--navy);border-radius:99px;
+  padding:.45rem 1.2rem;margin-top:.6rem;
+  box-shadow:0 4px 0 rgba(13,59,102,.3);
+}
+
+/* ---------- rodapé ---------- */
+.rodape{
+  position:relative;z-index:1;text-align:center;
+  color:var(--branco);padding:0 1.2rem 2.6rem;
+  font-weight:800;
+}
+.rodape .doo{font-family:var(--display);font-size:1.05rem}
+
+/* ---------- toast + confete ---------- */
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(150%);
+  background:var(--navy);color:var(--branco);
+  font-family:var(--display);font-weight:700;font-size:.95rem;
+  border-radius:99px;padding:.6rem 1.4rem;
+  box-shadow:0 6px 18px rgba(4,24,48,.45);
+  transition:transform .35s ease;z-index:70;
+  max-width:calc(100vw - 32px);text-align:center;
+}
+.toast.mostra{transform:translateX(-50%) translateY(0)}
+#confete{position:fixed;inset:0;z-index:65;pointer-events:none}
+
+/* ---------- movimento reduzido ---------- */
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+  .bolha{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="oceano-bg" id="oceanoBg" aria-hidden="true"><div class="raios"></div></div>
+
+<header class="topo">
+  <a class="voltar" href="index.html">🐟 Voltar ao cardápio</a>
+  <a class="voltar" href="fotos.html">📸 Fotos da festa</a>
+  <a class="voltar" href="capsula.html">🍾 Cápsula do Tempo</a>
+  <a class="voltar" href="tubarao.html">🎨 Vire um Tubarão</a>
+  <h1>Salinha de Jogos 🎮</h1>
+  <p class="sub">Jogue à vontade, encare o desafio de 30 segundos e entre para o Ranking do Cardume! 🦈</p>
+</header>
+
+<main>
+
+  <!-- quem está jogando -->
+  <section class="card jogador" aria-label="Identificação do jogador">
+    <label for="campoNome">🦈 Quem está jogando?</label>
+    <input id="campoNome" type="text" maxlength="40" autocomplete="name" placeholder="Seu nome (ex.: Tia Ana)">
+  </section>
+
+  <!-- salinha -->
+  <section class="card" aria-label="Salinha de jogos">
+    <p class="eyebrow">Escolha a brincadeira</p>
+    <h2>Hora de brincar! 🌊</h2>
+    <div class="jogo-abas" role="tablist" aria-label="Escolha o jogo">
+      <button class="jogo-aba ativa" type="button" role="tab" aria-selected="true" data-jogo="comilanca">🦈 Alimente o Baby Shark</button>
+      <button class="jogo-aba" type="button" role="tab" aria-selected="false" data-jogo="bolhas">🫧 Estoura Bolhas</button>
+      <button class="jogo-aba" type="button" role="tab" aria-selected="false" data-jogo="memoria">🃏 Memória da Família</button>
+      <button class="jogo-aba" type="button" role="tab" aria-selected="false" data-jogo="corrida">🐠 Corrida do Cardume</button>
+    </div>
+
+    <div class="jogo-palco" id="palcoJogo">
+      <div class="jogo-hud">
+        <span class="hud-chip" id="hudPlacar" role="status" aria-live="polite">🍽️ 0</span>
+        <span class="hud-chip" id="hudTempo">Meta: 5</span>
+        <span class="hud-chip" id="hudRecorde">🏆 —</span>
+      </div>
+      <img class="jogo-shark" id="jogoShark" src="img/brooklyn2.png" alt="" aria-hidden="true">
+      <span class="jogo-dica" id="jogoDica">Toque nas comidinhas!</span>
+    </div>
+
+    <button class="btn-desafio" id="btnDesafio" type="button">⏱️ Desafio de 30 segundos!</button>
+  </section>
+
+  <!-- ranking -->
+  <section class="card" id="ranking" aria-label="Ranking do Cardume">
+    <p class="eyebrow">Quem manda no oceano?</p>
+    <h2>🏆 Ranking do Cardume</h2>
+    <p class="desc">Os melhores placares dos desafios de 30 segundos. Jogue, envie o seu e apareça aqui!</p>
+    <div class="rank-abas" role="tablist" aria-label="Escolha o ranking">
+      <button class="rank-aba ativa" type="button" role="tab" aria-selected="true" data-rank="geral">🌊 Geral</button>
+      <button class="rank-aba" type="button" role="tab" aria-selected="false" data-rank="comilanca">🦈 Comilança</button>
+      <button class="rank-aba" type="button" role="tab" aria-selected="false" data-rank="bolhas">🫧 Bolhas</button>
+      <button class="rank-aba" type="button" role="tab" aria-selected="false" data-rank="memoria">🃏 Memória</button>
+      <button class="rank-aba" type="button" role="tab" aria-selected="false" data-rank="corrida">🐠 Corrida</button>
+    </div>
+    <ol class="rank-lista" id="rankLista" aria-live="polite"></ol>
+    <p class="rank-rodape" id="rankRodape">Carregando o ranking…</p>
+    <a class="link-telao" href="ranking.html" target="_blank" rel="noopener">📺 Abrir o telão do ranking</a>
+  </section>
+
+  <!-- passaporte -->
+  <section class="card" id="passaporte" aria-label="Passaporte do Mergulhador">
+    <p class="eyebrow">Missões da festa</p>
+    <h2>🤿 Passaporte do Mergulhador</h2>
+    <p class="desc">Complete as 4 missões da festa neste aparelho e ganhe o selo de Mergulhador Oficial!</p>
+    <div class="passa-grade" id="passaGrade">
+      <span class="carimbo" id="carimboJogo">
+        <span class="selo-emoji" aria-hidden="true">🎮</span>
+        <span class="titulo">Complete um desafio na salinha</span>
+        <span class="estado">Ainda não</span>
+      </span>
+      <a class="carimbo" id="carimboFoto" href="fotos.html">
+        <span class="selo-emoji" aria-hidden="true">📸</span>
+        <span class="titulo">Mande uma foto pra galeria</span>
+        <span class="estado">Ainda não</span>
+      </a>
+      <a class="carimbo" id="carimboCapsula" href="capsula.html">
+        <span class="selo-emoji" aria-hidden="true">🍾</span>
+        <span class="titulo">Lance uma mensagem na garrafa</span>
+        <span class="estado">Ainda não</span>
+      </a>
+      <a class="carimbo" id="carimboIa" href="tubarao.html">
+        <span class="selo-emoji" aria-hidden="true">🎨</span>
+        <span class="titulo">Vire um tubarão com a IA</span>
+        <span class="estado">Ainda não</span>
+      </a>
+    </div>
+    <div class="selo-mestre" id="seloMestre">
+      <h3>🏅 Mergulhador Oficial da Festa do Enzo!</h3>
+      <p>Você completou todas as missões do oceano. Doo doo doo! 🦈</p>
+      <button class="btn-compartilhar" id="btnCompartilhar" type="button">📣 Contar pra todo mundo</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <p class="doo">Baby Shark, doo doo doo doo doo doo 🎶</p>
+  <p>Feito com 💛 para o Enzo — 3 anos</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+<canvas id="confete" aria-hidden="true"></canvas>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ⚙️ CONFIG: URL /exec do Web App do jogos-apps-script.gs (ranking).
+     Sem ela a salinha funciona normalmente, só não envia/mostra o ranking. */
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxGFH_eSVKBWKgdCouOcR-BRUM8-HAf9qID2UHV-cCtPA4fxOJmxd1xeIVZzmv-nu5uqA/exec';
+
+  var DURACAO_DESAFIO = 30; // segundos (jogos de ação)
+  var PENALIDADE = 2;       // pontos perdidos ao tocar num item errado (piso: 0)
+  var PENAL_MEMORIA = 5;    // segundos somados por par errado no desafio da memória
+  var PENAL_BOLHA = 1;      // ponto perdido por bolha que escapa pelo topo (só no desafio)
+
+  var reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var jogoInicial = (location.search.match(/jogo=(\w+)/) || [])[1] || 'comilanca';
+
+  /* ---------- bolhas ambiente ---------- */
+  if (!reduzMovimento) {
+    var bg = document.getElementById('oceanoBg');
+    for (var i = 0; i < 14; i++) {
+      var amb = document.createElement('span');
+      var tam = 8 + Math.random() * 26;
+      amb.className = 'bolha';
+      amb.style.width = tam + 'px';
+      amb.style.height = tam + 'px';
+      amb.style.left = Math.random() * 100 + 'vw';
+      amb.style.animationDuration = 9 + Math.random() * 14 + 's';
+      amb.style.animationDelay = Math.random() * 12 + 's';
+      bg.appendChild(amb);
+    }
+  }
+
+  /* ---------- áudio ---------- */
+  var ctxAudio = null;
+  function audio() {
+    if (!ctxAudio) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) ctxAudio = new AC();
+    }
+    if (ctxAudio && ctxAudio.state === 'suspended') ctxAudio.resume();
+    return ctxAudio;
+  }
+  function nota(freq, quando, dur, vol, tipo) {
+    var ac = audio(); if (!ac) return;
+    var o = ac.createOscillator();
+    var g = ac.createGain();
+    o.type = tipo || 'triangle';
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(0.0001, quando);
+    g.gain.linearRampToValueAtTime(vol, quando + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, quando + dur);
+    o.connect(g); g.connect(ac.destination);
+    o.start(quando); o.stop(quando + dur + 0.05);
+  }
+  function nhacSom() { var ac = audio(); if (!ac) return; var t = ac.currentTime; nota(210, t, 0.08, 0.2, 'square'); nota(150, t + 0.09, 0.12, 0.18, 'square'); }
+  function popSom() { var ac = audio(); if (!ac) return; nota(650 + Math.random() * 350, ac.currentTime, 0.1, 0.16, 'sine'); }
+  function fanfarra() { var ac = audio(); if (!ac) return; var t = ac.currentTime; [392, 494, 587, 784].forEach(function (f, i) { nota(f, t + i * 0.11, 0.15, 0.2, 'triangle'); }); }
+  function tiqueSom() { var ac = audio(); if (!ac) return; nota(880, ac.currentTime, 0.07, 0.14, 'square'); }
+  function erroSom() { var ac = audio(); if (!ac) return; var t = ac.currentTime; nota(196, t, 0.12, 0.18, 'sawtooth'); nota(131, t + 0.11, 0.16, 0.16, 'sawtooth'); }
+  function fugiuSom() { var ac = audio(); if (!ac) return; nota(150, ac.currentTime, 0.09, 0.09, 'sine'); }
+
+  /* ---------- confete ---------- */
+  var canvas = document.getElementById('confete');
+  var cx = canvas.getContext('2d');
+  var particulas = [];
+  var CORES = ['#FFD23F', '#F49B33', '#F26DB3', '#FF7FA0', '#2E6FD8', '#58C472', '#7FE0F5', '#FFFFFF'];
+  var animando = false;
+  function dimensiona() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  dimensiona();
+  window.addEventListener('resize', dimensiona);
+  function estoura(x, y, qtd) {
+    if (reduzMovimento) return;
+    for (var i = 0; i < qtd; i++) {
+      particulas.push({
+        x: x, y: y,
+        vx: (Math.random() - 0.5) * 11,
+        vy: -Math.random() * 10 - 3,
+        w: 6 + Math.random() * 6,
+        h: 4 + Math.random() * 5,
+        rot: Math.random() * Math.PI,
+        vr: (Math.random() - 0.5) * 0.3,
+        cor: CORES[(Math.random() * CORES.length) | 0],
+        vida: 90 + Math.random() * 50
+      });
+    }
+    if (!animando) { animando = true; requestAnimationFrame(passo); }
+  }
+  function passo() {
+    cx.clearRect(0, 0, canvas.width, canvas.height);
+    particulas = particulas.filter(function (p) { return p.vida > 0 && p.y < canvas.height + 30; });
+    particulas.forEach(function (p) {
+      p.vx *= 0.985; p.vy += 0.22;
+      p.x += p.vx; p.y += p.vy;
+      p.rot += p.vr; p.vida--;
+      cx.save();
+      cx.translate(p.x, p.y);
+      cx.rotate(p.rot);
+      cx.globalAlpha = Math.min(1, p.vida / 40);
+      cx.fillStyle = p.cor;
+      cx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      cx.restore();
+    });
+    if (particulas.length) { requestAnimationFrame(passo); }
+    else { animando = false; cx.clearRect(0, 0, canvas.width, canvas.height); }
+  }
+
+  /* ---------- toast ---------- */
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function mostraToast(msg, ms) {
+    toast.textContent = msg;
+    toast.classList.add('mostra');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('mostra'); }, ms || 2600);
+  }
+
+  /* ---------- nome + aparelho ---------- */
+  var campoNome = document.getElementById('campoNome');
+  try { campoNome.value = localStorage.getItem('festa-enzo-nome') || ''; } catch (e) {}
+  campoNome.addEventListener('change', function () {
+    try { localStorage.setItem('festa-enzo-nome', campoNome.value.trim()); } catch (e) {}
+  });
+  function nomeJogador() { return campoNome.value.trim(); }
+  function aparelhoId() {
+    var id = null;
+    try { id = localStorage.getItem('festa-enzo-aparelho'); } catch (e) {}
+    if (!id) {
+      id = 'ap-' + Math.random().toString(36).slice(2, 10);
+      try { localStorage.setItem('festa-enzo-aparelho', id); } catch (e) {}
+    }
+    return id;
+  }
+
+  /* ---------- recordes (por aparelho) ---------- */
+  function recordes() {
+    try { return JSON.parse(localStorage.getItem('festa-enzo-recordes') || '{}'); } catch (e) { return {}; }
+  }
+  function salvaRecorde(jogo, valor) {
+    var r = recordes();
+    r[jogo] = valor;
+    try { localStorage.setItem('festa-enzo-recordes', JSON.stringify(r)); } catch (e) {}
+  }
+
+  /* ================= salinha ================= */
+  var palco = document.getElementById('palcoJogo');
+  var jogoShark = document.getElementById('jogoShark');
+  var hudPlacar = document.getElementById('hudPlacar');
+  var hudTempo = document.getElementById('hudTempo');
+  var hudRecorde = document.getElementById('hudRecorde');
+  var jogoDica = document.getElementById('jogoDica');
+  var btnDesafio = document.getElementById('btnDesafio');
+  var abas = document.querySelectorAll('.jogo-aba');
+
+  var jogoAtivo = /^(comilanca|bolhas|memoria|corrida)$/.test(jogoInicial) ? jogoInicial : 'comilanca';
+  var jogosVisivel = true;
+  var modo = 'livre'; // livre | contagem | desafio | fim
+  var pontos = { comilanca: 0, bolhas: 0, corrida: 0 };
+  var vitoriasMemoria = 0;
+  var paresAchados = 0;
+  var timerBolhas = null;
+  var rafCorrida = null;
+
+  /* desafio */
+  var tempoRestante = 0;
+  var timerDesafio = null;
+  var cronoInicio = 0;       // memória: começa no 1º toque
+  var cronoTimer = null;
+  var overlayFim = null;
+  var elContagem = null;
+
+  var ICONES = { comilanca: '🍽️', bolhas: '🫧', corrida: '🐠' };
+  var NOMES_JOGO = { comilanca: 'Comilança', bolhas: 'Estoura Bolhas', memoria: 'Memória da Família', corrida: 'Corrida do Cardume' };
+  var DICAS = {
+    comilanca: 'Toque só nas comidinhas — lixo não se come!',
+    bolhas: 'Estoure as bolhas antes que escapem!',
+    memoria: 'Encontre os 6 pares da família!',
+    corrida: 'Pegue os amigos — fuja do baiacu e da lula!'
+  };
+
+  function proximaMeta(pts) {
+    var degraus = [5, 10, 20, 35, 50];
+    for (var i = 0; i < degraus.length; i++) { if (pts < degraus[i]) return degraus[i]; }
+    return (Math.floor(pts / 25) + 1) * 25;
+  }
+  function ehDegrau(pts) {
+    return pts === 5 || pts === 10 || pts === 20 || pts === 35 || pts === 50 || (pts > 50 && pts % 25 === 0);
+  }
+
+  function textoRecorde() {
+    var r = recordes();
+    if (jogoAtivo === 'memoria') return r.memoria ? '🏆 ' + r.memoria + 's' : '🏆 —';
+    return r[jogoAtivo] ? '🏆 ' + r[jogoAtivo] : '🏆 —';
+  }
+
+  function atualizaHud() {
+    if (jogoAtivo === 'memoria') {
+      if (modo === 'desafio') {
+        hudPlacar.textContent = '🃏 Pares: ' + paresAchados + '/6';
+        var seg = cronoInicio ? Math.floor((Date.now() - cronoInicio) / 1000) : 0;
+        seg += errosMemoria * PENAL_MEMORIA; // penalidade já soma ao vivo
+        hudTempo.textContent = '⏱️ ' + seg + 's';
+      } else {
+        hudPlacar.textContent = '🃏 Vitórias: ' + vitoriasMemoria;
+        hudTempo.textContent = 'Pares: ' + paresAchados + '/6';
+      }
+    } else {
+      var pts = pontos[jogoAtivo];
+      hudPlacar.textContent = ICONES[jogoAtivo] + ' ' + pts;
+      if (modo === 'desafio') {
+        hudTempo.textContent = '⏱️ ' + tempoRestante + 's';
+        hudTempo.classList.toggle('urgente', tempoRestante <= 5);
+      } else {
+        hudTempo.textContent = 'Meta: ' + proximaMeta(pts);
+        hudTempo.classList.remove('urgente');
+      }
+    }
+    hudRecorde.textContent = textoRecorde();
+    jogoDica.textContent = (modo === 'desafio') ? 'Valendo! 🏁' : DICAS[jogoAtivo];
+  }
+
+  function festaNoPalco(msg) {
+    fanfarra();
+    var r = palco.getBoundingClientRect();
+    estoura(r.left + r.width / 2, r.top + r.height / 3, 60);
+    mostraToast(msg);
+  }
+
+  function pontua(jogo) {
+    pontos[jogo]++;
+    var pts = pontos[jogo];
+    atualizaHud();
+    if (modo !== 'desafio' && ehDegrau(pts)) {
+      var msgs = {
+        comilanca: '🎉 ' + pts + ' comidinhas! O Baby Shark está feliz!',
+        bolhas: '🎉 ' + pts + ' bolhas estouradas! Doo doo doo!',
+        corrida: '🎉 ' + pts + ' amigos no cardume! Go go go!'
+      };
+      festaNoPalco(msgs[jogo]);
+      if (jogo === 'comilanca') { jogoShark.classList.remove('nhac'); void jogoShark.offsetWidth; jogoShark.classList.add('nhac'); }
+    }
+  }
+
+  function penaliza(jogo, qtd, x, y, somSuave) {
+    pontos[jogo] = Math.max(0, pontos[jogo] - qtd);
+    if (somSuave) fugiuSom(); else erroSom();
+    mostraPena('-' + qtd, x, y);
+    atualizaHud();
+  }
+  function mostraPena(txt, x, y) { // x,y em px relativos ao palco
+    var p = document.createElement('span');
+    p.className = 'pena-flutua';
+    p.textContent = txt;
+    p.style.left = Math.max(6, Math.min(palco.clientWidth - 40, x)) + 'px';
+    p.style.top = Math.max(6, y) + 'px';
+    p.setAttribute('aria-hidden', 'true');
+    palco.appendChild(p);
+    setTimeout(function () { p.remove(); }, 950);
+  }
+
+  function limpaPalco() {
+    palco.querySelectorAll('.comida, .bolha-jogo, .memoria-grade, .peixe-amigo, .peixe-perigo, .pena-flutua, .corrida-shark, .fim-overlay, .contagem-num').forEach(function (el) { el.remove(); });
+    overlayFim = null;
+    elContagem = null;
+    palco.classList.remove('palco-travado');
+  }
+
+  /* --- jogo 1: alimente o baby shark --- */
+  var COMIDAS = ['🍗', '🥟', '🍕', '🍿', '🧁', '🍩', '🥤', '🍓', '🍪', '🍰'];
+  var NAO_COMIDAS = ['🥾', '🧦', '⚓', '🪨', '🧴']; // lixo do fundo do mar: isso não se come!
+  var SLOTS_COMIDA = [[8, 16], [38, 12], [68, 15], [14, 42], [44, 38], [72, 44], [28, 27], [58, 28]];
+  function novaComida() {
+    if (jogoAtivo !== 'comilanca' || modo === 'fim') return;
+    var usados = {};
+    palco.querySelectorAll('.comida').forEach(function (c) { usados[c.dataset.slot] = 1; });
+    var livres = [];
+    for (var i = 0; i < SLOTS_COMIDA.length; i++) { if (!usados[i]) livres.push(i); }
+    if (!livres.length) return;
+    var slot = livres[(Math.random() * livres.length) | 0];
+    var ruim = Math.random() < 0.28;
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'comida';
+    b.dataset.slot = slot;
+    if (ruim) {
+      b.dataset.ruim = '1';
+      b.textContent = NAO_COMIDAS[(Math.random() * NAO_COMIDAS.length) | 0];
+      b.setAttribute('aria-label', 'Isso não se come! Tocar perde ' + PENALIDADE + ' pontos');
+    } else {
+      b.textContent = COMIDAS[(Math.random() * COMIDAS.length) | 0];
+      b.setAttribute('aria-label', 'Comidinha — toque para alimentar o Baby Shark');
+    }
+    b.style.left = (SLOTS_COMIDA[slot][0] + Math.random() * 6 - 3) + '%';
+    b.style.top = (SLOTS_COMIDA[slot][1] + Math.random() * 6 - 3) + '%';
+    b.style.animationDelay = (Math.random() * 2) + 's';
+    b.style.animationDuration = (2.6 + Math.random() * 1.6) + 's';
+    b.addEventListener('pointerdown', comeu);
+    palco.appendChild(b);
+    // depois de alguns segundos o item vai embora e dá lugar a outro
+    var vida = (modo === 'desafio' ? 2400 + Math.random() * 1000 : 3500 + Math.random() * 1500);
+    setTimeout(function () {
+      if (!b.parentNode || b.dataset.comido) return;
+      b.dataset.comido = '1'; // já era: não pontua nem penaliza mais
+      b.classList.add('sumindo');
+      setTimeout(function () { b.remove(); novaComida(); }, 380);
+    }, vida);
+  }
+  function comeu(ev) {
+    var b = ev.currentTarget;
+    if (b.dataset.comido || modo === 'contagem' || modo === 'fim') return;
+    b.dataset.comido = '1';
+    if (b.dataset.ruim) { // eca! isso não é comida
+      b.classList.add('ruim-tocada');
+      penaliza('comilanca', PENALIDADE, b.offsetLeft, b.offsetTop - 14);
+      jogoShark.classList.remove('nhac'); void jogoShark.offsetWidth; jogoShark.classList.add('nhac');
+      setTimeout(function () { b.remove(); novaComida(); }, 500);
+      return;
+    }
+    var pr = palco.getBoundingClientRect();
+    var sr = jogoShark.getBoundingClientRect();
+    b.classList.add('voando');
+    b.style.left = (sr.left - pr.left + sr.width / 2 - 16) + 'px';
+    b.style.top = (sr.top - pr.top + 8) + 'px';
+    b.style.transform = 'scale(.25)';
+    jogoShark.classList.remove('nhac'); void jogoShark.offsetWidth; jogoShark.classList.add('nhac');
+    nhacSom();
+    setTimeout(function () { b.remove(); novaComida(); }, modo === 'desafio' ? 300 : 470);
+    pontua('comilanca');
+  }
+
+  /* --- jogo 2: estoura bolhas surpresa --- */
+  var SURPRESAS = ['🦈', '🐠', '🐙', '⭐', '🎁', '🍭', '🦀', '🐬'];
+  function novaBolha() {
+    if (jogoAtivo !== 'bolhas' || modo === 'fim' || modo === 'contagem') return;
+    if (!jogosVisivel && modo !== 'desafio') return;
+    if (palco.querySelectorAll('.bolha-jogo').length >= 9) return;
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'bolha-jogo';
+    var tam = 46 + Math.random() * 34;
+    b.style.width = tam + 'px';
+    b.style.height = tam + 'px';
+    b.style.left = (4 + Math.random() * 82) + '%';
+    b.innerHTML = '<span class="pele"></span>';
+    b.setAttribute('aria-label', 'Bolha — toque para estourar');
+    if (!reduzMovimento) {
+      b.classList.add('subindo');
+      if (modo === 'desafio' && tempoRestante <= 5) {
+        // frenesi final: nos últimos 5 segundos as bolhas disparam!
+        b.style.animationDuration = (0.9 + Math.random() * 0.6) + 's';
+      } else if (modo === 'desafio') {
+        // quanto menos tempo no relógio, mais rápido as bolhas sobem
+        var pressa = 1 - Math.max(0, Math.min(1, tempoRestante / DURACAO_DESAFIO));
+        b.style.animationDuration = ((3.6 - 2.1 * pressa) + Math.random() * (4 - 3 * pressa)) + 's';
+      } else {
+        b.style.animationDuration = (5 + Math.random() * 4) + 's';
+      }
+      b.addEventListener('animationend', function () {
+        // bolha que ninguém estourou cruzou a linha do topo: no desafio, perde ponto
+        if (modo === 'desafio' && !b.dataset.pop) {
+          penaliza('bolhas', PENAL_BOLHA, b.offsetLeft + b.offsetWidth / 2 - 12, 10, true);
+        }
+        b.remove();
+      });
+    } else {
+      b.style.bottom = (12 + Math.random() * 66) + '%';
+    }
+    setTimeout(function () { if (b.parentNode) b.remove(); }, 12000);
+    b.addEventListener('pointerdown', estourouBolha);
+    palco.appendChild(b);
+  }
+  function estourouBolha(ev) {
+    var b = ev.currentTarget;
+    if (b.dataset.pop || modo === 'fim') return;
+    b.dataset.pop = '1';
+    b.classList.add('pop');
+    popSom();
+    if (Math.random() < 0.28) {
+      var s = document.createElement('span');
+      s.className = 'surpresa';
+      s.textContent = SURPRESAS[(Math.random() * SURPRESAS.length) | 0];
+      b.appendChild(s);
+    }
+    setTimeout(function () { b.remove(); }, 900);
+    pontua('bolhas');
+  }
+  function ritmoBolhas() {
+    if (timerBolhas) { clearInterval(timerBolhas); timerBolhas = null; }
+    if (jogosVisivel || modo === 'desafio') {
+      timerBolhas = setInterval(novaBolha, modo === 'desafio' ? 550 : 850);
+    }
+  }
+
+  /* --- jogo 3: memória da família (6 pares / 12 cartas) --- */
+  var cartaAberta = null;
+  var memoriaTravada = false;
+  var errosMemoria = 0; // no desafio, cada par errado soma +5s ao cronômetro
+  var PERSONAGENS = [
+    { id: 'enzo', img: 'img/enzo-desenho.jpg', nome: 'Enzo' },
+    { id: 'baby', img: 'img/brooklyn2.png', nome: 'Baby Shark' },
+    { id: 'papai', img: 'img/papai-full.jpg', nome: 'Papai Tubarão' },
+    { id: 'mamae', img: 'img/mamae-full.jpg', nome: 'Mamãe Tubarão' },
+    { id: 'vovo', img: 'img/vovo.jpg', nome: 'Vovô Tubarão' },
+    { id: 'vovoa', img: 'img/vovoa2.jpg', nome: 'Vovó Tubarão' }
+  ];
+  var TOTAL_PARES = PERSONAGENS.length;
+  function montaMemoria() {
+    paresAchados = 0;
+    errosMemoria = 0;
+    cartaAberta = null;
+    memoriaTravada = false;
+    var grade = document.createElement('div');
+    grade.className = 'memoria-grade';
+    var baralho = PERSONAGENS.concat(PERSONAGENS).sort(function () { return Math.random() - 0.5; });
+    baralho.forEach(function (p) {
+      var c = document.createElement('button');
+      c.type = 'button';
+      c.className = 'carta';
+      c.dataset.par = p.id;
+      c.dataset.nome = p.nome;
+      c.setAttribute('aria-label', 'Carta virada para baixo');
+      c.innerHTML = '<span class="carta-face carta-verso">🌊</span>' +
+        '<span class="carta-face carta-frente"><img src="' + p.img + '" alt=""></span>';
+      c.addEventListener('pointerdown', viraCarta);
+      grade.appendChild(c);
+    });
+    palco.appendChild(grade);
+  }
+  function viraCarta(ev) {
+    var c = ev.currentTarget;
+    if (memoriaTravada || c.classList.contains('aberta') || modo === 'fim' || modo === 'contagem') return;
+    if (modo === 'desafio' && !cronoInicio) {
+      cronoInicio = Date.now();
+      cronoTimer = setInterval(atualizaHud, 1000);
+    }
+    c.classList.add('aberta');
+    c.setAttribute('aria-label', c.dataset.nome);
+    popSom();
+    if (!cartaAberta) { cartaAberta = c; return; }
+    var a = cartaAberta;
+    cartaAberta = null;
+    if (a.dataset.par === c.dataset.par) {
+      a.classList.add('certa'); c.classList.add('certa');
+      paresAchados++;
+      atualizaHud();
+      nhacSom();
+      if (paresAchados === TOTAL_PARES) {
+        if (modo === 'desafio') {
+          fimDesafio();
+        } else {
+          vitoriasMemoria++;
+          memoriaTravada = true;
+          festaNoPalco('🎉 Achou toda a família do Enzo! Doo doo doo!');
+          setTimeout(function () {
+            palco.querySelectorAll('.memoria-grade').forEach(function (g) { g.remove(); });
+            if (jogoAtivo === 'memoria' && modo === 'livre') { montaMemoria(); atualizaHud(); }
+          }, 2400);
+        }
+      }
+    } else {
+      memoriaTravada = true;
+      if (modo === 'desafio') { // errou o par: +5s no cronômetro
+        errosMemoria++;
+        erroSom();
+        var hr = hudTempo.getBoundingClientRect();
+        var pr = palco.getBoundingClientRect();
+        mostraPena('+' + PENAL_MEMORIA + 's', hr.left - pr.left + hr.width / 2 - 14, hr.top - pr.top + hr.height + 6);
+        atualizaHud();
+      }
+      setTimeout(function () {
+        a.classList.remove('aberta');
+        c.classList.remove('aberta');
+        a.setAttribute('aria-label', 'Carta virada para baixo');
+        c.setAttribute('aria-label', 'Carta virada para baixo');
+        memoriaTravada = false;
+      }, 950);
+    }
+  }
+
+  /* --- jogo 4: corrida do cardume --- */
+  var sharkCorrida = null;
+  var alvoX = 0, alvoY = 0, posX = 0, posY = 0, dirShark = 1;
+  var AMIGOS = ['🐠', '🐟', '🦐', '🐙'];
+  var PERIGOS = ['🐡', '🦑']; // encostou: perde pontos!
+  function montaCorrida() {
+    sharkCorrida = document.createElement('img');
+    sharkCorrida.src = 'img/brooklyn2.png';
+    sharkCorrida.alt = '';
+    sharkCorrida.className = 'corrida-shark';
+    palco.appendChild(sharkCorrida);
+    posX = alvoX = palco.clientWidth / 2;
+    posY = alvoY = palco.clientHeight / 2;
+    for (var i = 0; i < 4; i++) novoAmigo();
+    for (var k = 0; k < 2; k++) novoPerigo();
+    if (!rafCorrida) rafCorrida = requestAnimationFrame(nadaCorrida);
+  }
+  function posLonge(minDist2) { // ponto aleatório longe do tubarão
+    var l = 8 + Math.random() * 80, t = 14 + Math.random() * 68;
+    for (var tent = 0; tent < 10; tent++) {
+      var dx = l / 100 * palco.clientWidth - posX;
+      var dy = t / 100 * palco.clientHeight - posY;
+      if (dx * dx + dy * dy > minDist2) break;
+      l = 8 + Math.random() * 80; t = 14 + Math.random() * 68;
+    }
+    return [l, t];
+  }
+  function novoAmigo() {
+    var pos = posLonge(12100); /* pelo menos 110px do tubarão */
+    var p = document.createElement('span');
+    p.className = 'peixe-amigo';
+    p.textContent = AMIGOS[(Math.random() * AMIGOS.length) | 0];
+    p.style.left = pos[0] + '%';
+    p.style.top = pos[1] + '%';
+    p.style.animationDelay = (Math.random() * 2) + 's';
+    palco.appendChild(p);
+  }
+  function novoPerigo() {
+    if (jogoAtivo !== 'corrida' || modo === 'fim' || modo === 'contagem') return;
+    var pos = posLonge(19600); /* pelo menos 140px do tubarão: nascer em cima seria injusto */
+    var p = document.createElement('span');
+    p.className = 'peixe-perigo';
+    p.textContent = PERIGOS[(Math.random() * PERIGOS.length) | 0];
+    p.style.left = pos[0] + '%';
+    p.style.top = pos[1] + '%';
+    p.style.animationDelay = (Math.random() * 2) + 's';
+    palco.appendChild(p);
+    // o perigo não fica plantado: some depois de alguns segundos e renasce noutro canto
+    var vida = (modo === 'desafio' ? 2400 + Math.random() * 1000 : 3500 + Math.random() * 1500);
+    setTimeout(function () {
+      if (!p.parentNode || p.dataset.batido) return;
+      p.dataset.batido = '1'; // indo embora: não machuca mais
+      p.classList.add('embora');
+      setTimeout(function () { p.remove(); novoPerigo(); }, 400);
+    }, vida);
+  }
+  function nadaCorrida() {
+    rafCorrida = null;
+    if (jogoAtivo !== 'corrida' || !sharkCorrida) return;
+    if (!jogosVisivel && modo !== 'desafio') return;
+    if (modo !== 'fim' && modo !== 'contagem') {
+      posX += (alvoX - posX) * (modo === 'desafio' ? 0.13 : 0.09);
+      posY += (alvoY - posY) * (modo === 'desafio' ? 0.13 : 0.09);
+    }
+    if (Math.abs(alvoX - posX) > 2) dirShark = alvoX > posX ? 1 : -1;
+    sharkCorrida.style.left = posX + 'px';
+    sharkCorrida.style.top = posY + 'px';
+    sharkCorrida.style.transform = 'translate(-50%,-50%) scaleX(' + dirShark + ')';
+    if (modo !== 'fim' && modo !== 'contagem') {
+      palco.querySelectorAll('.peixe-amigo').forEach(function (p) {
+        var px = p.offsetLeft + p.offsetWidth / 2;
+        var py = p.offsetTop + p.offsetHeight / 2;
+        var dx = px - posX, dy = py - posY;
+        if (dx * dx + dy * dy < 2500) {
+          p.remove();
+          popSom();
+          pontua('corrida');
+          novoAmigo();
+        }
+      });
+      palco.querySelectorAll('.peixe-perigo').forEach(function (p) {
+        if (p.dataset.batido) return;
+        var px = p.offsetLeft + p.offsetWidth / 2;
+        var py = p.offsetTop + p.offsetHeight / 2;
+        var dx = px - posX, dy = py - posY;
+        if (dx * dx + dy * dy < 2200) { // hitbox um pouco menor: encostar de raspão perdoa
+          p.dataset.batido = '1';
+          p.classList.add('ai');
+          penaliza('corrida', PENALIDADE, px - 12, py - 34);
+          setTimeout(function () { p.remove(); novoPerigo(); }, 500);
+        }
+      });
+    }
+    rafCorrida = requestAnimationFrame(nadaCorrida);
+  }
+  function mirar(ev) {
+    if (jogoAtivo !== 'corrida') return;
+    var r = palco.getBoundingClientRect();
+    alvoX = Math.max(0, Math.min(r.width, ev.clientX - r.left));
+    alvoY = Math.max(0, Math.min(r.height, ev.clientY - r.top));
+  }
+  palco.addEventListener('pointermove', mirar);
+  palco.addEventListener('pointerdown', mirar);
+
+  /* ================= desafio de 30 segundos ================= */
+  function rotuloDesafio() {
+    return (jogoAtivo === 'memoria')
+      ? '⏱️ Desafio: feche os 6 pares no menor tempo!'
+      : '⏱️ Desafio de ' + DURACAO_DESAFIO + ' segundos!';
+  }
+
+  btnDesafio.addEventListener('click', function () {
+    if (modo !== 'livre') return;
+    modo = 'contagem';
+    btnDesafio.disabled = true;
+    limpaPalco();
+    pontos[jogoAtivo] = 0;
+    paresAchados = 0;
+    errosMemoria = 0;
+    cronoInicio = 0;
+    atualizaHud();
+    contagemRegressiva(3);
+  });
+
+  function contagemRegressiva(n) {
+    if (!elContagem) {
+      elContagem = document.createElement('div');
+      elContagem.className = 'contagem-num';
+      elContagem.setAttribute('aria-hidden', 'true');
+      palco.appendChild(elContagem);
+    }
+    if (n > 0) {
+      elContagem.innerHTML = '<span>' + n + '</span>';
+      tiqueSom();
+      setTimeout(function () { contagemRegressiva(n - 1); }, 850);
+    } else {
+      elContagem.innerHTML = '<span>Vai! 🦈</span>';
+      fanfarra();
+      setTimeout(function () {
+        if (elContagem) { elContagem.remove(); elContagem = null; }
+        comecaDesafio();
+      }, 700);
+    }
+  }
+
+  function comecaDesafio() {
+    modo = 'desafio';
+    if (jogoAtivo === 'memoria') {
+      montaMemoria();
+      mostraToast('⏱️ O cronômetro começa no primeiro toque!');
+    } else {
+      tempoRestante = DURACAO_DESAFIO;
+      if (jogoAtivo === 'comilanca') { for (var i = 0; i < 6; i++) novaComida(); }
+      if (jogoAtivo === 'bolhas') { for (var j = 0; j < 4; j++) novaBolha(); ritmoBolhas(); }
+      if (jogoAtivo === 'corrida') montaCorrida();
+      timerDesafio = setInterval(function () {
+        tempoRestante--;
+        if (tempoRestante <= 3 && tempoRestante > 0) tiqueSom();
+        atualizaHud();
+        if (tempoRestante <= 0) fimDesafio();
+      }, 1000);
+    }
+    atualizaHud();
+  }
+
+  function paraTimersDesafio() {
+    if (timerDesafio) { clearInterval(timerDesafio); timerDesafio = null; }
+    if (cronoTimer) { clearInterval(cronoTimer); cronoTimer = null; }
+  }
+
+  function fimDesafio() {
+    paraTimersDesafio();
+    modo = 'fim';
+    palco.classList.add('palco-travado');
+    ritmoBolhas();
+
+    var resultado, detalhe = '', textoPlacar, novoRecorde = false;
+    var r = recordes();
+    if (jogoAtivo === 'memoria') {
+      var segundos = Math.max(1, Math.round((Date.now() - cronoInicio) / 1000) + errosMemoria * PENAL_MEMORIA);
+      resultado = Math.max(1, 100 - segundos); // pontos p/ ranking geral
+      detalhe = segundos + 's' + (errosMemoria ? ' (' + errosMemoria + (errosMemoria === 1 ? ' erro)' : ' erros)') : '');
+      textoPlacar = segundos + 's';
+      if (!r.memoria || segundos < r.memoria) { salvaRecorde('memoria', segundos); novoRecorde = true; }
+    } else {
+      resultado = pontos[jogoAtivo];
+      textoPlacar = String(resultado);
+      if (resultado > (r[jogoAtivo] || 0)) { salvaRecorde(jogoAtivo, resultado); novoRecorde = true; }
+    }
+
+    try { localStorage.setItem('festa-enzo-carimbo-jogo', '1'); } catch (e) {}
+    atualizaPassaporte();
+    atualizaHud();
+    fanfarra();
+    var pr = palco.getBoundingClientRect();
+    estoura(pr.left + pr.width / 2, pr.top + pr.height / 3, 80);
+
+    mostraOverlayFim(resultado, detalhe, textoPlacar, novoRecorde);
+  }
+
+  function mostraOverlayFim(resultado, detalhe, textoPlacar, novoRecorde) {
+    overlayFim = document.createElement('div');
+    overlayFim.className = 'fim-overlay';
+    var caixa = document.createElement('div');
+    caixa.className = 'fim-caixa';
+    caixa.setAttribute('role', 'dialog');
+    caixa.setAttribute('aria-label', 'Resultado do desafio');
+
+    var titulo = (jogoAtivo === 'memoria') ? '🃏 Família completa!' : '⏱️ Tempo esgotado!';
+    var rotuloRec = novoRecorde ? '🎉 Novo recorde do aparelho!' : ('Seu recorde: ' + textoRecorde().replace('🏆 ', ''));
+
+    caixa.innerHTML =
+      '<h3>' + titulo + '</h3>' +
+      '<p class="fim-placar">' + (ICONES[jogoAtivo] || '🃏') + ' ' + textoPlacar + '</p>' +
+      '<p class="fim-recorde' + (novoRecorde ? ' novo' : '') + '">' + rotuloRec + '</p>' +
+      '<div class="fim-botoes">' +
+      '<button type="button" class="btn-enviar">🏆 Enviar pro ranking</button>' +
+      '<button type="button" class="btn-denovo">🔁 Jogar de novo</button>' +
+      '<button type="button" class="btn-fechar">Voltar ao modo livre</button>' +
+      '</div>';
+
+    overlayFim.appendChild(caixa);
+    palco.appendChild(overlayFim);
+
+    var btnEnviar = caixa.querySelector('.btn-enviar');
+    if (!SCRIPT_URL) {
+      btnEnviar.textContent = '🏆 Ranking ainda não ligado';
+    }
+
+    // o jogo acabou de terminar e o dedo ainda está batendo na tela:
+    // segura os botões por um instante para ninguém clicar sem querer
+    var botoes = caixa.querySelectorAll('.fim-botoes button');
+    botoes.forEach(function (b) { b.disabled = true; });
+    setTimeout(function () {
+      botoes.forEach(function (b) { b.disabled = false; });
+      if (!SCRIPT_URL) btnEnviar.disabled = true;
+    }, 1500);
+    btnEnviar.addEventListener('click', function () {
+      var nome = nomeJogador();
+      if (!nome) {
+        mostraToast('Escreva seu nome lá em cima pra entrar no ranking! ✏️');
+        campoNome.focus();
+        return;
+      }
+      btnEnviar.disabled = true;
+      btnEnviar.textContent = 'Enviando… 🫧';
+      enviaPlacar(jogoAtivo, resultado, detalhe)
+        .then(function () {
+          btnEnviar.textContent = '✅ Placar no ranking!';
+          mostraToast('🏆 Placar enviado! Doo doo doo!');
+          carregaRanking();
+        })
+        .catch(function (err) {
+          btnEnviar.disabled = false;
+          btnEnviar.textContent = '🏆 Enviar pro ranking';
+          var motivo = err && err.message;
+          mostraToast(motivo === 'placar fora do plausível'
+            ? 'Uau, placar alto demais — o ranking desconfiou! 😅'
+            : 'A maré levou o placar! Tente de novo 🌊');
+        });
+    });
+    caixa.querySelector('.btn-denovo').addEventListener('click', function () {
+      modo = 'livre';
+      btnDesafio.disabled = false;
+      btnDesafio.click();
+    });
+    caixa.querySelector('.btn-fechar').addEventListener('click', function () {
+      modo = 'livre';
+      btnDesafio.disabled = false;
+      iniciaJogo();
+    });
+  }
+
+  function cancelaDesafio() {
+    if (modo === 'livre') return;
+    paraTimersDesafio();
+    modo = 'livre';
+    btnDesafio.disabled = false;
+    cronoInicio = 0;
+  }
+
+  /* ================= envio + ranking ================= */
+  function enviaPlacar(jogo, pts, detalhe) {
+    // sem headers customizados = requisição simples, sem preflight (funciona com Apps Script)
+    return fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        nome: nomeJogador(),
+        jogo: jogo,
+        pontos: pts,
+        detalhe: detalhe || '',
+        aparelho: aparelhoId()
+      })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d || !d.ok) throw new Error((d && d.erro) || 'falha');
+      return d;
+    });
+  }
+
+  var rankAtivo = 'geral';
+  var dadosRanking = null;
+  var rankLista = document.getElementById('rankLista');
+  var rankRodape = document.getElementById('rankRodape');
+  var rankAbas = document.querySelectorAll('.rank-aba');
+
+  rankAbas.forEach(function (a) {
+    a.addEventListener('click', function () {
+      rankAtivo = a.dataset.rank;
+      rankAbas.forEach(function (x) {
+        x.classList.toggle('ativa', x.dataset.rank === rankAtivo);
+        x.setAttribute('aria-selected', x.dataset.rank === rankAtivo ? 'true' : 'false');
+      });
+      renderRanking();
+    });
+  });
+
+  function renderRanking() {
+    rankLista.innerHTML = '';
+    if (!SCRIPT_URL) {
+      rankRodape.textContent = 'O ranking ainda não foi ligado à planilha 🛠️ (veja o jogos-apps-script.gs)';
+      return;
+    }
+    if (!dadosRanking) return;
+    var linhas = (rankAtivo === 'geral')
+      ? (dadosRanking.geral || [])
+      : ((dadosRanking.porJogo || {})[rankAtivo] || []);
+    if (!linhas.length) {
+      var vazio = document.createElement('li');
+      vazio.className = 'rank-vazio';
+      vazio.style.justifyContent = 'center';
+      vazio.textContent = 'Ninguém aqui ainda… seja o primeiro tubarão! 🦈';
+      rankLista.appendChild(vazio);
+      return;
+    }
+    var MEDALHAS = ['🥇', '🥈', '🥉'];
+    linhas.slice(0, 10).forEach(function (l, i) {
+      var li = document.createElement('li');
+      var pos = document.createElement('span');
+      pos.className = 'rank-pos';
+      pos.textContent = MEDALHAS[i] || (i + 1) + 'º';
+      var nome = document.createElement('span');
+      nome.className = 'rank-nome';
+      nome.textContent = l.nome;
+      var pts = document.createElement('span');
+      pts.className = 'rank-pontos';
+      if (rankAtivo === 'geral') pts.textContent = l.total + ' pts · ' + l.jogos + '/4 jogos';
+      else if (rankAtivo === 'memoria') pts.textContent = (l.detalhe || (l.pontos + ' pts'));
+      else pts.textContent = l.pontos + ' pts';
+      li.appendChild(pos); li.appendChild(nome); li.appendChild(pts);
+      rankLista.appendChild(li);
+    });
+  }
+
+  function carregaRanking() {
+    if (!SCRIPT_URL) { renderRanking(); return; }
+    fetch(SCRIPT_URL + '?ranking=1&t=' + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d || !d.ok) throw new Error();
+        dadosRanking = d;
+        renderRanking();
+        var agora = new Date();
+        rankRodape.textContent = 'Atualizado às ' +
+          ('0' + agora.getHours()).slice(-2) + ':' + ('0' + agora.getMinutes()).slice(-2) +
+          ' — atualiza sozinho a cada 45s';
+      })
+      .catch(function () {
+        rankRodape.textContent = 'Não deu pra buscar o ranking agora 🌊 Tentamos de novo já já.';
+      });
+  }
+  carregaRanking();
+  setInterval(carregaRanking, 45000);
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) carregaRanking();
+  });
+
+  /* ================= passaporte do mergulhador ================= */
+  var seloMestre = document.getElementById('seloMestre');
+  function leFlag(chave) {
+    try { return !!localStorage.getItem(chave); } catch (e) { return false; }
+  }
+  function usosIa() {
+    try { return parseInt(localStorage.getItem('festa-enzo-ia-usos') || '0', 10) || 0; } catch (e) { return 0; }
+  }
+  function atualizaPassaporte() {
+    var missoes = [
+      { el: document.getElementById('carimboJogo'), feito: leFlag('festa-enzo-carimbo-jogo') },
+      { el: document.getElementById('carimboFoto'), feito: leFlag('festa-enzo-carimbo-foto') },
+      { el: document.getElementById('carimboCapsula'), feito: leFlag('festa-enzo-carimbo-capsula') },
+      { el: document.getElementById('carimboIa'), feito: usosIa() > 0 }
+    ];
+    var completas = 0;
+    missoes.forEach(function (m) {
+      m.el.classList.toggle('feito', m.feito);
+      m.el.querySelector('.estado').textContent = m.feito ? '✅ Carimbado!' : 'Ainda não';
+      if (m.feito) completas++;
+    });
+    if (completas === missoes.length) {
+      seloMestre.classList.add('mostra');
+      if (!leFlag('festa-enzo-passaporte-ok')) {
+        try { localStorage.setItem('festa-enzo-passaporte-ok', '1'); } catch (e) {}
+        fanfarra();
+        estoura(window.innerWidth / 2, window.innerHeight / 2, 130);
+        mostraToast('🏅 Passaporte completo! Você é Mergulhador Oficial!', 4200);
+      }
+    }
+  }
+  document.getElementById('btnCompartilhar').addEventListener('click', function () {
+    var texto = '🏅 Sou Mergulhador Oficial da Festa do Enzo! Completei as 4 missões do oceano 🦈 Doo doo doo!';
+    if (navigator.share) {
+      navigator.share({ text: texto }).catch(function () {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(texto).then(function () {
+        mostraToast('Copiado! Cole onde quiser 📋');
+      });
+    }
+  });
+  atualizaPassaporte();
+
+  /* ================= troca de abas + liga/desliga ================= */
+  function iniciaJogo() {
+    limpaPalco();
+    palco.classList.toggle('modo-bolhas', jogoAtivo !== 'comilanca');
+    palco.style.touchAction = (jogoAtivo === 'corrida') ? 'none' : 'manipulation';
+    if (jogoAtivo === 'comilanca') { for (var i = 0; i < 6; i++) novaComida(); }
+    if (jogoAtivo === 'bolhas') { for (var j = 0; j < 3; j++) novaBolha(); }
+    if (jogoAtivo === 'memoria') montaMemoria();
+    if (jogoAtivo === 'corrida') montaCorrida();
+    btnDesafio.textContent = rotuloDesafio();
+    btnDesafio.disabled = (modo !== 'livre');
+    atualizaHud();
+  }
+  abas.forEach(function (a) {
+    a.addEventListener('click', function () {
+      if (modo === 'desafio' || modo === 'contagem') {
+        cancelaDesafio();
+        mostraToast('Desafio cancelado — troca de jogo! 🌊');
+      } else if (modo === 'fim') {
+        modo = 'livre';
+        btnDesafio.disabled = false;
+      }
+      jogoAtivo = a.dataset.jogo;
+      sincronizaAbas();
+      iniciaJogo();
+      ritmoBolhas();
+    });
+  });
+  function sincronizaAbas() {
+    abas.forEach(function (x) {
+      x.classList.toggle('ativa', x.dataset.jogo === jogoAtivo);
+      x.setAttribute('aria-selected', x.dataset.jogo === jogoAtivo ? 'true' : 'false');
+    });
+  }
+
+  function ligaDesligaJogos(visivel) {
+    jogosVisivel = visivel;
+    ritmoBolhas();
+    if ((visivel || modo === 'desafio') && jogoAtivo === 'corrida' && !rafCorrida) rafCorrida = requestAnimationFrame(nadaCorrida);
+  }
+  if ('IntersectionObserver' in window) {
+    var ioJogos = new IntersectionObserver(function (ents) {
+      ents.forEach(function (e) { ligaDesligaJogos(e.isIntersecting); });
+    }, { threshold: 0.15 });
+    ioJogos.observe(palco);
+  } else {
+    ligaDesligaJogos(true);
+  }
+  sincronizaAbas();
+  iniciaJogo();
+})();
+</script>
+
+</body>
+</html>

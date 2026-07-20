@@ -341,6 +341,7 @@ button{font-family:inherit;cursor:pointer}
 
 <div class="pagina" id="topo">
   <a class="voltar" href="index.html">🐟 Voltar ao cardápio</a>
+  <a class="voltar" href="jogos.html">🎮 Jogos</a>
   <a class="voltar" href="capsula.html">🍾 Cápsula do Tempo</a>
   <a class="voltar" href="tubarao.html">🎨 Vire um Tubarão</a>
 
@@ -530,6 +531,8 @@ function enviarUma(file, nome) {
         var resp = JSON.parse(xhr.responseText);
         barra.style.width = '100%';
         status.textContent = '✅';
+        // carimbo do Passaporte do Mergulhador (jogos.html)
+        try { localStorage.setItem('festa-enzo-carimbo-foto', '1'); } catch (e2) {}
         setTimeout(function () { item.remove(); }, 2500);
         enviosProntos.unshift({
           public_id: resp.public_id,

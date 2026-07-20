@@ -269,6 +269,7 @@ textarea.campo{min-height:9.5rem;resize:vertical;line-height:1.5}
 
 <div class="pagina" id="topo">
   <a class="voltar" href="index.html">🐟 Voltar ao cardápio</a>
+  <a class="voltar" href="jogos.html">🎮 Jogos</a>
   <a class="voltar" href="fotos.html">📸 Fotos da festa</a>
   <a class="voltar" href="tubarao.html">🎨 Vire um Tubarão</a>
 
@@ -456,6 +457,8 @@ form.addEventListener('submit', function (e) {
     .then(function (r) { return r.json(); })
     .then(function (dados) {
       if (!dados || !dados.ok) throw new Error(dados && dados.erro);
+      // carimbo do Passaporte do Mergulhador (jogos.html)
+      try { localStorage.setItem('festa-enzo-carimbo-capsula', '1'); } catch (e2) {}
       celebrar();
     })
     .catch(function () {
