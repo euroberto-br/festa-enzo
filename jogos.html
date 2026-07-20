@@ -446,6 +446,15 @@ main{position:relative;z-index:1;padding:0 1rem 3.5rem;display:grid;gap:1.6rem;j
   padding:.45rem 1.2rem;margin-top:.6rem;
   box-shadow:0 4px 0 rgba(13,59,102,.3);
 }
+.btn-compartilhar:disabled{opacity:.6;cursor:wait}
+.arte-moldura{margin:1rem auto .3rem;max-width:330px}
+.arte-moldura img{
+  width:100%;border:4px solid var(--navy);border-radius:18px;
+  background:var(--ceu);
+  box-shadow:0 6px 0 rgba(13,59,102,.35), 0 12px 22px rgba(8,63,118,.3);
+}
+.arte-botoes{display:flex;flex-wrap:wrap;gap:.2rem .6rem;justify-content:center}
+.arte-dica{font-size:.8rem;font-weight:800;opacity:.7;margin-top:.55rem}
 
 /* ---------- rodapé ---------- */
 .rodape{
@@ -568,7 +577,14 @@ main{position:relative;z-index:1;padding:0 1rem 3.5rem;display:grid;gap:1.6rem;j
     <div class="selo-mestre" id="seloMestre">
       <h3>🏅 Mergulhador Oficial da Festa do Enzo!</h3>
       <p>Você completou todas as missões do oceano. Doo doo doo! 🦈</p>
-      <button class="btn-compartilhar" id="btnCompartilhar" type="button">📣 Contar pra todo mundo</button>
+      <div class="arte-moldura" id="arteMoldura" hidden>
+        <img id="artePrevia" alt="Passaporte do Mergulhador carimbado, com o nome do convidado">
+      </div>
+      <div class="arte-botoes">
+        <button class="btn-compartilhar" id="btnCompartilhar" type="button">📣 Compartilhar meu passaporte</button>
+        <button class="btn-compartilhar" id="btnBaixarArte" type="button">⬇️ Baixar meu passaporte</button>
+      </div>
+      <p class="arte-dica">O passaporte sai com o nome que você escreveu lá em cima ✏️</p>
     </div>
   </section>
 
@@ -1459,6 +1475,7 @@ main{position:relative;z-index:1;padding:0 1rem 3.5rem;display:grid;gap:1.6rem;j
     });
     if (completas === missoes.length) {
       seloMestre.classList.add('mostra');
+      atualizaArtePassaporte();
       if (!leFlag('festa-enzo-passaporte-ok')) {
         try { localStorage.setItem('festa-enzo-passaporte-ok', '1'); } catch (e) {}
         fanfarra();
@@ -1467,16 +1484,376 @@ main{position:relative;z-index:1;padding:0 1rem 3.5rem;display:grid;gap:1.6rem;j
       }
     }
   }
-  document.getElementById('btnCompartilhar').addEventListener('click', function () {
-    var texto = '🏅 Sou Mergulhador Oficial da Festa do Enzo! Completei as 4 missões do oceano 🦈 Doo doo doo!';
-    if (navigator.share) {
-      navigator.share({ text: texto }).catch(function () {});
-    } else if (navigator.clipboard) {
-      navigator.clipboard.writeText(texto).then(function () {
-        mostraToast('Copiado! Cole onde quiser 📋');
-      });
+
+  /* ================= arte compartilhável do passaporte ================= */
+  var arteMoldura = document.getElementById('arteMoldura');
+  var artePrevia = document.getElementById('artePrevia');
+  var btnCompartilhar = document.getElementById('btnCompartilhar');
+  var btnBaixarArte = document.getElementById('btnBaixarArte');
+  var ARTE_W = 1080, ARTE_H = 1350;
+
+  function fonteBaloo(px) { return '800 ' + px + 'px "Baloo 2","Arial Rounded MT Bold",sans-serif'; }
+  function fonteNunito(px, peso) { return (peso || 700) + ' ' + px + 'px Nunito,"Segoe UI",sans-serif'; }
+
+  function prontoFontes() {
+    if (!(document.fonts && document.fonts.load)) return Promise.resolve();
+    return Promise.all([
+      document.fonts.load(fonteBaloo(110)),
+      document.fonts.load(fonteBaloo(40)),
+      document.fonts.load(fonteNunito(32, 800))
+    ]).catch(function () {});
+  }
+
+  function desenhaArte(nome) {
+    var cv = document.createElement('canvas');
+    cv.width = ARTE_W; cv.height = ARTE_H;
+    var cx = cv.getContext('2d');
+    var meio = ARTE_W / 2;
+    var semente = 7;
+    function rnd() { semente = (semente * 9301 + 49297) % 233280; return semente / 233280; }
+    function retRed(x, y, w, h, r) {
+      cx.beginPath();
+      cx.moveTo(x + r, y);
+      cx.arcTo(x + w, y, x + w, y + h, r);
+      cx.arcTo(x + w, y + h, x, y + h, r);
+      cx.arcTo(x, y + h, x, y, r);
+      cx.arcTo(x, y, x + w, y, r);
+      cx.closePath();
     }
+    function ajustaFonte(texto, maxPx, maxLarg) {
+      var p = maxPx;
+      cx.font = fonteBaloo(p);
+      while (p > 24 && cx.measureText(texto).width > maxLarg) { p -= 2; cx.font = fonteBaloo(p); }
+      return p;
+    }
+
+    /* --- oceano --- */
+    var mar = cx.createLinearGradient(0, 0, 0, ARTE_H);
+    mar.addColorStop(0, '#7FE0F5'); mar.addColorStop(.16, '#3FC0E8');
+    mar.addColorStop(.45, '#1D93CE'); mar.addColorStop(.78, '#0F6FB5');
+    mar.addColorStop(1, '#083F76');
+    cx.fillStyle = mar; cx.fillRect(0, 0, ARTE_W, ARTE_H);
+
+    /* raios de luz */
+    [120, 460, 790].forEach(function (rx, i) {
+      cx.save();
+      cx.translate(rx, -40); cx.rotate(0.2 + i * 0.03);
+      var luz = cx.createLinearGradient(0, 0, 0, 900);
+      luz.addColorStop(0, 'rgba(255,255,255,.3)'); luz.addColorStop(1, 'rgba(255,255,255,0)');
+      cx.fillStyle = luz;
+      cx.fillRect(0, 0, 90 + i * 20, 900);
+      cx.restore();
+    });
+
+    /* bolhas */
+    for (var b = 0; b < 26; b++) {
+      var bx = rnd() * ARTE_W, by = rnd() * ARTE_H, br = 5 + rnd() * 22;
+      cx.beginPath(); cx.arc(bx, by, br, 0, Math.PI * 2);
+      cx.fillStyle = 'rgba(255,255,255,' + (0.08 + rnd() * 0.18).toFixed(2) + ')';
+      cx.fill();
+      cx.beginPath(); cx.arc(bx - br * 0.3, by - br * 0.35, br * 0.28, 0, Math.PI * 2);
+      cx.fillStyle = 'rgba(255,255,255,.5)'; cx.fill();
+    }
+
+    /* areia */
+    cx.beginPath();
+    cx.moveTo(0, ARTE_H);
+    cx.lineTo(0, 1262);
+    cx.quadraticCurveTo(200, 1226, 420, 1252);
+    cx.quadraticCurveTo(660, 1280, 860, 1246);
+    cx.quadraticCurveTo(980, 1228, 1080, 1256);
+    cx.lineTo(1080, ARTE_H);
+    cx.closePath();
+    cx.fillStyle = '#FBE9BF'; cx.fill();
+    cx.fillStyle = 'rgba(13,59,102,.14)';
+    for (var g = 0; g < 40; g++) {
+      cx.beginPath(); cx.arc(rnd() * ARTE_W, 1268 + rnd() * 70, 2 + rnd() * 3, 0, Math.PI * 2); cx.fill();
+    }
+
+    /* algas */
+    function alga(ax, alt, cor) {
+      cx.save(); cx.translate(ax, ARTE_H - 40);
+      cx.strokeStyle = cor; cx.lineCap = 'round'; cx.lineWidth = 14;
+      cx.beginPath(); cx.moveTo(0, 30);
+      cx.bezierCurveTo(-24, -alt * 0.3, 26, -alt * 0.6, -6, -alt);
+      cx.stroke(); cx.restore();
+    }
+    alga(56, 130, '#2E8B57'); alga(92, 92, '#58C472');
+    alga(1014, 120, '#2E8B57'); alga(982, 82, '#58C472');
+
+    cx.textAlign = 'center'; cx.textBaseline = 'middle';
+
+    /* bichinhos */
+    cx.font = '50px sans-serif'; cx.fillText('⭐', 150, 1300);
+    cx.font = '44px sans-serif'; cx.fillText('🐚', 935, 1305);
+    cx.font = '48px sans-serif'; cx.fillText('🐠', 130, 66);
+    cx.font = '34px sans-serif'; cx.fillText('🐟', 220, 92);
+
+    /* --- cartão do passaporte --- */
+    var CX = 64, CY = 120, CW = 952, CH = 1060, CR = 46;
+    retRed(CX, CY + 16, CW, CH, CR); cx.fillStyle = 'rgba(4,24,48,.55)'; cx.fill();
+    retRed(CX, CY, CW, CH, CR); cx.fillStyle = '#FFFFFF'; cx.fill();
+    cx.lineWidth = 10; cx.strokeStyle = '#0D3B66'; cx.stroke();
+    retRed(CX + 24, CY + 24, CW - 48, CH - 48, CR - 18);
+    cx.setLineDash([16, 12]); cx.lineWidth = 4; cx.strokeStyle = '#7FE0F5'; cx.stroke();
+    cx.setLineDash([]);
+
+    /* cabeçalho */
+    cx.fillStyle = '#1D93CE';
+    cx.font = fonteBaloo(34);
+    cx.fillText('🦈 FESTA DO ENZO · 3 ANOS 🦈', meio, 208);
+
+    cx.font = '54px sans-serif';
+    cx.fillText('🤿', 168, 258);
+    cx.fillText('🐡', 912, 258);
+
+    cx.fillStyle = '#0D3B66';
+    cx.font = fonteBaloo(56);
+    cx.fillText('Passaporte do', meio, 290);
+
+    var tit = 'MERGULHADOR';
+    ajustaFonte(tit, 110, 830);
+    cx.fillStyle = '#F49B33'; cx.fillText(tit, meio, 388);
+    cx.fillStyle = '#0D3B66'; cx.fillText(tit, meio, 381);
+
+    /* ondinha divisória */
+    cx.strokeStyle = '#3FC0E8'; cx.lineWidth = 6; cx.lineCap = 'round';
+    cx.beginPath();
+    cx.moveTo(meio - 140, 452);
+    for (var o = 0; o < 7; o++) {
+      cx.quadraticCurveTo(meio - 140 + o * 40 + 20, 452 + (o % 2 ? -14 : 14), meio - 140 + (o + 1) * 40, 452);
+    }
+    cx.stroke();
+
+    /* nome do convidado */
+    cx.fillStyle = 'rgba(13,59,102,.78)';
+    cx.font = fonteNunito(32, 800);
+    cx.fillText('Este passaporte pertence a', meio, 508);
+
+    var nomeArte = nome || 'Mergulhador da Festa';
+    var placaW = 830, placaH = 126, placaX = meio - placaW / 2, placaY = 540;
+    retRed(placaX, placaY + 10, placaW, placaH, 30); cx.fillStyle = 'rgba(244,155,51,.9)'; cx.fill();
+    retRed(placaX, placaY, placaW, placaH, 30); cx.fillStyle = '#FFD23F'; cx.fill();
+    cx.lineWidth = 7; cx.strokeStyle = '#0D3B66'; cx.stroke();
+    ajustaFonte(nomeArte, 66, placaW - 90);
+    cx.fillStyle = '#0D3B66';
+    cx.fillText(nomeArte, meio, placaY + placaH / 2 + 4);
+
+    /* carimbos das missões */
+    cx.font = fonteBaloo(34); cx.fillStyle = '#1D93CE';
+    cx.fillText('· 4 missões do oceano completas ·', meio, 738);
+
+    var selos = [
+      { emo: '🎮', rot: 'Desafio' },
+      { emo: '📸', rot: 'Foto' },
+      { emo: '🍾', rot: 'Cápsula' },
+      { emo: '🎨', rot: 'Tubarão IA' }
+    ];
+    selos.forEach(function (s, i) {
+      var sx = meio - 318 + i * 212, sy = 844, sr = 82;
+      cx.beginPath(); cx.arc(sx, sy, sr, 0, Math.PI * 2);
+      cx.fillStyle = '#E9F8EE'; cx.fill();
+      cx.lineWidth = 7; cx.strokeStyle = '#58C472'; cx.stroke();
+      cx.beginPath(); cx.arc(sx, sy, sr - 14, 0, Math.PI * 2);
+      cx.setLineDash([10, 8]); cx.lineWidth = 3; cx.strokeStyle = 'rgba(46,116,66,.5)'; cx.stroke();
+      cx.setLineDash([]);
+      cx.font = '62px sans-serif'; cx.fillText(s.emo, sx, sy - 6);
+      cx.beginPath(); cx.arc(sx + 54, sy + 54, 25, 0, Math.PI * 2);
+      cx.fillStyle = '#FFFFFF'; cx.fill();
+      cx.lineWidth = 4; cx.strokeStyle = '#58C472'; cx.stroke();
+      cx.font = '28px sans-serif'; cx.fillText('✅', sx + 54, sy + 55);
+      cx.font = fonteBaloo(27); cx.fillStyle = '#0D3B66';
+      cx.fillText(s.rot, sx, sy + sr + 36);
+    });
+
+    /* roseta de Mergulhador Oficial */
+    (function roseta(x, y) {
+      cx.save(); cx.translate(x, y);
+      for (var i = 0; i < 12; i++) {
+        var a = (Math.PI * 2 / 12) * i;
+        cx.beginPath();
+        cx.arc(Math.cos(a) * 64, Math.sin(a) * 64, 21, 0, Math.PI * 2);
+        cx.fillStyle = (i % 2) ? '#F49B33' : '#FFD23F';
+        cx.fill();
+        cx.lineWidth = 4; cx.strokeStyle = '#0D3B66'; cx.stroke();
+      }
+      cx.beginPath(); cx.arc(0, 0, 66, 0, Math.PI * 2);
+      var mio = cx.createLinearGradient(0, -66, 0, 66);
+      mio.addColorStop(0, '#FFD23F'); mio.addColorStop(1, '#FFC72C');
+      cx.fillStyle = mio; cx.fill();
+      cx.lineWidth = 6; cx.strokeStyle = '#0D3B66'; cx.stroke();
+      cx.beginPath(); cx.arc(0, 0, 52, 0, Math.PI * 2);
+      cx.setLineDash([8, 7]); cx.lineWidth = 3; cx.strokeStyle = 'rgba(13,59,102,.55)'; cx.stroke();
+      cx.setLineDash([]);
+      cx.font = '52px sans-serif'; cx.fillText('🏅', 0, -8);
+      cx.font = fonteBaloo(20); cx.fillStyle = '#0D3B66';
+      cx.fillText('OFICIAL', 0, 34);
+      cx.restore();
+    })(252, 1064);
+    cx.font = '30px sans-serif';
+    cx.fillText('✨', 356, 998);
+    cx.fillText('✨', 152, 1132);
+
+    /* faixa com o título oficial */
+    (function faixa(x, y, w, h) {
+      cx.beginPath();
+      cx.moveTo(x, y);
+      cx.lineTo(x + w, y);
+      cx.lineTo(x + w - 24, y + h / 2);
+      cx.lineTo(x + w, y + h);
+      cx.lineTo(x, y + h);
+      cx.lineTo(x + 24, y + h / 2);
+      cx.closePath();
+      cx.fillStyle = '#0D3B66'; cx.fill();
+      cx.lineWidth = 4; cx.strokeStyle = '#04182F'; cx.stroke();
+      var rot = 'MERGULHADOR OFICIAL';
+      var p = 44; cx.font = fonteBaloo(p);
+      while (p > 24 && cx.measureText(rot).width > w - 110) { p -= 2; cx.font = fonteBaloo(p); }
+      cx.fillStyle = '#FFD23F';
+      cx.fillText(rot, x + w / 2, y + h / 2 + 2);
+    })(392, 1026, 566, 76);
+    cx.fillStyle = 'rgba(13,59,102,.75)';
+    cx.font = fonteNunito(26, 800);
+    cx.fillText('Carimbado em ' + dataCarimbo() + ' · doo doo doo 🎶', 675, 1146);
+
+    /* tubarãozinho nadando no topo */
+    (function tubarao(x, y, esc, rot2) {
+      cx.save(); cx.translate(x, y); cx.rotate(rot2); cx.scale(esc, esc);
+      cx.lineJoin = 'round';
+      cx.beginPath();
+      cx.moveTo(-88, 0);
+      cx.lineTo(-146, -42);
+      cx.quadraticCurveTo(-124, -4, -128, 0);
+      cx.quadraticCurveTo(-124, 4, -146, 42);
+      cx.closePath();
+      cx.fillStyle = '#FFD23F'; cx.fill();
+      cx.lineWidth = 6; cx.strokeStyle = '#0D3B66'; cx.stroke();
+      cx.beginPath();
+      cx.moveTo(-12, -52);
+      cx.quadraticCurveTo(8, -100, 42, -84);
+      cx.quadraticCurveTo(30, -62, 26, -46);
+      cx.closePath();
+      cx.fillStyle = '#FFD23F'; cx.fill(); cx.stroke();
+      cx.beginPath();
+      cx.ellipse(0, 0, 100, 58, 0, 0, Math.PI * 2);
+      cx.fillStyle = '#FFD23F'; cx.fill(); cx.stroke();
+      cx.save();
+      cx.beginPath(); cx.ellipse(0, 0, 100, 58, 0, 0, Math.PI * 2); cx.clip();
+      cx.beginPath(); cx.ellipse(14, 34, 88, 40, 0, 0, Math.PI * 2);
+      cx.fillStyle = '#FFF6D6'; cx.fill();
+      cx.restore();
+      cx.beginPath(); cx.ellipse(0, 0, 100, 58, 0, 0, Math.PI * 2); cx.stroke();
+      cx.beginPath();
+      cx.moveTo(-4, 22);
+      cx.quadraticCurveTo(-14, 56, 18, 60);
+      cx.quadraticCurveTo(26, 40, 20, 24);
+      cx.closePath();
+      cx.fillStyle = '#FFC72C'; cx.fill(); cx.stroke();
+      cx.beginPath(); cx.arc(52, -18, 15, 0, Math.PI * 2); cx.fillStyle = '#FFF'; cx.fill();
+      cx.lineWidth = 4; cx.stroke();
+      cx.beginPath(); cx.arc(56, -16, 7.5, 0, Math.PI * 2); cx.fillStyle = '#0D3B66'; cx.fill();
+      cx.beginPath(); cx.arc(59, -19, 2.6, 0, Math.PI * 2); cx.fillStyle = '#FFF'; cx.fill();
+      cx.beginPath(); cx.arc(58, 6, 24, 0.25, Math.PI * 0.75);
+      cx.lineWidth = 5; cx.strokeStyle = '#0D3B66'; cx.stroke();
+      cx.beginPath(); cx.arc(28, 10, 9, 0, Math.PI * 2); cx.fillStyle = 'rgba(242,109,179,.55)'; cx.fill();
+      cx.restore();
+    })(872, 76, 0.82, -0.1);
+
+    /* rodapé na areia */
+    cx.font = fonteBaloo(30); cx.fillStyle = '#0D3B66';
+    cx.fillText('Baby Shark, doo doo doo doo doo doo 🎶', meio, 1312);
+
+    return cv;
+  }
+
+  function dataCarimbo() {
+    var d = new Date();
+    return ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2) + '/' + d.getFullYear();
+  }
+
+  function geraArtePassaporte(nome) {
+    return prontoFontes().then(function () { return desenhaArte(nome); });
+  }
+
+  var previaTimer = null;
+  function atualizaArtePassaporte() {
+    if (!seloMestre.classList.contains('mostra')) return;
+    clearTimeout(previaTimer);
+    previaTimer = setTimeout(function () {
+      geraArtePassaporte(nomeJogador()).then(function (cv) {
+        artePrevia.src = cv.toDataURL('image/png');
+        arteMoldura.hidden = false;
+      }).catch(function () {});
+    }, 300);
+  }
+  campoNome.addEventListener('input', atualizaArtePassaporte);
+
+  function slugNome(n) {
+    return n.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'convidado';
+  }
+  function nomeArquivoArte() { return 'passaporte-mergulhador-' + slugNome(nomeJogador()) + '.png'; }
+
+  function pedeNome() {
+    if (nomeJogador()) return true;
+    mostraToast('Escreva seu nome lá em cima pra sair no passaporte! ✏️');
+    campoNome.focus();
+    return false;
+  }
+
+  function arteEmBlob(cv) {
+    return new Promise(function (res, rej) {
+      cv.toBlob(function (blob) { if (blob) res(blob); else rej(new Error('sem blob')); }, 'image/png');
+    });
+  }
+
+  function baixaArte(blob) {
+    var a = document.createElement('a');
+    var url = URL.createObjectURL(blob);
+    a.href = url; a.download = nomeArquivoArte();
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 4000);
+  }
+
+  btnCompartilhar.addEventListener('click', function () {
+    if (!pedeNome()) return;
+    var antes = btnCompartilhar.textContent;
+    btnCompartilhar.disabled = true;
+    btnCompartilhar.textContent = 'Preparando o passaporte… 🫧';
+    function fim() { btnCompartilhar.disabled = false; btnCompartilhar.textContent = antes; }
+    geraArtePassaporte(nomeJogador())
+      .then(arteEmBlob)
+      .then(function (blob) {
+        var texto = '🏅 ' + nomeJogador() + ' é Mergulhador Oficial da Festa do Enzo! 4 missões do oceano completas 🦈 Doo doo doo!';
+        var arquivo = null;
+        try { arquivo = new File([blob], nomeArquivoArte(), { type: 'image/png' }); } catch (e) {}
+        if (arquivo && navigator.canShare && navigator.canShare({ files: [arquivo] })) {
+          return navigator.share({ files: [arquivo], text: texto }).catch(function () {});
+        }
+        baixaArte(blob);
+        if (navigator.clipboard) navigator.clipboard.writeText(texto).catch(function () {});
+        mostraToast('Aqui não dá pra compartilhar imagem — baixamos o passaporte pra você! 💾');
+      })
+      .catch(function () { mostraToast('A maré atrapalhou 🌊 Tente de novo!'); })
+      .then(fim, fim);
   });
+
+  btnBaixarArte.addEventListener('click', function () {
+    if (!pedeNome()) return;
+    var antes = btnBaixarArte.textContent;
+    btnBaixarArte.disabled = true;
+    btnBaixarArte.textContent = 'Carimbando… 🫧';
+    function fim() { btnBaixarArte.disabled = false; btnBaixarArte.textContent = antes; }
+    geraArtePassaporte(nomeJogador())
+      .then(arteEmBlob)
+      .then(function (blob) {
+        baixaArte(blob);
+        mostraToast('🏅 Passaporte baixado com seu nome! Doo doo doo!');
+      })
+      .catch(function () { mostraToast('A maré atrapalhou 🌊 Tente de novo!'); })
+      .then(fim, fim);
+  });
+
   atualizaPassaporte();
 
   /* ================= troca de abas + liga/desliga ================= */

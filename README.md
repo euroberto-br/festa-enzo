@@ -134,7 +134,11 @@ voando na tela ("−2" / "−1" / "+5s") e o placar nunca fica negativo.*
 
 4 missões carimbadas automaticamente no aparelho: completar um desafio na salinha 🎮, mandar uma
 foto pra galeria 📸, lançar uma mensagem na garrafa 🍾 e virar um tubarão com a IA 🎨. Completou
-as 4? Selo de **Mergulhador Oficial** com confete e botão de compartilhar (Web Share API).
+as 4? Selo de **Mergulhador Oficial** com confete — e a página gera **o passaporte em arte
+completa** (canvas 1080×1350, tema do oceano: cartão carimbado, roseta oficial, tubarãozinho,
+areia e bolhas) **personalizado com o nome do convidado**, com prévia na página, botão de
+**compartilhar a imagem** (Web Share API com arquivo; fallback baixa o PNG e copia o texto)
+e botão de **baixar** (`passaporte-mergulhador-<nome>.png`).
 
 ### 📸 A galeria colaborativa (`fotos.html`)
 
